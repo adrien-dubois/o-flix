@@ -1,0 +1,50 @@
+{% extends "base.html.twig" %}
+{% block title %}
+    Liste des séries - {{parent()}}
+{% endblock %}
+
+{% block body %}
+    <main>
+
+        <section class="py-5 text-center container">
+            <div class="row py-lg-5">
+                <div class="col-lg-6 col-md-8 mx-auto">
+                    <h1 class="fw-light">Dernières séries</h1>
+                </div>
+            </div>
+        </section>
+
+        <div class="py-5 bg-light">
+            <div class="container">
+
+                <div class="row row-cols-1 row-cols-sm-2 row-cols-md-3 g-3">
+
+                {# SERIES CARDS #}
+
+                    {% for tvshow in tvshows %}
+                        <div class="col">
+                            <div class="card shadow-sm">
+                                <img src=" {{asset('img/') ~ tvshow.image}} " alt="">
+                                <div class="card-body">
+                                    <p class="card-text"> {{tvshow.synopsis}} </p>
+                                    <div class="d-flex justify-content-between align-items-center">
+                                        <div class="btn-group">
+                                            <a href=" {{path('show_single', {id: tvshow.id})}} " class="btn btn-sm btn-outline-secondary">Voir</a>
+                                            <a href="tvshow_details.html" class="btn btn-sm btn-outline-secondary">Editer</a>
+                                        </div>
+                                        <small class="text-muted">
+                                            {{tvshow.nbLikes}}
+                                            <img src=" {{asset('img/like.svg')}} " alt="" class="like">
+                                        </small>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    {% endfor %}
+                </div>
+            </div>
+        </div>
+
+    </main>
+
+{% endblock %}

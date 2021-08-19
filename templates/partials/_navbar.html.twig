@@ -1,4 +1,10 @@
+    {% block navbar %}
+    {# Set the current route to put the links in active class #}
+    {% set currentRoute = app.request.attributes.get('_route') %}
+
     <header>
+
+        {# LOGO PART #}
         <nav class="navbar navbar-expand-md navbar-dark bg-dark mb-4">
             <div class="container">
                 <a class="navbar-brand text-danger" href=" {{path('home')}} ">
@@ -11,13 +17,16 @@
                 <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarCollapse" aria-controls="navbarCollapse" aria-expanded="false" aria-label="Toggle navigation">
                     <span class="navbar-toggler-icon"></span>
                 </button>
+
+                {# PAGES LINKS #}
+
                 <div class="collapse navbar-collapse" id="navbarCollapse">
                     <ul class="navbar-nav me-auto mb-2 mb-md-0">
                         <li class="nav-item">
-                            <a class="nav-link active" aria-current="page" href=" {{path('home')}} ">Accueil</a>
+                            <a class="nav-link {{(currentRoute == 'home')? 'active' }}" aria-current="page" href=" {{path('home')}} ">Accueil</a>
                         </li>
                         <li class="nav-item">
-                            <a class="nav-link" href="tvshow_list.html">Séries</a>
+                            <a class="nav-link {{(currentRoute is same as 'show_list' or currentRoute is same as 'show_single')? 'active' }}" href=" {{path('show_list')}} ">Séries</a>
                         </li>
                         <li class="nav-item">
                             <a class="nav-link" href="#">Ma liste</a>
@@ -36,3 +45,6 @@
             </div>
         </nav>
     </header>
+
+    
+    {% endblock %}

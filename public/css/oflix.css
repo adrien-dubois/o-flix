@@ -29,3 +29,8 @@ body {
     border-top-left-radius: 0;
     border-top-right-radius: 0;
 }
+
+.like{
+    width: 16px;
+    color: #6C757D;
+}
