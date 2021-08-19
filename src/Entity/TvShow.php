@@ -59,9 +59,21 @@ class TvShow
      */
     private $season;
 
+    /**
+     * @ORM\ManyToMany(targetEntity=Character::class, mappedBy="tvshows")
+     */
+    private $characters;
+
+    /**
+     * @ORM\ManyToMany(targetEntity=Category::class, inversedBy="tvShows")
+     */
+    private $categories;
+
     public function __construct()
     {
         $this->season = new ArrayCollection();
+        $this->characters = new ArrayCollection();
+        $this->categories = new ArrayCollection();
     }
 
     public function getId(): ?int
@@ -179,6 +191,57 @@ class TvShow
                 $season->setTvShow(null);
             }
         }
+
+        return $this;
+    }
+
+    /**
+     * @return Collection|Character[]
+     */
+    public function getCharacters(): Collection
+    {
+        return $this->characters;
+    }
+
+    public function addCharacter(Character $character): self
+    {
+        if (!$this->characters->contains($character)) {
+            $this->characters[] = $character;
+            $character->addTvshow($this);
+        }
+
+        return $this;
+    }
+
+    public function removeCharacter(Character $character): self
+    {
+        if ($this->characters->removeElement($character)) {
+            $character->removeTvshow($this);
+        }
+
+        return $this;
+    }
+
+    /**
+     * @return Collection|Category[]
+     */
+    public function getCategories(): Collection
+    {
+        return $this->categories;
+    }
+
+    public function addCategory(Category $category): self
+    {
+        if (!$this->categories->contains($category)) {
+            $this->categories[] = $category;
+        }
+
+        return $this;
+    }
+
+    public function removeCategory(Category $category): self
+    {
+        $this->categories->removeElement($category);
 
         return $this;
     }
