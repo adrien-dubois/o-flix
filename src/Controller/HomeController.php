@@ -22,7 +22,7 @@ class HomeController extends AbstractController{
     {
         // Get the three last entries in the DB with findBy()
         $shows = $tvShowRepository->findBy([],
-            ['createdAt'=>"DESC"],
+            ['createdAt' => "DESC"],
             3,0
         );
 

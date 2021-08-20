@@ -2,6 +2,8 @@
 
 namespace App\Controller;
 
+
+use App\Repository\SeasonRepository;
 use App\Repository\TvShowRepository;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
 use Symfony\Component\HttpFoundation\Response;
@@ -9,6 +11,7 @@ use Symfony\Component\Routing\Annotation\Route;
 
 class TvShowController extends AbstractController
 {
+
     /**
      * @Route("/tvshow/", name="show_list")
      */
@@ -32,18 +35,40 @@ class TvShowController extends AbstractController
      * @param TvShowRepository $tvShowRepository
      * @return Response
      */
-    public function singleShow($id, TvShowRepository $tvShowRepository): Response
+    public function singleShow($id, TvShowRepository $tvShowRepository, SeasonRepository $seasonRepository): Response
     {
+
+        
         // Get the right serie with the asked ID
         $show = $tvShowRepository->find($id);
-
+        
+        // Get seasons in relation with the good show
+        $season = $seasonRepository->findBy(['tvShow' => $id]);
+        
+        
         // If someone ask an ID doesn't exists, send a 404
         if(!$show){
             throw $this->createNotFoundException('La série demandée n\'existe pas');
-        }
-
+        }      
+        
+        // dump($show);
         return $this->render('tv_show/single.html.twig',[
             'show'=>$show,
+            'seasons'=>$season,
         ]);
     }
+
+
+    /**
+     * Method displaying favorites page
+     * 
+     * @Route("/tvshow/favorite", name="show_fav")
+     *
+     * @return void
+     */
+    public function favs()
+    {
+        return $this->render('tv_show/favs.html.twig');
+    }
+
 }

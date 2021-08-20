@@ -1,11 +1,33 @@
-{% extends "base.html.twig" %}
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Page Not Found</title>
+    <link rel="stylesheet" href=" {{asset('css/bootstrap.css')}} ">
+    <link rel="stylesheet" href=" {{asset('css/oflix.css')}} ">
+</head>
+<body style="background-image: url('https://wallpaperboat.com/wp-content/uploads/2019/04/game-of-thrones-cool-minimal-wallpaper-hd-picture-012.jpg'); margin-bottom: 2rem;">
 
-{% block title %}
-    Page non trouvée - {{parent()}}
-{% endblock %}
+{% include "partials/_navbar.html.twig" %}
+    <section style="padding-top: 60px;">
+        <div id="error" class="container">
+            <div class="row">
+                <div class="col-md-8 offset-md-2 text-center">
+                    <h1 style="font-size: 162px;">404</h1>
+                    <h2>Winter Is Coming</h2>
+                    <p>Nous sommes désolés, la page que vous avez demandée n'a pas été trouvée.</p>
 
-{% block body %}
+                    <br>
+                    <a href=" {{path('home')}} " class="btn btn-dark">Retour à l'accueil</a>
+                </div>
+            </div>
+        </div>
+    </section>
 
-    <h1>Page non trouvée</h1>
-    <p>La page que vous demandez n'a pas été trouvée</p>
-{% endblock %}
+
+{% include "partials/_footer.html.twig" %}
+<script src=" {{asset('js/bootstrap.js')}} " ></script>
+</body>
+</html>

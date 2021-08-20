@@ -41,7 +41,7 @@ class Character
     private $bio;
 
     /**
-     * @ORM\Column(type="integer", nullable=true)
+     * @ORM\Column(type="integer")
      */
     private $age;
 
@@ -49,6 +49,11 @@ class Character
      * @ORM\ManyToMany(targetEntity=TvShow::class, inversedBy="characters")
      */
     private $tvshows;
+
+    /**
+     * @ORM\Column(type="string", length=255)
+     */
+    private $truename;
 
     public function __construct()
     {
@@ -140,6 +145,18 @@ class Character
     public function removeTvshow(TvShow $tvshow): self
     {
         $this->tvshows->removeElement($tvshow);
+
+        return $this;
+    }
+
+    public function getTruename(): ?string
+    {
+        return $this->truename;
+    }
+
+    public function setTruename(string $truename): self
+    {
+        $this->truename = $truename;
 
         return $this;
     }
