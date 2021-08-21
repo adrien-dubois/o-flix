@@ -1,4 +1,5 @@
 {% extends "base.html.twig" %}
+{% import "macro/macro.html.twig" as macro %}
 {% block title %}
    {{show.title}}  - {{parent()}}
 {% endblock %}
@@ -11,7 +12,7 @@
             <div class="row py-lg-5">
                 <div class="col-lg-12 col-md-8 mx-auto">
                     <h1 class="fw-light"> {{show.title}} </h1>
-                    <img src=" {{asset('img/' ~ show.image)}} " alt="" height="400">
+                    <img src=" {{asset('img/' ~ show.image)}} " alt="" height="400" class="img-fluid">
                     <p class="lead text-muted">
                     {% for season in seasons %}
                         <a href="#"><span class="badge bg-secondary"> Saison {{season.seasonNumber}} </span></a>
@@ -25,55 +26,50 @@
         <div class="py-2 bg-light ">
             <div class="container ">
                 <div class="accordion mx-auto " id="synopsis" >
-                <div class="accordion-item ">
-                    <h2 style="text-align: center;" class="accordion-header mx-auto " id="panelsStayOpen-headingOne">
-                    <button class="accordion-button bg-light" type="button" data-bs-toggle="collapse" data-bs-target="#panelsStayOpen-collapseOne" aria-expanded="true" aria-controls="panelsStayOpen-collapseOne">
-                      <strong>Synopsis </strong>
-                    </button>
-                    </h2>
-                    <div id="panelsStayOpen-collapseOne" class="accordion-collapse collapse show " aria-labelledby="panelsStayOpen-headingOne">
-                    <div class="accordion-body">
-                        {{show.synopsis}}
-                    </div>
-                    </div>
-                </div>
-                <div class="accordion-item">
-                    <h2 class="accordion-header" id="panelsStayOpen-headingTwo">
-                    <button class="accordion-button collapsed bg-light" type="button" data-bs-toggle="collapse" data-bs-target="#panelsStayOpen-collapseTwo" aria-expanded="false" aria-controls="panelsStayOpen-collapseTwo">
-                        <strong>Personnages </strong>
-                    </button>
-                    </h2>
-                    <div id="panelsStayOpen-collapseTwo" class="accordion-collapse collapse" aria-labelledby="panelsStayOpen-headingTwo">
-                    <div class="accordion-body">
-                    <ul id="charalist">
-
-                        {% for character in show.characters %}
-                        <li>
-                            {# CANVAS LINK #}
-                            <a type="button" data-bs-toggle="offcanvas" data-bs-target="#offcanvasRight" aria-controls="offcanvasRight"> 
-
-                            {{character.firstname}} {{character.lastname}}
-                            </a>
-                        </li>
-                        <br>
-                        {% endfor %}
-                    </ul>
-
-                            {# CANVAS PART #}
-                            <div class="offcanvas offcanvas-end" tabindex="-1" id="offcanvasRight" aria-labelledby="offcanvasRightLabel">
-                                <div class="offcanvas-header">
-                                    <h5 id="offcanvasRightLabel">Personnage</h5>
-                                    <button type="button" class="btn-close text-reset" data-bs-dismiss="offcanvas" aria-label="Close"></button>
-                                </div>
-                                <div class="offcanvas-body">
-                            {# TEXT CANVAS #}
+                    <div class="accordion-item ">
+                        <h2 style="text-align: center;" class="accordion-header mx-auto " id="panelsStayOpen-headingOne">
+                        <button class="accordion-button bg-light" type="button" data-bs-toggle="collapse" data-bs-target="#panelsStayOpen-collapseOne" aria-expanded="true" aria-controls="panelsStayOpen-collapseOne">
+                        <strong>Synopsis </strong>
+                        </button>
+                        </h2>
+                            <div id="panelsStayOpen-collapseOne" class="accordion-collapse collapse show " aria-labelledby="panelsStayOpen-headingOne">
+                                <div class="accordion-body">
+                                    {{show.synopsis}}
                                 </div>
                             </div>
                     </div>
+                    <div class="accordion-item">
+                        <h2 class="accordion-header" id="panelsStayOpen-headingTwo">
+                        <button class="accordion-button collapsed bg-light" type="button" data-bs-toggle="collapse" data-bs-target="#panelsStayOpen-collapseTwo" aria-expanded="false" aria-controls="panelsStayOpen-collapseTwo">
+                            <strong>Personnages </strong>
+                        </button>
+                        </h2>
+                        <div id="panelsStayOpen-collapseTwo" class="accordion-collapse collapse" aria-labelledby="panelsStayOpen-headingTwo">
+                            <div class="accordion-body">
+                                <ul id="charalist">
+
+                                    {% for key, character in show.characters %}
+                                    <li>
+                                        {# MODAL LINK #}
+                                        <a href="#" data-bs-toggle="modal" data-bs-target="#exampleModal{{key}}" >
+
+                                        {{character.firstname}} {{character.lastname}}
+                                        </a>
+                                        {{macro.perso_modal(key, character.firstname)}}
+
+                                    </li>
+                                    <br>
+                                    {% endfor %}
+                                    
+                                </ul>
+
+                            </div>
+                        </div>
                     </div>
+                    
                 </div>
             </div>
-        {# CANVAS #}
+        </div>
 
     </main>
 

@@ -2,11 +2,12 @@
 
 namespace App\Controller;
 
-
+use App\Repository\CharacterRepository;
 use App\Repository\SeasonRepository;
 use App\Repository\TvShowRepository;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
 use Symfony\Component\HttpFoundation\Response;
+use Symfony\Component\HttpFoundation\Session\SessionInterface;
 use Symfony\Component\Routing\Annotation\Route;
 
 class TvShowController extends AbstractController
@@ -35,7 +36,7 @@ class TvShowController extends AbstractController
      * @param TvShowRepository $tvShowRepository
      * @return Response
      */
-    public function singleShow($id, TvShowRepository $tvShowRepository, SeasonRepository $seasonRepository): Response
+    public function singleShow($id, TvShowRepository $tvShowRepository, SeasonRepository $seasonRepository, SessionInterface $session): Response
     {
 
         
@@ -44,6 +45,11 @@ class TvShowController extends AbstractController
         
         // Get seasons in relation with the good show
         $season = $seasonRepository->findBy(['tvShow' => $id]);
+
+        $perso = $session->get('perso');
+        if(empty($perso)){
+            $perso['firstname'] = "Pas de personnage séléctionné";
+        }
         
         
         // If someone ask an ID doesn't exists, send a 404
@@ -55,8 +61,27 @@ class TvShowController extends AbstractController
         return $this->render('tv_show/single.html.twig',[
             'show'=>$show,
             'seasons'=>$season,
+            'perso'=>$perso,
         ]);
     }
+
+
+        /**
+         * Undocumented function
+         *
+         * @Route("/tvshow/canvas/{id}", name="show_canvas", methods={"GET"})
+         * 
+         * @return void
+         */
+        public function canvas($id, CharacterRepository $characterRepository, SessionInterface $session)
+        {
+            $chara = $characterRepository->find($id);
+            // dd($chara);
+
+            $session->set('perso', $chara);
+
+            return $this->render('partials/_modal.html.twig');
+        }
 
 
     /**
@@ -72,3 +97,4 @@ class TvShowController extends AbstractController
     }
 
 }
+ 
