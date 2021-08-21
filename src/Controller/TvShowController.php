@@ -65,25 +65,6 @@ class TvShowController extends AbstractController
         ]);
     }
 
-
-        /**
-         * Undocumented function
-         *
-         * @Route("/tvshow/canvas/{id}", name="show_canvas", methods={"GET"})
-         * 
-         * @return void
-         */
-        public function canvas($id, CharacterRepository $characterRepository, SessionInterface $session)
-        {
-            $chara = $characterRepository->find($id);
-            // dd($chara);
-
-            $session->set('perso', $chara);
-
-            return $this->render('partials/_modal.html.twig');
-        }
-
-
     /**
      * Method displaying favorites page
      * 

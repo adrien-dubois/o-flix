@@ -51,11 +51,11 @@
                                     {% for key, character in show.characters %}
                                     <li>
                                         {# MODAL LINK #}
-                                        <a href="#" data-bs-toggle="modal" data-bs-target="#exampleModal{{key}}" >
+                                        <a href="#" data-bs-toggle="modal" data-bs-target="#exampleModal{{key}}" style="text-decoration: none; color: black;">
 
                                         {{character.firstname}} {{character.lastname}}
                                         </a>
-                                        {{macro.perso_modal(key, character.firstname)}}
+                                        {{macro.perso_modal(key, character)}}
 
                                     </li>
                                     <br>

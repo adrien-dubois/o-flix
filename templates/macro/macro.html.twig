@@ -1,17 +1,25 @@
-{%- macro perso_modal(key, firstname) -%}
+{%- macro perso_modal(key, character) -%}
 <div class="modal fade" id="exampleModal{{key}}" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
   <div class="modal-dialog">
     <div class="modal-content">
       <div class="modal-header">
-        <h5 class="modal-title" id="exampleModalLabel">Modal title</h5>
+        <h5 class="modal-title" id="exampleModalLabel">{{character.firstname}} {{character.lastname}}</h5>
         <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
       </div>
       <div class="modal-body">
-        {{firstname}}
+        <span class="true">{{character.firstname}} {{character.lastname}}</span>,
+        {#AGE  #}
+        {% if character.age is null %} {% else %}{{character.age}} ans ,{% endif %}
+        {# VRAI NOM #}
+        {% if character.gender is same as 'Homme' %}joué par{% endif %}
+        {% if character.gender is same as 'Femme' %}jouée par {% endif %} {{character.truename}} <br>
+        {# BIOGRAPHIE #}
+        <span class="true">Biographie :</span> <br>
+        {{character.bio}}
+        
       </div>
       <div class="modal-footer">
-        <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Close</button>
-        <button type="button" class="btn btn-primary">Save changes</button>
+        <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Fermer</button>
       </div>
     </div>
   </div>

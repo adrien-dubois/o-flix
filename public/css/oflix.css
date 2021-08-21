@@ -43,3 +43,9 @@ body {
 #charalist{
     list-style: none;
 }
+
+.true{
+    font-style: italic;
+    font-weight: bold;
+
+}
