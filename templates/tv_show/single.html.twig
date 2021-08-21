@@ -23,12 +23,14 @@
             
         </section>
 
+        {# ACCORDION FOR SYNOPSIS & CHARACTERS #}
         <div class="py-2 bg-light ">
             <div class="container ">
                 <div class="accordion mx-auto " id="synopsis" >
                     <div class="accordion-item ">
                         <h2 style="text-align: center;" class="accordion-header mx-auto " id="panelsStayOpen-headingOne">
                         <button class="accordion-button bg-light" type="button" data-bs-toggle="collapse" data-bs-target="#panelsStayOpen-collapseOne" aria-expanded="true" aria-controls="panelsStayOpen-collapseOne">
+                        {# SYNOPSIS PART #}
                         <strong>Synopsis </strong>
                         </button>
                         </h2>
@@ -41,6 +43,7 @@
                     <div class="accordion-item">
                         <h2 class="accordion-header" id="panelsStayOpen-headingTwo">
                         <button class="accordion-button collapsed bg-light" type="button" data-bs-toggle="collapse" data-bs-target="#panelsStayOpen-collapseTwo" aria-expanded="false" aria-controls="panelsStayOpen-collapseTwo">
+                        {# CHARACTERS PART #}
                             <strong>Personnages </strong>
                         </button>
                         </h2>
@@ -48,6 +51,7 @@
                             <div class="accordion-body">
                                 <ul id="charalist">
 
+                                {# MODAL PART TO DYNAMISE BIOGRAPHY #}
                                     {% for key, character in show.characters %}
                                     <li>
                                         {# MODAL LINK #}

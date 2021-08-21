@@ -2,12 +2,12 @@
 
 namespace App\Controller;
 
-use App\Repository\CharacterRepository;
+use App\Entity\TvShow;
 use App\Repository\SeasonRepository;
 use App\Repository\TvShowRepository;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
+use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\Response;
-use Symfony\Component\HttpFoundation\Session\SessionInterface;
 use Symfony\Component\Routing\Annotation\Route;
 
 class TvShowController extends AbstractController
@@ -36,21 +36,14 @@ class TvShowController extends AbstractController
      * @param TvShowRepository $tvShowRepository
      * @return Response
      */
-    public function singleShow($id, TvShowRepository $tvShowRepository, SeasonRepository $seasonRepository, SessionInterface $session): Response
+    public function singleShow($id, TvShowRepository $tvShowRepository, SeasonRepository $seasonRepository): Response
     {
-
-        
+    
         // Get the right serie with the asked ID
         $show = $tvShowRepository->find($id);
         
         // Get seasons in relation with the good show
         $season = $seasonRepository->findBy(['tvShow' => $id]);
-
-        $perso = $session->get('perso');
-        if(empty($perso)){
-            $perso['firstname'] = "Pas de personnage séléctionné";
-        }
-        
         
         // If someone ask an ID doesn't exists, send a 404
         if(!$show){
@@ -61,9 +54,40 @@ class TvShowController extends AbstractController
         return $this->render('tv_show/single.html.twig',[
             'show'=>$show,
             'seasons'=>$season,
-            'perso'=>$perso,
         ]);
     }
+
+
+    /**
+     * Method adding likes to the choosen tv show
+     *
+     * @Route("/tvshow/like/{id}", name="show_like", requirements={"id"="\d+"})
+     * 
+     * @param [int] $id
+     * @return Redirect
+     */
+    public function addLike($id, Request $request)
+    {
+        // Get the tv show that we click on the thumbs up with
+        $like = $this->getDoctrine()->getRepository(TvShow::class);
+        $like = $like->find($id);
+
+        // Testing if the serie exists
+        if(!$like){
+            throw $this->createNotFoundException('La série choisie n\'existe pas.' );
+        }
+
+        // Then increment plus one on the right Tv Show
+        $likeAdd = $like->setNbLikes($like->getNbLikes() +1) ;
+        
+        // Call the manager and update it before redirect to the same page automaticly
+        $em = $this->getDoctrine()->getManager();
+        $em->persist($likeAdd);
+        $em->flush();
+
+        return $this->redirect($request->server->get('HTTP_REFERER'));
+    }
+
 
     /**
      * Method displaying favorites page

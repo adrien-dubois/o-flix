@@ -34,7 +34,9 @@
                                         </div>
                                         <small class="text-muted">
                                             {{tvshow.nbLikes}}
-                                            <img src=" {{asset('img/like.svg')}} " alt="" class="like">
+                                            <a href="{{path('show_like', {id: tvshow.id})}}">
+                                            <img src="{{asset('img/like.svg')}}" alt="thumbs up" class="like">
+                                        </a>
                                         </small>
                                     </div>
                                 </div>
