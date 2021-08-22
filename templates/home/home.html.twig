@@ -29,7 +29,7 @@
                 {% for show in shows %}
                     <div class="col">
                         <div class="card shadow-sm">
-                            <img class="img-fluid" src="{{ asset('img/')~ show.image }}" alt="" style="height: 225px;">
+                            <a href="{{path('show_single', {id: show.id})}}"><img class="img-fluid" src="{{ asset('img/')~ show.image }}" alt="" style="height: 225px;"></a>
                             <div class="card-body">
                                 <p class="card-text"> {{ show.synopsis }} </p>
                                 <div class="d-flex justify-content-between align-items-center">

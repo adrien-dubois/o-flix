@@ -24,7 +24,7 @@
                     {% for tvshow in tvshows %}
                         <div class="col">
                             <div class="card shadow-sm">
-                                <img src=" {{asset('img/') ~ tvshow.image}} " alt="" class="img-fluid">
+                                <a href="{{path('show_single', {id: tvshow.id})}}"><img src=" {{asset('img/') ~ tvshow.image}} " alt="" class="img-fluid"></a>
                                 <div class="card-body">
                                     <p class="card-text"> {{tvshow.synopsis}} </p>
                                     <div class="d-flex justify-content-between align-items-center">
