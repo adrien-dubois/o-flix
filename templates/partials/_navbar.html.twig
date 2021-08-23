@@ -37,8 +37,8 @@
                             <a class="btn btn-danger" aria-current="page" href=" {{path ('appuser_login')}} ">Se connecter</a>
                         </li>
                     </ul>
-                    <form class="d-flex m">
-                        <input class="form-control me-2" type="search" placeholder="Ex : The mandalorian" aria-label="Search">
+                    <form class="d-flex m" action=" {{path('search_index')}} ">
+                        <input class="form-control me-2" type="search" placeholder="Ex : The mandalorian" aria-label="Search" name="q">
                         <button class="btn btn-outline-secondary" type="submit">GO</button>
                     </form>
                 </div>

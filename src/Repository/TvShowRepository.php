@@ -19,6 +19,44 @@ class TvShowRepository extends ServiceEntityRepository
         parent::__construct($registry, TvShow::class);
     }
 
+    /**
+     * Make a TV Show research with $title variable
+     *
+     * Version 1 : Query Builder
+     * 
+     * @param $title
+     * @return tvShow[]
+     */
+    public function searchTvShowByTitle($title)
+    {
+        return $this->createQueryBuilder('tvshow')
+            ->where('tvshow.title Like :title')
+            ->setParameter(':title', "%$title%" )
+            ->getQuery()
+            ->getResult();
+    }
+
+    /**
+     * Version 2 with DQL method
+     *
+     * @param $title
+     * @return TvShow[]
+     */
+    public function searchTvShowByTitleDQL($title)
+    {
+        $entityManager = $this->getEntityManager();
+
+        $query = $entityManager->createQuery(
+
+            'SELECT tv
+            FROM App\Entity\TvShow tv
+            WHERE tv.title LIKE :title'
+        )->setParameter(':title', "%$title%");
+
+        return $query->getResult();
+    }
+
+
     // /**
     //  * @return TvShow[] Returns an array of TvShow objects
     //  */

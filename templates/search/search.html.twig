@@ -1,0 +1,28 @@
+{% extends 'base.html.twig' %}
+
+{% block title %}
+    Résultat de la recherche - {{parent()}}
+{% endblock %}
+
+{% block body %}
+
+<main>
+<section class="py-5 text-center container">
+    <div class="row py-lg-5">
+        <div class="col-lg-6 col-md-8 mx-auto">
+            
+            <h1 class="fw-light">Résultat(s) pour la recherche de <span class="true"> "{{query}}"</span></h1>
+            <br>
+            
+                <ul class="charalist search">
+                    {% for result in search %}
+                       <a href="{{path('show_single', {id: result.id})}}" class="listLink"> <li> {{result.title}} </li></a>
+                    {% else %}
+                        <p class="lead text-muted">Pas de résultat pour cette recherche</p>
+                    {% endfor %}
+                </ul>
+            </div>
+        </div>
+    </section>
+</main>
+{% endblock %}

@@ -40,12 +40,20 @@ body {
     text-shadow: rgba(0, 0, 0, 0.445);
 }
 
-#charalist{
+.charalist{
     list-style: none;
+}
+
+.search{
+    float: left;
 }
 
 .true{
     font-style: italic;
     font-weight: bold;
+}
 
+.listLink{
+    text-decoration: none;
+    color: black;
 }
