@@ -21,8 +21,10 @@ class SearchController extends AbstractController
     public function index(Request $request, TvShowRepository $tvShowRepository): Response
     {
 
+        // Get the search request with the get method
         $query = $request->query->get('q');
 
+        // Send it to the method that is in the repository
         $results = $tvShowRepository->searchTvShowByTitle($query);
         // dd($results);
 
