@@ -44,6 +44,8 @@ class TvShowController extends AbstractController
         
         // Get seasons in relation with the good show
         $season = $seasonRepository->findBy(['tvShow' => $id]);
+
+        dump($show);
         
         // If someone ask an ID doesn't exists, send a 404
         if(!$show){

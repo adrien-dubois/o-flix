@@ -17,6 +17,10 @@
                     {% for season in seasons %}
                         <a href="#"><span class="badge bg-secondary"> Saison {{season.seasonNumber}} </span></a>
                     {% endfor %}
+                    <br>
+                    {% for category in show.categories %}
+                        <a href="#"><span class="badge bg-dark my-2"> {{category.name}} </span></a>
+                    {% endfor %}
                     </p>
                 </div>
             </div>
