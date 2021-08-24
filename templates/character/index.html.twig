@@ -1,0 +1,27 @@
+{% extends 'base.html.twig' %}
+
+{% block title %}Hello CharacterController!{% endblock %}
+
+{% block body %}
+
+<main>
+        <section class="py-5 container">
+            <div class="row py-lg-5">
+                <div class="col-lg-6 col-md-8 mx-auto">
+                    <h2>Personnages</h2>
+                        <p>
+                        <ul>
+                            {% for character in characters %}
+                                
+                            <li> {{character.firstname}} {{character.lastname}} </li>
+                            {% endfor %}
+                        </ul>
+                        </p>
+                </div>
+            </div>
+        </section>
+</main>
+
+
+
+{% endblock %}

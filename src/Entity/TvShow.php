@@ -3,6 +3,7 @@
 namespace App\Entity;
 
 use App\Repository\TvShowRepository;
+use DateTimeImmutable;
 use Doctrine\Common\Collections\ArrayCollection;
 use Doctrine\Common\Collections\Collection;
 use Doctrine\ORM\Mapping as ORM;
@@ -74,6 +75,7 @@ class TvShow
         $this->season = new ArrayCollection();
         $this->characters = new ArrayCollection();
         $this->categories = new ArrayCollection();
+        $this->setCreatedAt(new DateTimeImmutable());
     }
 
     public function getId(): ?int
