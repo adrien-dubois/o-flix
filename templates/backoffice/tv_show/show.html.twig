@@ -1,6 +1,6 @@
 {% extends 'base.html.twig' %}
 
-{% block title %}TvShow{% endblock %}
+{% block title %} {{ tv_show.title }} - Backoffice - {{parent()}} {% endblock %}
 
 {% block body %}
     <section class="py-5 text-center container">

@@ -7,6 +7,7 @@ use DateTimeImmutable;
 use Doctrine\Common\Collections\ArrayCollection;
 use Doctrine\Common\Collections\Collection;
 use Doctrine\ORM\Mapping as ORM;
+use Symfony\Component\Validator\Constraints as Assert;
 
 /**
  * @ORM\Entity(repositoryClass=TvShowRepository::class)
@@ -22,26 +23,31 @@ class TvShow
 
     /**
      * @ORM\Column(type="string", length=255)
+     * @Assert\NotBlank(message="Ajouter un titre")
      */
     private $title;
 
     /**
      * @ORM\Column(type="text")
+     * @Assert\NotBlank(message="Ajouter un synopsis")
      */
     private $synopsis;
 
     /**
      * @ORM\Column(type="string", length=255)
+     * Ajouter une image
      */
     private $image;
 
     /**
      * @ORM\Column(type="integer", nullable=true)
+     * 
      */
     private $nbLikes;
 
     /**
      * @ORM\Column(type="datetime_immutable", nullable=true)
+     * @Assert\NotBlank(message="Date de publication")
      */
     private $publishedAt;
 
@@ -62,11 +68,14 @@ class TvShow
 
     /**
      * @ORM\ManyToMany(targetEntity=Character::class, mappedBy="tvshows")
+     * 
      */
     private $characters;
 
     /**
      * @ORM\ManyToMany(targetEntity=Category::class, inversedBy="tvShows")
+     * @Assert\NotBlank(message="Ajouter des catégories")
+     * 
      */
     private $categories;
 

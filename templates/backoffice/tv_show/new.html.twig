@@ -1,11 +1,24 @@
 {% extends 'base.html.twig' %}
 
-{% block title %}New TvShow{% endblock %}
+{% block title %}
+    Ajouter une série - Backoffice - {{parent()}} 
+{% endblock %}
 
 {% block body %}
-    <h1>Create new TvShow</h1>
+<section class="py-5 text-center container">
+    <div class="row py-lg-5">
+        <div class="col-lg-6 col-md-8 mx-auto">
+            <h1 class="fw-light">Ajouter une série télé</h1>
+        </div>
+    </div>
+</section>
 
-    {{ include('backoffice_tv_show/_form.html.twig') }}
+<div class="input-group-sm mb-3 mx-auto text-center" style="width: 600px;">
+    {{ include('backoffice/tv_show/_form.html.twig') }}
 
-    <a href="{{ path('backoffice_tv_show_index') }}">back to list</a>
+
+    <a class="card-link badge rounded-pill bg-secondary mx-4" style="text-decoration: none; color: white;" href="{{ path('backoffice_tv_show_index') }}">Retour à la liste</a>
+
+    </div>
+</main>
 {% endblock %}
