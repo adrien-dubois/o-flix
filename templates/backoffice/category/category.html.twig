@@ -1,0 +1,35 @@
+{% extends 'base.html.twig' %}
+
+{% block title %}Category Backoffice - {{parent()}} {% endblock %}
+
+{% block body %}
+
+        <section class="py-5 text-center container">
+            <div class="row py-lg-5">
+                <div class="col-lg-6 col-md-8 mx-auto">
+                    <h1 class="fw-light">Dernières séries</h1>
+                </div>
+            </div>
+        </section>
+
+
+        <ul class="list-group list-group-flush mx-auto" style="width: 600px;">
+            {% for category in categories %}
+                <li class="list-group-item">{{category.name}} 
+                
+                {# DELETE #}
+                <a style="text-decoration: none; color: white; float: right;" href="{{path('backoffice_category_delete',{ id: category.id})}}" class="card-link badge rounded-pill bg-danger mx-2">Suppr.</a>
+
+                {# EDIT #}
+                <a style="text-decoration: none; color: white; float: right" href="{{path('backoffice_category_update',{ id: category.id})}}" class="card-link badge rounded-pill bg-success">Edit</a>
+                
+                </li>
+            {% endfor %}
+        </ul>
+
+        <br>
+        <a href=" {{ path('backoffice_category_add') }} " class="btn btn-secondary mx-4">Ajouter une catégorie</a>
+
+    </main>
+
+{% endblock %}
