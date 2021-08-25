@@ -3,11 +3,20 @@
 {% block title %}Edit TvShow{% endblock %}
 
 {% block body %}
-    <h1>Edit TvShow</h1>
+<section class="py-5 text-center container">
+    <div class="row py-lg-5">
+        <div class="col-lg-6 col-md-8 mx-auto">
+            <h1 class="fw-light">Éditer une série télé</h1>
+        </div>
+    </div>
+</section>
 
-    {{ include('backoffice_tv_show/_form.html.twig', {'button_label': 'Update'}) }}
+    <div class="input-group-sm mb-3 mx-auto text-center" style="width: 600px;">
+        {{ include('backoffice/tv_show/_form.html.twig', {'button_label': 'Update'}) }}
 
-    <a href="{{ path('backoffice_tv_show_index') }}">back to list</a>
+            <a class="card-link badge rounded-pill bg-secondary mx-4" style="text-decoration: none; color: white;" href="{{ path('backoffice_tv_show_index') }}">Retour à la liste</a>
 
-    {{ include('backoffice_tv_show/_delete_form.html.twig') }}
+        {{ include('backoffice/tv_show/_delete_form.html.twig') }}
+    </div>
+</main>
 {% endblock %}

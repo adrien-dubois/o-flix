@@ -68,6 +68,15 @@ class Character
         $this->tvshows = new ArrayCollection();
     }
 
+    public function __toString()
+{
+    return $this->firstname;
+}
+    public function getFullName()
+    {
+        return $this->firstname . ' ' . $this->lastname;
+    }
+
     public function getId(): ?int
     {
         return $this->id;

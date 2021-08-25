@@ -31,12 +31,14 @@
                         <li class="nav-item">
                             <a class="nav-link {{(currentRoute == 'show_fav')? 'active' }}" href="{{path ('show_fav')}}">Ma liste</a>
                         </li>
+
+                        {# BACKOFFICE PART #}
                         <li class="nav-item dropdown">
                             <a class="nav-link dropdown-toggle" href=" " id="navbarDropdown" role="button" data-bs-toggle="dropdown" aria-expanded="false">
                                 Backoffice
                             </a>
-                            <ul class="dropdown-menu" aria-labelledby="navbarDropdown">
-                                <li><a class="dropdown-item" href=" {{path('backoffice_tv_show_index')}}">Tv Shows</a></li>
+                            <ul class="dropdown-menu dropdown-menu-dark" aria-labelledby="navbarDropdown">
+                                <li><a class="dropdown-item {{(currentRoute == 'backoffice_tv_show_index')? 'active' }}" href=" {{path('backoffice_tv_show_index')}}">Tv Shows</a></li>
                                 <li><a class="dropdown-item {{(currentRoute == 'backoffice_category_home')? 'active' }}" href=" {{path ('backoffice_category_home') }} ">Catégories</a></li>
                                 <li><a class="dropdown-item {{(currentRoute == 'backoffice_character_home')? 'active' }}" href="{{path ('backoffice_character_home') }}">Personnages</a></li>
                             </ul>
