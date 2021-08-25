@@ -1,0 +1,13 @@
+{% extends 'base.html.twig' %}
+
+{% block title %}Edit TvShow{% endblock %}
+
+{% block body %}
+    <h1>Edit TvShow</h1>
+
+    {{ include('backoffice_tv_show/_form.html.twig', {'button_label': 'Update'}) }}
+
+    <a href="{{ path('backoffice_tv_show_index') }}">back to list</a>
+
+    {{ include('backoffice_tv_show/_delete_form.html.twig') }}
+{% endblock %}

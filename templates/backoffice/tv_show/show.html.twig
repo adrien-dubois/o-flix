@@ -1,0 +1,50 @@
+{% extends 'base.html.twig' %}
+
+{% block title %}TvShow{% endblock %}
+
+{% block body %}
+    <h1>TvShow</h1>
+
+    <table class="table">
+        <tbody>
+            <tr>
+                <th>Id</th>
+                <td>{{ tv_show.id }}</td>
+            </tr>
+            <tr>
+                <th>Title</th>
+                <td>{{ tv_show.title }}</td>
+            </tr>
+            <tr>
+                <th>Synopsis</th>
+                <td>{{ tv_show.synopsis }}</td>
+            </tr>
+            <tr>
+                <th>Image</th>
+                <td>{{ tv_show.image }}</td>
+            </tr>
+            <tr>
+                <th>NbLikes</th>
+                <td>{{ tv_show.nbLikes }}</td>
+            </tr>
+            <tr>
+                <th>PublishedAt</th>
+                <td>{{ tv_show.publishedAt ? tv_show.publishedAt|date('Y-m-d H:i:s') : '' }}</td>
+            </tr>
+            <tr>
+                <th>CreatedAt</th>
+                <td>{{ tv_show.createdAt ? tv_show.createdAt|date('Y-m-d H:i:s') : '' }}</td>
+            </tr>
+            <tr>
+                <th>UpdatedAt</th>
+                <td>{{ tv_show.updatedAt ? tv_show.updatedAt|date('Y-m-d H:i:s') : '' }}</td>
+            </tr>
+        </tbody>
+    </table>
+
+    <a href="{{ path('backoffice_tv_show_index') }}">back to list</a>
+
+    <a href="{{ path('backoffice_tv_show_edit', {'id': tv_show.id}) }}">edit</a>
+
+    {{ include('backoffice_tv_show/_delete_form.html.twig') }}
+{% endblock %}
