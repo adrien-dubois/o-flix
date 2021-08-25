@@ -1,0 +1,35 @@
+{% extends 'base.html.twig' %}
+
+{% block title %}Liste personnages - Backoffice - {{parent()}} {% endblock %}
+
+{% block body %}
+
+        <section class="py-5 text-center container">
+            <div class="row py-lg-5">
+                <div class="col-lg-6 col-md-8 mx-auto">
+                    <h1 class="fw-light">Liste des personnages</h1>
+                </div>
+            </div>
+        </section>
+
+
+        <ul class="list-group list-group-flush mx-auto" style="width: 600px;">
+            {% for character in characters %}
+                <li class="list-group-item">{{character.lastname}} {{character.firstname}} 
+                
+                {# DELETE #}
+                <a style="text-decoration: none; color: white; float: right;" href="{{path('backoffice_character_delete',{ id: character.id})}}" class="card-link badge rounded-pill bg-danger mx-2">Suppr.</a>
+
+                {# EDIT #}
+                <a style="text-decoration: none; color: white; float: right" href="{{path('backoffice_character_update',{ id: character.id})}}" class="card-link badge rounded-pill bg-success">Edit</a>
+                
+                </li>
+            {% endfor %}
+        </ul>
+
+        <br>
+        <a href=" {{ path('backoffice_character_add') }} " class="btn btn-secondary mx-4">Ajouter un personnage</a>
+
+    </main>
+
+{% endblock %}
