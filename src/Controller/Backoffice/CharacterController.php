@@ -25,7 +25,7 @@ class CharacterController extends AbstractController
      */
     public function index(CharacterRepository $characterRepository): Response
     {
-        return $this->render('backoffice/character/index.html.twig', [
+        return $this->render('backoffice/character/character.html.twig', [
             'characters' => $characterRepository->findAll(),
         ]);
     }
@@ -77,7 +77,7 @@ class CharacterController extends AbstractController
      */
     public function update($id, Request $request, Character $character)
     {
-        $form = $this->createForm(Character::class, $character);
+        $form = $this->createForm(CharacterType::class, $character);
         $form->handleRequest($request);
 
         if($form->isSubmitted() && $form->isValid()){
@@ -92,7 +92,7 @@ class CharacterController extends AbstractController
         }
 
         return $this->render('backoffice/character/update.html.twig',[
-            'category' => $character,
+            'character' => $character,
             'formView'=>$form->createView(),
         ]);
 

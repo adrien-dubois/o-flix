@@ -6,6 +6,7 @@ use App\Entity\Character;
 use App\Entity\TvShow;
 use Symfony\Bridge\Doctrine\Form\Type\EntityType;
 use Symfony\Component\Form\AbstractType;
+use Symfony\Component\Form\Extension\Core\Type\ChoiceType;
 use Symfony\Component\Form\Extension\Core\Type\NumberType;
 use Symfony\Component\Form\Extension\Core\Type\SubmitType;
 use Symfony\Component\Form\Extension\Core\Type\TextareaType;
@@ -29,17 +30,30 @@ class CharacterType extends AbstractType
                     'placeholder'=>'Nom'
                 ]
             ])
-            ->add('gender')
+            ->add('gender', ChoiceType::class,[
+                'label' => 'Sexe du personnage',
+                'choices' =>[
+                    'Homme'=>'Homme',
+                    'Femme'=>'Femme'
+                ]
+            ])
             ->add('bio', TextareaType::class)
-            ->add('age',NumberType::class)
+            ->add('age',null, [
+                'label'=> 'Âge',
+                'attr'=>[
+                    'type'=> 'number',
+                    'placeholder'=>'Âge du personnage'
+                ]
+            ])
             ->add('truename', null, [
                 'label'=>'Nom/Prénom de l\'acteur'
             ])
             ->add('tvshows', EntityType::class,[
                 'class'=>TvShow::class,
-                'label'=>'Série TV du personnage',
-                'choice_label'=>'title',
-                'multiple'=> true,
+                'label'=> 'Choisir la série télé de votre personnage',
+                'choice_label' => 'title',
+                'multiple'=>true,
+                    
             ])
             ->add('submit', SubmitType::class,[
                 'label'=>'Envoyer',
