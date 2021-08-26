@@ -1,10 +1,10 @@
-{% extends 'base.html.twig' %}
+{% extends 'backoffice/layout.html.twig' %}
 
 {% block title %}
     Modifier série - Backoffice - {{parent()}} 
 {% endblock %}
 
-{% block body %}
+{% block content %}
 <section class="py-5 text-center container">
     <div class="row py-lg-5">
         <div class="col-lg-6 col-md-8 mx-auto">
@@ -16,9 +16,9 @@
     <div class="input-group-sm mb-3 mx-auto text-center" style="width: 600px;">
         {{ include('backoffice/tv_show/_form.html.twig', {'button_label': 'Update'}) }}
 
-            <a class="card-link badge rounded-pill bg-secondary mx-4" style="text-decoration: none; color: white;" href="{{ path('backoffice_tv_show_index') }}">Retour à la liste</a>
-
         {{ include('backoffice/tv_show/_delete_form.html.twig') }}
+
+            <a class="btn btn-secondary mx-4 my-2" style="text-decoration: none; color: white;" href="{{ path('backoffice_tv_show_index') }}">Retour à la liste</a>
     </div>
 </main>
 {% endblock %}

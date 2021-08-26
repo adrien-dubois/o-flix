@@ -1,8 +1,8 @@
-{% extends 'base.html.twig' %}
+{% extends 'backoffice/layout.html.twig' %}
 
 {% block title %} {{ tv_show.title }} - Backoffice - {{parent()}} {% endblock %}
 
-{% block body %}
+{% block content %}
     <section class="py-5 text-center container">
             <div class="row py-lg-5">
                 <div class="col-lg-6 col-md-8 mx-auto">
@@ -13,7 +13,7 @@
 
 <div class="container">
 
-    <table class="table  list-group-flush mx-auto">
+    <table style="color: white; width: 800px;" class="table  list-group-flush mx-auto">
         <tbody>
             <tr>
                 <th>Id</th>
@@ -48,12 +48,13 @@
                 <td>{{ tv_show.updatedAt ? tv_show.updatedAt|date('Y-m-d H:i:s') : '' }}</td>
             </tr>
         </tbody>
+    <a style="text-decoration: none; color: white;" href="{{ path('backoffice_tv_show_edit', {'id': tv_show.id}) }}" class="card-link badge rounded-pill bg-success mx-2">Edit</a>
+   
+    {{ include('backoffice/tv_show/_delete_form.html.twig') }}
     </table>
 
-    <a style="text-decoration: none; color: white;" href="{{ path('backoffice_tv_show_index') }}" class="card-link badge rounded-pill bg-secondary">Retour à la liste</a> <br>
-    <a style="text-decoration: none; color: white;" href="{{ path('backoffice_tv_show_edit', {'id': tv_show.id}) }}" class="card-link badge rounded-pill bg-success">Edit</a>
-   
 
-    {{ include('backoffice/tv_show/_delete_form.html.twig') }}
+    <a style="text-decoration: none; color: white;" href="{{ path('backoffice_tv_show_index') }}" class="btn btn-secondary mx-4 my-2">Retour à la liste</a> 
+
 </div>
 {% endblock %}
