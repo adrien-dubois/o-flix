@@ -1,27 +1,25 @@
-{% extends "base.html.twig" %}
+{% extends "backoffice/layout.html.twig" %}
 {% block title %}
     Modifier personnage - Backoffice - {{parent()}}
 {% endblock %}
 
-{% block body %}
-
-
-        <section class="py-5 text-center container">
+{% block content %}
+        <section class="container">
             <div class="row py-lg-5">
-                <div class="col-lg-6 col-md-8 mx-auto">
+                <div class="col-lg-6 col-md-8">
                     <h1 class="fw-light">Modifier un personnage</h1>
                 </div>
             </div>
         </section>
 
-        <div class="input-group-sm mb-3 mx-auto text-center" style="width: 450px;">
+        <div class="input-group-sm mb-3" style="width: 450px;">
             {{ form_start(formView, {'attr': {'novalidate': 'novalidate'}}) }}
    
             
             {{ form_end(formView) }}
         </div>  
 
-         <a href=" {{ path('backoffice_character_home') }} " class="btn btn-secondary mx-4">Retour à la liste</a>  
+         <a href=" {{ path('backoffice_character_home') }} " class="btn btn-secondary my-2 mx-4">Retour à la liste</a>  
 
     </main>
 {% endblock %}

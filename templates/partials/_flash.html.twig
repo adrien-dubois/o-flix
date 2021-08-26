@@ -1,11 +1,11 @@
 {# Displaying Flash Messages with Bootstrap classes #}
 
+<div class="flashAdd">
 {% for label, messages in app.flashes %}
     {% for message in messages %}   
-        <div class="flashAdd">
             <div class="alert alert-{{ label }}" role="alert">
                 {{ message }}
             </div>
-        </div>    
     {% endfor %}
 {% endfor %}
+</div>    

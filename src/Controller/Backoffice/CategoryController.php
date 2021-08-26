@@ -114,22 +114,14 @@ class CategoryController extends AbstractController
     /**
      * Delete a selected category
      * 
-     * @Route("/delete/{id}", name="delete", requirements={"id"="\d+"} )
+     * @Route("/delete/{id}", name="delete" )
      *
      * @param [type] $id
      * @return void
      */
-    public function delete($id)
+    public function delete(Category $category)
     {
         $em = $this->getDoctrine()->getManager();
-        $category = $this->getDoctrine()->getRepository(Category::class);
-        $category = $category->find($id);
-
-        if(!$category){
-            throw $this->createNotFoundException('Il n\'y a pas de catégories avec cet identifiant: ' . $id);
-
-        }
-
         $em->remove($category);
         $em->flush();
 

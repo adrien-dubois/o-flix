@@ -1,21 +1,18 @@
-{% extends 'base.html.twig' %}
+{% extends 'backoffice/layout.html.twig' %}
 
 {% block title %}TvShows - Backoffice - {{parent()}}{% endblock %}
 
-{% block body %}
+{% block content %}
 
         <section class="py-5 text-center container">
             <div class="row py-lg-5">
-                <div class="col-lg-6 col-md-8 mx-auto">
+                <div class="col-lg-6 col-md-8">
                     <h1 class="fw-light">TV Shows</h1>
                 </div>
             </div>
         </section>
 
-<div class="container ">
-
-
-    <table class="table table-striped list-group-flush mx-auto " >
+    <table class="table list-group-flush " style="color: white;">
         <thead>
             <tr>
                 <th>#</th>
@@ -48,12 +45,12 @@
             </tr>
         {% else %}
             <tr>
-                <td colspan="9">no records found</td>
+                <td colspan="9">Pas de données trouvées</td>
             </tr>
         {% endfor %}
         </tbody>
     </table>
 
     <a class="btn btn-secondary mx-4" href="{{ path('backoffice_tv_show_new') }}">Créer nouvelle série</a>
-</div>
+</main>
 {% endblock %}
