@@ -11,7 +11,7 @@ use Symfony\Component\HttpFoundation\Response;
 use Symfony\Component\Routing\Annotation\Route;
 
 /**
- * @Route("/backoffice/category", name="backoffice_category_")
+ * @Route("/backoffice/category", name="backoffice_category_", requirements={"id"="\d+"})
  */
 class CategoryController extends AbstractController
 {
@@ -63,6 +63,22 @@ class CategoryController extends AbstractController
             'formView'=>$form->createView(),
         ]);
 
+    }
+
+    /**
+     * Display the category details
+     *
+     * @Route("/{id}", name="show")
+     * 
+     * @param integer $id
+     * @param CategoryRepository $categoryRepository
+     * @return void
+     */
+    public function show(Category $category)
+    {
+        return $this->render('backoffice/category/show.html.twig', [
+            'category' => $category
+        ]);
     }
 
     /**

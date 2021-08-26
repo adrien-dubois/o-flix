@@ -1,26 +1,26 @@
-{% extends "base.html.twig" %}
+{% extends "backoffice/layout.html.twig" %}
 {% block title %}
     Ajout catégorie - Backoffice - {{parent()}}
 {% endblock %}
 
-{% block body %}
+{% block content %}
 
 
-        <section class="py-5 text-center container">
+        <section class="container">
             <div class="row py-lg-5">
-                <div class="col-lg-6 col-md-8 mx-auto">
+                <div class="col-lg-6 col-md-8 ">
                     <h1 class="fw-light">Ajouter une catégorie</h1>
                 </div>
             </div>
         </section>
 
-        <div class="input-group-sm mb-3 mx-auto text-center" style="width: 450px;">
+        <div class="input-group-sm mb-3 " style="width: 450px;">
             {{ form_start(formView, {'attr': {'novalidate': 'novalidate'}}) }}
                 
             {{ form_end(formView) }}
         </div>  
 
-         <a href=" {{ path('backoffice_category_home') }} " class="btn btn-secondary mx-4">Retour à la liste</a>  
+         <a href=" {{ path('backoffice_category_home') }} " class="btn btn-secondary my-4 mx-4">Retour à la liste</a>  
 
     </main>
 {% endblock %}

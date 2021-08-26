@@ -1,21 +1,21 @@
-{% extends 'base.html.twig' %}
+{% extends 'backoffice/layout.html.twig' %}
 
 {% block title %}Category Backoffice - {{parent()}} {% endblock %}
 
-{% block body %}
+{% block content %}
 
-        <section class="py-5 text-center container">
+        <section class="container">
             <div class="row py-lg-5">
-                <div class="col-lg-6 col-md-8 mx-auto">
+                <div class="col-lg-6 col-md-8">
                     <h1 class="fw-light">Catégories</h1>
                 </div>
             </div>
         </section>
 
 
-        <ul class="list-group list-group-flush mx-auto" style="width: 600px;">
+        <ul class="list-group list-group list-group-flush " style="width: 600px;">
             {% for category in categories %}
-                <li class="list-group-item">{{category.name}} 
+                <li class="list-group-item " style="background-color: #212529; color: #fff"> <a href=" {{path('backoffice_category_show', {id: category.id} )}} " style="text-decoration: none; color: white;">{{category.name}} </a>
                 
                 {# DELETE #}
                 <a style="text-decoration: none; color: white; float: right;" href="{{path('backoffice_category_delete',{ id: category.id})}}" class="card-link badge rounded-pill bg-danger mx-2">Suppr.</a>
@@ -28,7 +28,7 @@
         </ul>
 
         <br>
-        <a href=" {{ path('backoffice_category_add') }} " class="btn btn-secondary mx-4">Ajouter une catégorie</a>
+        <a href=" {{ path('backoffice_category_add') }} " class="btn btn-secondary my-4 mx-4">Ajouter une catégorie</a>
 
     </main>
 

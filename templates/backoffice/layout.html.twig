@@ -1,0 +1,24 @@
+{% extends "base.html.twig" %}
+
+{% block body %}
+
+    <section id="black" class="row">
+        <!-- Menu de navigation -->
+        <div class="col-4 my-4 mx-auto">
+            <h2>Administration</h2>
+            <div class="btn-group-vertical py-4 m-2" role="group" aria-label="Basic example">
+                <a href="" class="btn btn-warning border border-dark">Séries</a>
+                <a href="" class="btn btn-warning border border-dark">Personnages</a>
+                <a href="" class="btn btn-warning border border-dark">Catégories</a>
+            </div>
+        </div>
+
+        <!-- Contenu principal -->
+        <div class="col-8">
+
+            {% block content %}{% endblock %}
+
+        </div>
+    </section>
+</main>
+{% endblock %}

@@ -1,0 +1,31 @@
+{% extends "backoffice/layout.html.twig" %}
+{% block title %}
+    {{category.name}} - Backoffice - {{parent()}}
+{% endblock %}
+
+{% block content %}
+
+    <section class="container">
+        <div class="row py-lg-5">
+            <div class="col-lg-6 col-md-8 ">
+                <h1 class="fw-light">Catégorie {{category.name}} </h1>
+            </div>
+        </div>
+    </section>
+    <ul class=" " style="width: 600px;">
+        <li class="list-group-item " style="background-color: #212529; color: #fff; font-weight: 600;">ACTIONS :</li>
+        <li class="list-group-item " style="background-color: #212529; color: #fff">
+                {# EDIT #}
+                <a style="text-decoration: none; color: white;" href="{{path('backoffice_category_update',{ id: category.id})}}" class="card-link badge rounded-pill bg-success">Edit</a>
+        </li>
+        <li class="list-group-item " style="background-color: #212529; color: #fff">
+                {# DELETE #}
+                <a style="text-decoration: none; color: white;" href="{{path('backoffice_category_delete',{ id: category.id})}}" class="card-link badge rounded-pill bg-danger ">Suppr.</a>
+        </li>
+    </ul>
+
+    <a href=" {{ path('backoffice_category_home') }} " class="btn btn-secondary my-4 mx-4">Retour à la liste</a>  
+
+</main>
+
+{% endblock %}

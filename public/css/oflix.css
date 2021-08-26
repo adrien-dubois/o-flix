@@ -61,3 +61,10 @@ body {
 .flashAdd{
     margin-top: 4rem;
 }
+
+#black{
+    padding-left: 2rem;
+    margin-top: 3rem;
+    color: white;
+    background-color: #212529;
+}
