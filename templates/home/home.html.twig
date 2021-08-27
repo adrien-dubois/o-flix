@@ -7,15 +7,26 @@
 
 
     {# CONNECTION PART #}
-    <section class="py-5 text-center container">
+    <section class="py-3 text-center container">
         <div class="row py-lg-5">
             <div class="col-lg-6 col-md-8 mx-auto">
                 <h1 class="fw-light">Séries TV et bien plus en illimité.</h1>
                 <p class="lead text-muted">Où que vous soyez. Annulez à tout moment.</p>
+                {% if app.user %}
+                <p class="lead fst-italic">
+                    Bienvenue sur votre compte <span class="text-danger">O'flix</span> {{app.user.firstname}}
+                </p>
+                <div class="divider-custom">
+                    <div class="divider-custom-line"></div>
+                    <div class="divider-custom-icon"><i class="fas fa-film"></i></div>
+                <div class="divider-custom-line"></div>
+                </div>
+                {% else %}    
                 <p>
-                    <a href=" {{path('appuser_login')}} " class="btn btn-danger my-2">Se connecter</a>
+                    <a href=" {{path('app_login')}} " class="btn btn-danger my-2">Se connecter</a>
                     <a href="#" class="btn btn-secondary my-2">Créer un compte</a>
                 </p>
+                {% endif %}
             </div>
         </div>
     </section>
