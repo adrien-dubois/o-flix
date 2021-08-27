@@ -47,7 +47,7 @@ class Character
     private $bio;
 
     /**
-     * @ORM\Column(type="integer")
+     * @ORM\Column(type="integer", nullable=true)
      * @Assert\NotBlank(message="Ajouter un âge")
      */
     private $age;
