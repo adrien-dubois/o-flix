@@ -99,3 +99,19 @@ body {
   .divider-custom.divider-light .divider-custom-icon {
     color: #fff;
   }
+  /* The app flash close button */
+.closebtn {
+    margin-left: 15px;
+    color: gray;
+    font-weight: bold;
+    float: right;
+    font-size: 22px;
+    line-height: 20px;
+    cursor: pointer;
+    transition: 0.3s;
+}
+  
+  /* When moving the mouse over the close button */
+  .closebtn:hover {
+    color: black;
+  }

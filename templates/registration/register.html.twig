@@ -7,14 +7,36 @@
 {% block body %}
 <section class="py-5  container">
     <div class="form-signin py-5">
-        <h1 class="h3 mb-3 fw-normal text-center">Inscription</h1>
+        <h1 class="h3 mb-3 fw-bold fst-italic text-center">Inscription</h1>
 
+        <div class="form-floating ">
         {{ form_start(registrationForm) }}
-            {{ form_row(registrationForm.email) }}
-            {{ form_row(registrationForm.lastname)}}
-            {{ form_row(registrationForm.firstname)}}
-            {{ form_row(registrationForm.plainPassword) }}
-            {{ form_row(registrationForm.agreeTerms) }}
+        </div>
+            <div class="form-floating my-2">
+            {{ form_widget(registrationForm.email) }}
+            {{ form_label(registrationForm.email) }}
+             </div>
+            <div class="form-floating my-2">
+            {{ form_widget(registrationForm.lastname)}}
+            {{ form_label(registrationForm.lastname)}}
+            </div>
+            <div class="form-floating my-2">
+            {{ form_widget(registrationForm.firstname)}}
+            {{ form_label(registrationForm.firstname)}}
+            </div>
+            <div class="form-floating my-2">
+            {{ form_widget(registrationForm.plainPassword.first) }}
+            {{ form_label(registrationForm.plainPassword.first )}}
+            </div>
+            <div class="form-floating my-2">
+            {{ form_widget(registrationForm.plainPassword.second) }}
+            {{ form_label(registrationForm.plainPassword.second )}}
+            </div>
+            <div class="form-floating my-2">
+            {{ form_widget(registrationForm.agreeTerms) }}
+            {{ form_label(registrationForm.agreeTerms) }}
+            </div>
+        
 
             <button type="submit" class="w-100 btn btn-lg btn-secondary">S'inscrire</button>
         {{ form_end(registrationForm) }}

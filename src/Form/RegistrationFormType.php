@@ -18,7 +18,11 @@ class RegistrationFormType extends AbstractType
     public function buildForm(FormBuilderInterface $builder, array $options)
     {
         $builder
-            ->add('email')
+            ->add('email', null, [
+                'attr'=>[
+                    'placeholder'=>'Email'
+                ]
+            ])
             ->add('agreeTerms', CheckboxType::class, [
                 'label'=>'Accepter les conditions',
                 'mapped' => false,
@@ -29,20 +33,26 @@ class RegistrationFormType extends AbstractType
                 ]
             ])
             ->add('lastname',null,[
-                'label'=>'Nom de famille',
+                'label'=>'Nom',
+                'attr'=>[
+                    'placeholder'=>'Nom'
+                ]
             ])
             ->add('firstname', null,[
                 'label'=>'Prénom',
+                'attr'=>[
+                    'placeholder'=>'Prénom'
+                ]
             ])
             ->add('plainPassword', RepeatedType::class, [
                 'type' => PasswordType::class,
                 'invalid_message' => 'Les mots de passe doivent être identiques',
-                'options' => ['attr' => ['class' => 'password-field']],
+                'options' => ['attr' => ['class' => 'password-field','placeholder'=>'Mot de passe']],
                 'required' => true,
-                'first_options'  => ['label' => 'Mot de passe'],
+                'first_options'  => ['label' => 'Mot de passe (6 caractères minimum)'],
                 'second_options' => ['label' => 'Confirmez votre mot de passe'],
                 'mapped' => false,
-                'attr' => ['autocomplete' => 'new-password'],
+                'attr' => ['autocomplete' => 'new-password',],
                 'constraints' => [
                     new NotBlank([
                         'message' => 'Merci de renseigner un mot de passe',
