@@ -8,6 +8,7 @@ use App\Repository\UserRepository;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\Response;
+use Symfony\Component\PasswordHasher\Hasher\UserPasswordHasherInterface;
 use Symfony\Component\Routing\Annotation\Route;
 
 /**
@@ -25,7 +26,8 @@ class UserController extends AbstractController
      */
     public function index(UserRepository $userRepository): Response
     {
-        return $this->render('backoffice/user/index.html.twig', [
+        
+        return $this->render('backoffice/user/user.html.twig', [
             'users'=>$userRepository->findAll(),
         ]);
     }
@@ -38,7 +40,7 @@ class UserController extends AbstractController
      * @param Request $request
      * @return void
      */
-    public function add(Request $request)
+    public function add(Request $request, UserPasswordHasherInterface $userPasswordHasherInterface)
     {
         $user = new User();
 
@@ -46,6 +48,13 @@ class UserController extends AbstractController
         $form->handleRequest($request);
 
         if($form->isSubmitted() && $form->isValid()){
+            $user->setPassword(
+                $userPasswordHasherInterface->hashPassword(
+                    $user,
+                    $form->get('plainPassword')->getData()
+                )
+            );
+
             $em = $this->getDoctrine()->getManager();
             $em->persist($user);
             $em->flush();
@@ -88,12 +97,18 @@ class UserController extends AbstractController
      * @param User $user
      * @return void
      */
-    public function update(Request $request, User $user)
+    public function update(Request $request, User $user, UserPasswordHasherInterface $userPasswordHasherInterface)
     {
         $form = $this->createForm(UserType::class, $user);
         $form->handleRequest($request);
 
         if($form->isSubmitted() && $form->isValid()){
+            $user->setPassword(
+                $userPasswordHasherInterface->hashPassword(
+                    $user,
+                    $form->get('plainPassword')->getData()
+                )
+            );
             $this->getDoctrine()->getManager()->flush();
 
             $this->addFlash(

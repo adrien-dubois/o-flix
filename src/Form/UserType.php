@@ -4,6 +4,8 @@ namespace App\Form;
 
 use App\Entity\User;
 use Symfony\Component\Form\AbstractType;
+use Symfony\Component\Form\Extension\Core\Type\ChoiceType;
+use Symfony\Component\Form\Extension\Core\Type\CollectionType;
 use Symfony\Component\Form\Extension\Core\Type\PasswordType;
 use Symfony\Component\Form\Extension\Core\Type\RepeatedType;
 use Symfony\Component\Form\FormBuilderInterface;
@@ -17,14 +19,29 @@ class UserType extends AbstractType
     {
         $builder
             ->add('email')
-            ->add('roles')
-            ->add('password', RepeatedType::class, [
+            ->add('lastname',null,[
+                'label'=>'Nom'
+            ])
+            ->add('firstname',null,[
+                'label'=>'Prénom'
+            ])
+            ->add('roles', ChoiceType::class, [
+                'label'=> 'Rôle',
+                'choices' => [
+                    'Membre' => 'ROLE_USER',
+                    'Admin' => 'ROLE_ADMIN',
+                ],
+                'expanded'  => false, 
+                'multiple'  => true, 
+            ])
+            ->add('plainPassword', RepeatedType::class, [
                 'type' => PasswordType::class,
                 'invalid_message' => 'Les mots de passe doivent être identiques',
                 'options' => ['attr' => ['class' => 'password-field','placeholder'=>'Mot de passe']],
                 'required' => true,
                 'first_options'  => ['label' => 'Mot de passe (6 caractères minimum)'],
                 'second_options' => ['label' => 'Confirmez votre mot de passe'],
+                'mapped' => false,
                 'attr' => ['autocomplete' => 'new-password',],
                 'constraints' => [
                     new NotBlank([
@@ -38,8 +55,6 @@ class UserType extends AbstractType
                     ]),
                 ],
             ])
-            ->add('firstname')
-            ->add('lastname')
         ;
     }
 

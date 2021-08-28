@@ -70,6 +70,11 @@ class User implements UserInterface, PasswordAuthenticatedUserInterface
         $this->setCreatedAt(new DateTimeImmutable());
     }
 
+    public function __toString()
+    {
+        $this->roles;
+    }
+
     public function getId(): ?int
     {
         return $this->id;
