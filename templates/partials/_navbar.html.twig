@@ -31,9 +31,12 @@
                         <li class="nav-item">
                             <a class="nav-link {{(currentRoute == 'show_fav')? 'active' }}" href="{{path ('show_fav')}}">Ma liste</a>
                         </li>
+                        {# BACKOFFICE PROTECTED FOR ADMINS #}
+                        {% if is_granted("ROLE_ADMIN") %}
                         <li class="nav-item">
                             <a class="nav-link {{(currentRoute is same as 'backoffice_tv_show_index' or currentRoute is same as 'backoffice_character_home' or currentRoute is same as 'backoffice_category_HOME')? 'active' }}" href="{{path('backoffice_tv_show_index')}}">Backoffice</a>
                         </li>
+                        {% endif %}
 
                        
                        
