@@ -1,0 +1,25 @@
+{% extends 'backoffice/layout.html.twig' %}
+
+{% block title %}
+    Ajouter utilisateur - Backoffice - {{parent()}}
+{% endblock %}
+
+{% block content %}
+<section class="py-5 text-center container">
+    <div class="row py-lg-5">
+        <div class="col-lg-6 col-md-8 mx-auto">
+            <h1 class="fw-light">Ajouter un utilisateur</h1>
+        </div>
+    </div>
+</section>
+
+<div class="input-group-sm mb-3 mx-auto text-center" style="width: 600px;">
+    {{ include('backoffice/user/form.html.twig') }}
+
+
+    <a class="btn btn-secondary m-4" style="text-decoration: none; color: white;" href="{{ path('user_home') }}">Retour à la liste</a>
+
+    </div>
+
+</main>
+{% endblock %}

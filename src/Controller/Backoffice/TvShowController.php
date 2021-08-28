@@ -39,6 +39,11 @@ class TvShowController extends AbstractController
             $entityManager->persist($tvShow);
             $entityManager->flush();
 
+            $this->addFlash(
+                'success',
+                'La série TV a bien été crée'
+            );
+
             return $this->redirectToRoute('backoffice_tv_show_index', [], Response::HTTP_SEE_OTHER);
         }
 

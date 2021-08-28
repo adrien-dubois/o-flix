@@ -89,7 +89,7 @@ class CategoryController extends AbstractController
      * @param INT $id
      * @return void
      */
-    public function update($id, Request $request, Category $category)
+    public function update(Request $request, Category $category)
     {
         $form = $this->createForm(CategoryType::class, $category);
         $form->handleRequest($request);

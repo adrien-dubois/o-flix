@@ -1,0 +1,52 @@
+{% extends 'backoffice/layout.html.twig' %}
+
+{% block title %}
+    Utilisateurs - Backoffice - {{parent()}}
+{% endblock %}
+
+{% block content %}
+
+<section class="py-5 text-center container">
+            <div class="row py-lg-5">
+                <div class="col-lg-6 col-md-8 mx-auto">
+                    <h1 class="fw-light">TV Shows</h1>
+                    <a class="btn btn-secondary mx-4 my-4" href="{{ path('user_add') }}">Créer nouvel utilisateur</a>
+                </div>
+            </div>
+        </section>
+
+    <table class="table list-group-flush " style="color: white; float: left;">
+        <thead>
+            <tr>
+                <th>#</th>
+                <th>Email</th>
+                <th>Nom</th>
+                <th>Prénom</th>
+                <th>Role</th>
+            </tr>
+        </thead>
+        <tbody>
+        {% for user in users %}
+            <tr>
+                <td>{{ user.id }}</td>
+                <td>{{ user.email }}</td>
+                <td>{{ user.lastname }}</td>
+                <td>{{ user.firstname}}</td>
+                <td>{{ user.roles}}</td>
+                <td>
+                    <a style="text-decoration: none; color: white;" href="{{ path('user_show', {'id': user.id}) }}" class="card-link badge rounded-pill bg-success">Détail</a>
+                    <a style="text-decoration: none; color: white; " href="{{ path('user_update', {'id': user.id}) }}" class="card-link badge rounded-pill bg-danger mx-2">Edit</a>
+                    
+                </td>
+            </tr>
+        {% else %}
+            <tr>
+                <td colspan="9">Pas de données trouvées</td>
+            </tr>
+        {% endfor %}
+        </tbody>
+    </table>
+
+
+</main>
+{% endblock %}

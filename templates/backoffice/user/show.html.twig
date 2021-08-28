@@ -1,0 +1,56 @@
+{% extends 'backoffice/layout.html.twig' %}
+
+{% block title %}
+    {{user.firstname}} - Backoffice - {{parent()}}
+{% endblock %}
+
+{% block content %}
+ <section class="py-5 text-center container">
+            <div class="row py-lg-5">
+                <div class="col-lg-6 col-md-8 mx-auto">
+                    <h1 class="fw-light"> {{ user.firstname }}</h1>
+                </div>
+            </div>
+        </section>
+
+<div class="container">
+
+    <table style="color: white; width: 800px;" class="table  list-group-flush mx-auto">
+        <tbody>
+            <tr>
+                <th>Id</th>
+                <td>{{ user.id }}</td>
+            </tr>
+            <tr>
+                <th>Email</th>
+                <td>{{ user.email }}</td>
+            </tr>
+            <tr>
+                <th>Nom</th>
+                <td>{{ user.lastname}}</td>
+            </tr>
+            <tr>
+                <th>Prénom</th>
+                <td>{{ user.firstname}}</td>
+            </tr>
+            <tr>
+                <th>Rôle</th>
+                <td>{{ user.roles}}</td>
+            </tr>
+            <tr>
+                <th>CreatedAt</th>
+                <td>{{ user.createdAt ? user.createdAt|date('Y-m-d H:i:s') : '' }}</td>
+            </tr>
+        </tbody>
+    <a style="text-decoration: none; color: white;" href="{{ path('user_update', {'id': user.id}) }}" class="card-link badge rounded-pill bg-success mx-2">Edit</a>
+   
+    {{ include('backoffice/user/delete.html.twig') }}
+    </table>
+
+
+    <a style="text-decoration: none; color: white;" href="{{ path('user_home') }}" class="btn btn-secondary mx-4 my-2">Retour à la liste</a> 
+
+</div>
+
+</main>
+{% endblock %}
