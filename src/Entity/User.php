@@ -38,7 +38,7 @@ class User implements UserInterface, PasswordAuthenticatedUserInterface
     /**
      * @var string The hashed password
      * @ORM\Column(type="string")
-     * @Assert\NotBlank(message="Mot de passe requis")
+     * 
      */
     private $password;
 
@@ -67,7 +67,7 @@ class User implements UserInterface, PasswordAuthenticatedUserInterface
     public function __construct()
     {
         $this->roles = array('ROLE_USER');
-        $this->setCreatedAt(new DateTimeImmutable());
+        $this->createdAt = new \DateTimeImmutable();
     }
 
     public function __toString()
@@ -208,6 +208,18 @@ class User implements UserInterface, PasswordAuthenticatedUserInterface
     public function setUpdatedAt(?\DateTimeImmutable $updatedAt): self
     {
         $this->updatedAt = $updatedAt;
+
+        return $this;
+    }
+
+    public function getActivationToken(): ?string
+    {
+        return $this->activation_token;
+    }
+
+    public function setActivationToken(string $activation_token): self
+    {
+        $this->activation_token = $activation_token;
 
         return $this;
     }

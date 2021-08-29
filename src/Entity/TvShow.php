@@ -84,7 +84,7 @@ class TvShow
         $this->season = new ArrayCollection();
         $this->characters = new ArrayCollection();
         $this->categories = new ArrayCollection();
-        $this->setCreatedAt(new DateTimeImmutable());
+        $this->createdAt = new \DateTimeImmutable();
     }
 
     public function getId(): ?int

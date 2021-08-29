@@ -98,3 +98,83 @@ Si on souhaite savoir si un utilisateur s’est connecté avec succès :
 <p>Utilisateur: {{ app.user.firstname }}</p>
 {% endif %}
 ```
+
+
+## Création mail de confirmation d'inscription
+
+Pour commencer, nous allons modifier notre entité "Users" pour y ajouter la propriété "activation_token", champ de type "string" et pouvant être vide.
+
+On effectue la migration, puis on va modifier le ResgistrationController en y ajoutant cette ligne pour générer le token : `$user->setActivationToken(md5(uniqid()));`
+Ligne que l'on ajoute juste après le hash du mot de passe. Maintenant, nous allons avoir un token automatiquement généré à chaque inscription.
+
+On va ensuite ajouter une méthode dans le fichier RegistrationController. Cette méthode pointera vers une route du type "/activation/{token}"
+
+Le lien dans l'e-mail devra diriger vers cette route qui vérifiera si le token existe et ensuite valider le compte correspondant.
+
+```
+    /**
+     * @Route("/activation/{token}", name="activation")
+     */
+    public function activation($token, UserRepository $users)
+    {
+        // We search in the DB if an user have this token
+        $user = $users->findOneBy(['activation_token' => $token]);
+
+        // If no one is associate with it
+        if(!$user){
+            // We send a 404
+            throw $this->createNotFoundException('Cet utilisateur n\'existe pas');
+        }
+
+        // And delete token
+        $user->setActivationToken('');
+        $entityManager = $this->getDoctrine()->getManager();
+        $entityManager->persist($user);
+        $entityManager->flush();
+
+        
+        $this->addFlash(
+            'success',
+            'Utilisateur activé avec succès'
+        );
+
+        //  And redirect to home
+        return $this->redirectToRoute('home');
+    }
+```
+
+Notre route étant créée, nous allons préparer l'e-mail à envoyer à l'utilisateur. Celui-ci devra contenir le lien d'activation.
+
+Nous devrons créer le fichier twig et l'envoi depuis le RegistrationController, Twig que l'on va créer dans `templates/emails`, et qu'on appellera `activation.twig.html`
+
+```
+<h1>Activation de votre compte</p>
+<p>Vous avez créé un compte sur notre site, veuillez cliquer sur le lien ci-dessous pour l'activer</p>
+<p><a href="{{ absolute_url(path('activation', {'token': token})) }}">Activer mon compte</a></p>
+```
+
+Pour l'envoi du mail, d'abord installer SwiftMailer avec `composer require symfony/swiftmailer-bundle`
+
+Nous allons ensuite modifier les paramètres de la méthode "register" de notre contrôleur en rajoutant d'abord en argument de la méthode `\Swift_Mailer $mailer` :
+
+Et ensuite sous le Flash message, là où il y a le commentaire concernant l'envoi de mail *(// do anything else you need here, like send an email)* :
+
+```
+// do anything else you need here, like send an email
+// We create message
+$message = (new \Swift_Message('Nouveau compte'))
+// Set the expeditor
+->setFrom('votre@adresse.fr')
+// set the client
+->setTo($user->getEmail())
+// Create the text with the view
+->setBody(
+$this->renderView(
+        'emails/activation.html.twig', ['token' => $user->getActivationToken()]
+),
+'text/html'
+)
+;
+$mailer->send($message);
+```
+

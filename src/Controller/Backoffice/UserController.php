@@ -62,7 +62,7 @@ class UserController extends AbstractController
             $em->flush();
 
             $this->addFlash(
-                'succes',
+                'success',
                 'Utilisateur ajouté avec succès'
             );
 
