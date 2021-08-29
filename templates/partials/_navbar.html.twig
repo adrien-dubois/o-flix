@@ -32,7 +32,7 @@
                             <a class="nav-link {{(currentRoute == 'show_fav')? 'active' }}" href="{{path ('show_fav')}}">Ma liste</a>
                         </li>
                         {# BACKOFFICE PROTECTED FOR ADMINS #}
-                        {% if is_granted("ROLE_ADMIN") %}
+                        {% if is_granted("ROLE_ADMIN") or is_granted("ROLE_SUPER_ADMIN") %}
                         <li class="nav-item">
                             <a class="nav-link {{(currentRoute is same as 'backoffice_tv_show_index' or currentRoute is same as 'backoffice_character_home' or currentRoute is same as 'backoffice_category_HOME')? 'active' }}" href="{{path('backoffice_tv_show_index')}}">Backoffice</a>
                         </li>
@@ -43,7 +43,7 @@
                     <div class="d-flex">
                         {% if app.user %}
                             {# IF ADMIN #}
-                            {% if is_granted("ROLE_ADMIN") %}
+                            {% if is_granted("ROLE_ADMIN") or is_granted("ROLE_SUPER_ADMIN")  %}
                             <p class="my-2 fw-bold" style="color: white;" data-bs-toggle="tooltip" data-bs-placement="bottom" title="Administrateur"> 
                             {# IF USER #}
                             {% elseif is_granted("ROLE_USER") %}
@@ -54,7 +54,7 @@
                             <a class="btn btn-danger mx-2" href=" {{path('app_logout')}} ">Deconnexion</a>
                         {% else %}
                         {# IF VISITOR #}
-                            <p class="my-2 fw-bold " style="color: white;" data-bs-toggle="tooltip" data-bs-placement="bottom" title="Inscrivez-vous">
+                            <p class="my-2" style="color: white;" data-bs-toggle="tooltip" data-bs-placement="bottom" title="Inscrivez-vous">
                             Visiteur </p> 
                             <a class="btn btn-danger mx-2" href=" {{path('app_login')}} ">Connexion</a>
                         {% endif %}

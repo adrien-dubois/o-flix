@@ -33,10 +33,68 @@ Il vous faudra donc utiliser ce que nous venons de rentrer en argument de la mé
 
 Dans le `config/packages/security.yaml` à `firewalls : main : logout` décommentez `target` puis mettez la route où vous souhaitez rediriger, pour ma part le formulaire de connexion
 
-## Twig
+## Rôles 
+
+### `security.yaml`
+
+Dans le `security.yaml` à la ligne `access_control` on peut décommenter les lignes avec les regex de routes de rôles.
+Il faut commencer par le rôle le plus important à sécuriser, en mettant la route autorisée par ce rôle, suivi du nom du rôle. Par exemple si on a des rôles Super Admin/Admin/User, on va fonctionner de cette façon :
+
+```
+access_control:
+        - { path: ^/backoffice/user, roles: ROLE_SUPER_ADMIN }
+        - { path: ^/backoffice, roles: ROLE_ADMIN }
+        - { path: ^/profile, roles: ROLE_USER }
+```
+
+Et ensuite on va définir la hiérarchie des rôles. On commence par noter le rôle à qui on souhaite en attribuer un autre. Le rôle définit pour avoir les mêmes droits que le rôle attribué. Si on attribut ensuite un rôle qui est déjà hierarchisé, le rôle qui récupère cette attribution aura donc le rôle attribué, ainsi que le rôle qui était déjà attribué à ce dernier. Pour que ce soit plus parlant :
+
+```
+    role_hierarchy:
+        ROLE_ADMIN: ROLE_USER
+        ROLE_SUPER_ADMIN: ROLE_ADMIN
+```
+
+Ici le role ROLE_ADMIN pourra avoir les mêmes droits que ROLE_USER. Et en fonctionnant en cascade, on peut en déduire que ROLE_SUPER_ADMIN, aura les mêmes droits que ROLE_ADMIN, donc aussi ceux de ROLE_USER
+
+### Controller
+
+Dans le controller on peut commencer par sécuriser les routes avec l'annotation 
+
+```
+use Sensio\Bundle\FrameworkExtraBundle\Configuration\IsGranted;
+
+/**
+ * @IsGranted("ROLE_ADMIN")
+ */
+public function helloAction($name)
+{
+```
+
+On peut également sécuriser une classe complète pour bloquer la route parente.
+
+Mais on peut aussi sécuriser juste la partie d'une méthode, pour ne pas aller plus loin si le rôle ne le permets pas : 
+
+```
+public function helloAction($name)
+{
+// The second parameter is used to specify on what object the role is tested.
+$this->denyAccessUnlessGranted('ROLE_ADMIN', null, 'Unable to access this page!');
+```
+
+
+### Twig
 
 Pour afficher des infos si connecté :
 `{% if app.user %}` *Par exemple pour afficher le prénom du User connecté :`{{app.user.firstname}}`*
 
-Pour afficher des informations selon le rôle, il faut utiliser la condition :
+Pour afficher des informations selon le rôle du user connecté, il faut utiliser la condition :
 `{% if is_granted("ROLE_ADMIN") %}` 
+
+Si on souhaite savoir si un utilisateur s’est connecté avec succès :
+
+```
+{% if is_granted('IS_AUTHENTICATED_FULLY') %}
+<p>Utilisateur: {{ app.user.firstname }}</p>
+{% endif %}
+```

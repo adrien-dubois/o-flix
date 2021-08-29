@@ -1,6 +1,7 @@
 html,
 body {
     height: 100%;
+    
 }
 
 .form-signin {
@@ -114,4 +115,10 @@ body {
   /* When moving the mouse over the close button */
   .closebtn:hover {
     color: black;
+  }
+
+
+  .err_txt{
+    color: black;
+    margin-top: 8rem;
   }

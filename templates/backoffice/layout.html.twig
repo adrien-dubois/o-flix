@@ -10,7 +10,9 @@
                 <a href="{{path('backoffice_tv_show_index')}}" class="btn btn-warning border border-dark">Séries</a>
                 <a href="{{path ('backoffice_character_home') }}" class="btn btn-warning border border-dark">Personnages</a>
                 <a href="{{path ('backoffice_category_home') }}" class="btn btn-warning border border-dark">Catégories</a>
+                {% if is_granted("ROLE_SUPER_ADMIN") %}
                 <a href="{{path ('user_home') }}" class="btn btn-warning border border-dark">Utilisateurs</a>
+                {% endif %}
             </div>
         </div>
 

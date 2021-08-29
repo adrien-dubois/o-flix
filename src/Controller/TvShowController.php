@@ -9,12 +9,17 @@ use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\Response;
 use Symfony\Component\Routing\Annotation\Route;
+use Sensio\Bundle\FrameworkExtraBundle\Configuration\IsGranted;
 
+/**
+ * @Route("/tvshow", name="show_")
+ * @IsGranted("ROLE_USER")
+ */
 class TvShowController extends AbstractController
 {
 
     /**
-     * @Route("/tvshow/", name="show_list")
+     * @Route("/", name="list")
      */
     public function index(TvShowRepository $tvShowRepository): Response
     {
@@ -30,7 +35,7 @@ class TvShowController extends AbstractController
     /**
      * Methods which display a serie by his ID
      *
-     * @Route("/tvshow/{id}", name="show_single", requirements={"id"="\d+"})
+     * @Route("/{id}", name="single", requirements={"id"="\d+"})
      * 
      * @param [int] $id
      * @param TvShowRepository $tvShowRepository
@@ -63,7 +68,7 @@ class TvShowController extends AbstractController
     /**
      * Method adding likes to the choosen tv show
      *
-     * @Route("/tvshow/like/{id}", name="show_like", requirements={"id"="\d+"})
+     * @Route("/like/{id}", name="like", requirements={"id"="\d+"})
      * 
      * @param [int] $id
      * @return Redirect
@@ -94,7 +99,7 @@ class TvShowController extends AbstractController
     /**
      * Method displaying favorites page
      * 
-     * @Route("/tvshow/favorite", name="show_fav")
+     * @Route("/favorite", name="fav")
      *
      * @return void
      */
