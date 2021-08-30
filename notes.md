@@ -1,5 +1,47 @@
 # Notes Login / Register :
 
+## Make CRUD User
+
+Donc commencer par `php bin/console make:crud` pour `Backoffice\User`
+
+Le truc c'est que le CRUD ne va pas inclure le hash des mots de passe. Attention penser que le CRUD automatique va générer les mêmes erreurs de slashs sur les routes, que précédemment, donc penser à les modifier.
+
+Créer aussi le formulaire de user : `php bin/console make:form User`
+
+Modifier le UserType, en ajoutant déjà les firstname et lastname :
+
+```
+->add('firstname')
+->add('lastname')
+```
+
+Modifier le password par plainPassword, et ajouter`mapped=>false` dans les options, de cette manière :
+
+```
+->add('plainPassword', PasswordType::class, [
+    'mapped' => false,
+])
+```
+`Mapped -> false` dit à Symfony que plainPassword n'est pas présent dans Entity pour qu'il ne le cherche pas par erreur.
+
+Ensuite modifier le controller pour récupérer le mot de passe et le hasher.
+Donc dans UserController, sur la méthode New :
+
+Ajouter dans les arguments de la méthode : `UserPasswordHasherInterface $userPasswordHasherInterface`
+
+Et donc sous le `if($form->isSubmitted....etc`
+Ajouter : 
+```
+$user->setPassword(
+    $userPasswordHasherInterface->hashPassword(
+        $user,
+        $form->get('plainPassword')->getData()
+    )
+);
+```
+
+On peut aussi ajouter ça à la méthode edit.
+
 ## Enregistrement
 
 ### - Verification Mot de passe

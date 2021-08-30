@@ -32,7 +32,7 @@
                 <td>{{ user.email }}</td>
                 <td>{{ user.lastname }}</td>
                 <td>{{ user.firstname}}</td>
-                <td>{{ user.roles[0]}}</td>
+                <td>{{ user.roles ? user.roles|json_encode : '' }}</td>
                 <td>
                     <a style="text-decoration: none; color: white;" href="{{ path('user_show', {'id': user.id}) }}" class="card-link badge rounded-pill bg-success">Détail</a>
                     <a style="text-decoration: none; color: white; " href="{{ path('user_update', {'id': user.id}) }}" class="card-link badge rounded-pill bg-danger mx-2">Edit</a>
