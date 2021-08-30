@@ -7,12 +7,20 @@
         <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
       </div>
       <div class="modal-body">
+        {# IMAGE PERSO #}
+        {% if character.imgUpload is null %}
+        
+        {% else %}
+        <img src=" {{asset('uploads/') ~ character.imgUpload}} " alt="" class="roundimg">
+        {% endif %}
+        <br>
+        {# NOM PRENOM #}
         <span class="true">{{character.firstname}} {{character.lastname}}</span>,
         {#AGE  #}
         {% if character.age is null %} {% else %}{{character.age}} ans ,{% endif %}
         {# VRAI NOM #}
         {% if character.gender is same as 'Homme' %}joué par{% endif %}
-        {% if character.gender is same as 'Femme' %}jouée par {% endif %} {{character.truename}} <br>
+        {% if character.gender is same as 'Femme' %}jouée par {% endif %} {{character.truename}} 
         {# BIOGRAPHIE #}
         <span class="true">Biographie :</span> <br>
         {{character.bio}}

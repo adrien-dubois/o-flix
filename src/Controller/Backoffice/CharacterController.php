@@ -10,6 +10,8 @@ use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\Response;
 use Symfony\Component\Routing\Annotation\Route;
 use Sensio\Bundle\FrameworkExtraBundle\Configuration\IsGranted;
+use Symfony\Component\HttpFoundation\File\Exception\FileException;
+use Symfony\Component\String\Slugger\SluggerInterface;
 
 /**
  * @Route("/backoffice/character", name="backoffice_character_")
@@ -40,7 +42,7 @@ class CharacterController extends AbstractController
      * @param Request $request
      * @return void
      */
-    public function add(Request $request)
+    public function add(Request $request, SluggerInterface $slugger)
     {
         $character = new Character();
 
@@ -49,7 +51,31 @@ class CharacterController extends AbstractController
         $form->handleRequest($request);
 
         if($form->isSubmitted() && $form->isValid()){
+            // We get back the physical file
+             /** @var UploadedFile $brochureFile */
+            $imgFile = $form->get('imgBrut')->getData();
 
+            if ($imgFile) {
+                $originalFilename = pathinfo($imgFile->getClientOriginalName(), PATHINFO_FILENAME);
+                // this is needed to safely include the file name as part of the URL
+                // We get the file name clean for safety, according the SluggerInterface Service
+                $safeFilename = $slugger->slug($originalFilename);
+
+                // To avoid that 2 users upload 2 files withthe same name, and to not overwrite someone's else file, we will rename our files with a uniq suffix.
+                $newFilename = $safeFilename.'-'.uniqid().'.'.$imgFile->guessExtension();
+
+                // We move the file in the public asset
+                try {
+                    $imgFile->move(
+                        'uploads',
+                        $newFilename
+                    );
+                    $character->setImgUpload($newFilename);
+                } catch (FileException $e) {
+                    // If it gets wrong, we can send a mail to the admin
+                }
+            }
+                
             $em = $this->getDoctrine()->getManager();
             $em->persist($character);
             $em->flush();
@@ -77,12 +103,35 @@ class CharacterController extends AbstractController
      * @param Character $character
      * @return void
      */
-    public function update($id, Request $request, Character $character)
+    public function update($id, Request $request, Character $character, SluggerInterface $slugger)
     {
         $form = $this->createForm(CharacterType::class, $character);
         $form->handleRequest($request);
 
         if($form->isSubmitted() && $form->isValid()){
+             /** @var UploadedFile $brochureFile */
+             $imgFile = $form->get('imgBrut')->getData();
+
+             if ($imgFile) {
+                 $originalFilename = pathinfo($imgFile->getClientOriginalName(), PATHINFO_FILENAME);
+                 // this is needed to safely include the file name as part of the URL
+                 // We get the file name clean for safety, according the SluggerInterface Service
+                 $safeFilename = $slugger->slug($originalFilename);
+ 
+                 // To avoid that 2 users upload 2 files withthe same name, and to not overwrite someone's else file, we will rename our files with a uniq suffix.
+                 $newFilename = $safeFilename.'-'.uniqid().'.'.$imgFile->guessExtension();
+ 
+                 // We move the file in the public asset
+                 try {
+                     $imgFile->move(
+                         'uploads',
+                         $newFilename
+                     );
+                     $character->setImgUpload($newFilename);
+                 } catch (FileException $e) {
+                     // If it gets wrong, we can send a mail to the admin
+                 }
+             }
             $this->getDoctrine()->getManager()->flush();
 
             $this->addFlash(

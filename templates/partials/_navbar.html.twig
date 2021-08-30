@@ -34,7 +34,7 @@
                         {# BACKOFFICE PROTECTED FOR ADMINS #}
                         {% if is_granted("ROLE_ADMIN") %}
                         <li class="nav-item">
-                            <a class="nav-link {{(currentRoute is same as 'backoffice_tv_show_index' or currentRoute is same as 'backoffice_character_home' or currentRoute is same as 'backoffice_category_HOME')? 'active' }}" href="{{path('backoffice_tv_show_index')}}">Backoffice</a>
+                            <a class="nav-link {{(currentRoute is same as 'backoffice_tv_show_index' or currentRoute is same as 'backoffice_character_home' or currentRoute is same as 'backoffice_category_home')? 'active' }}" href="{{path('backoffice_home')}}">Backoffice</a>
                         </li>
                         {% endif %}
            

@@ -63,6 +63,11 @@ class Character
      */
     private $truename;
 
+    /**
+     * @ORM\Column(type="string", length=255, nullable=true)
+     */
+    private $imgUpload;
+
     public function __construct()
     {
         $this->tvshows = new ArrayCollection();
@@ -174,6 +179,18 @@ class Character
     public function setTruename(string $truename): self
     {
         $this->truename = $truename;
+
+        return $this;
+    }
+
+    public function getImgUpload(): ?string
+    {
+        return $this->imgUpload;
+    }
+
+    public function setImgUpload(?string $imgUpload): self
+    {
+        $this->imgUpload = $imgUpload;
 
         return $this;
     }

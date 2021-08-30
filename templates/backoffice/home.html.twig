@@ -1,0 +1,19 @@
+{% extends 'backoffice/layout.html.twig' %}
+
+{% block title %}
+    Backoffice - {{ parent() }}
+{% endblock %}
+
+{% block content %}
+
+<div class="container pt-4">
+{% if app.user %}
+<h2 class="fw-bold ">Bonjour {{ app.user.firstname }}</h2>
+<h3 class="fst-italic ">Bienvenue dans le panneau d'administration</h3>
+{% endif %}
+
+
+
+</div>
+</main>
+{% endblock %}

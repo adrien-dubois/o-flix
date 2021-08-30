@@ -127,3 +127,14 @@ body {
     color: white;
     margin-top: 8rem;
   }
+
+
+  .roundimg{
+    float: right;
+    width : 150px; height : 150px;
+    border: 2px solid grey;
+    box-shadow:8px 6px 10px rgba(0, 0, 0, 0.445);
+    -moz-border-radius : 75px;
+    -webkit-border-radius : 75px;
+    border-radius : 75px;
+  }
