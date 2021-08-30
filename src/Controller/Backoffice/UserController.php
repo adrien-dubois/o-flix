@@ -99,11 +99,15 @@ class UserController extends AbstractController
      * @param User $user
      * @return void
      */
-    public function update(Request $request, User $user, UserPasswordHasherInterface $userPasswordHasherInterface)
+    public function update(Request $request, User $user, UserPasswordHasherInterface $userPasswordHasherInterface )
     {
+
+        $this->denyAccessUnlessGranted('edit', $user);
+        dd($user);
+        
         $form = $this->createForm(UserType::class, $user);
         $form->handleRequest($request);
-
+        
         if($form->isSubmitted() && $form->isValid()){
             $user->setPassword(
                 $userPasswordHasherInterface->hashPassword(

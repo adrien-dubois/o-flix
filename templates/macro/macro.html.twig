@@ -9,7 +9,7 @@
       <div class="modal-body">
         {# IMAGE PERSO #}
         {% if character.imgUpload is null %}
-        
+
         {% else %}
         <img src=" {{asset('uploads/') ~ character.imgUpload}} " alt="" class="roundimg">
         {% endif %}
@@ -20,7 +20,7 @@
         {% if character.age is null %} {% else %}{{character.age}} ans ,{% endif %}
         {# VRAI NOM #}
         {% if character.gender is same as 'Homme' %}joué par{% endif %}
-        {% if character.gender is same as 'Femme' %}jouée par {% endif %} {{character.truename}} 
+        {% if character.gender is same as 'Femme' %}jouée par {% endif %} {{character.truename}} <br> 
         {# BIOGRAPHIE #}
         <span class="true">Biographie :</span> <br>
         {{character.bio}}
