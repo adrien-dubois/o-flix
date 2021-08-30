@@ -23,7 +23,7 @@ class UserVoter extends Voter
 
     protected function voteOnAttribute(string $attribute, $subject, TokenInterface $token): bool
     {
-        dd('coucou');
+        
         $user = $token->getUser();
         // if the user is not an instance of UserInterface, that means he's not logged, so he doesn't have any rights
         if (!$user instanceof User) {

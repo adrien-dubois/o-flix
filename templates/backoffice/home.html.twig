@@ -12,10 +12,11 @@
 <h3 class="fst-italic ">Bienvenue dans le panneau d'administration</h3>
 {% endif %}
 
-
+{% if is_granted("edit", app.user) %}
+<p>
 <a href=" {{path('user_update', {id: app.user.id} )}} ">Edit</a>
 </p>
-
+{% endif %}
 
 </div>
 </main>
