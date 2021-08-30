@@ -4,21 +4,70 @@
 
     <section id="black" class="row">
         <!-- Menu de navigation -->
-        <div class="col-2 my-4 mx-auto">
-            <h3 class="mx-auto" ><a style="text-decoration: none;" class="text-muted" href=" {{path('backoffice_home')}} "> Administration </a></h3>
-            <div class="btn-group-vertical pt-2 pb-4 m-3" role="group" aria-label="Basic example">
-                <a href="{{path('backoffice_tv_show_index')}}" class="btn btn-warning border border-dark">Séries</a>
-                <a href="{{path ('backoffice_character_home') }}" class="btn btn-warning border border-dark">Personnages</a>
-                <a href="{{path ('backoffice_category_home') }}" class="btn btn-warning border border-dark">Catégories</a>
-                {% if is_granted("ROLE_SUPER_ADMIN") %}
-                <a href="{{path ('user_home') }}" class="btn btn-warning border border-dark">Utilisateurs</a>
-                {% endif %}
-            </div>
-        </div>
+<div class="col-2 my-4 mx-auto">
+            <div class="offcanvas bg-dark offcanvas-start sidebar-nav" tabindex="-1" id="offcanvasExample" aria-labelledby="offcanvasExampleLabel">
 
+                <div class="offcanvas-body p-0">
+                    <nav class="navbar-dark">
+                        <ul class="navbar-nav">
+                            <li>
+                                <div class="text-muted small fw-bold text-uppercase px-3">
+                                    backoffice
+                                </div>
+                            </li>
+                            <li>
+                                <a href="{{path('backoffice_home')}}" class="nav-link px-3 active">
+                                <span class="me-2">
+                                    <i class="bi bi-tools"></i>
+                                </span>
+                                <span>Administration</span>
+                                </a>
+                            </li>
+                            <li class="my-4">
+                                <hr class="dropdown-divider">
+                            </li> 
+                            <li>
+                                <div class="text-muted small fw-bold text-uppercase px-3">
+                                    Interface
+                                </div>
+                            </li>
+
+                            <li>
+                              <a class="nav-link px-3 sidebar-link" data-bs-toggle="collapse" href="#collapseExample" role="button" aria-expanded="false" aria-controls="collapseExample">
+                                <span class="me-2"> <i class="bi bi-film"></i> </span>
+                                <span>TV Shows</span>
+                                <span class="right-icon ms-auto"> 
+                                    <i class="bi bi-chevron-down"></i>
+                                </span>
+                              </a>
+                                <div class="collapse" id="collapseExample">
+                                    <div>
+                                       <ul class="navbar-nav ps-3">
+                                            <li>
+                                                <a href="{{path('backoffice_tv_show_index')}}" class="nav-link px-3">
+                                                    <span class="me-2"> <i class="bi bi-list-stars"></i> </span>
+                                                    <span>Liste</span>
+                                                </a>
+                                            </li>
+                                            <li>
+                                                <a href="{{path('backoffice_tv_show_new')}}" class="nav-link px-3">
+                                                    <span class="me-2"> <i class="bi bi-plus-square"></i> </span>
+                                                    <span>Ajouter une série</span>
+                                                </a>
+                                            </li>
+                                       </ul>
+                                    </div>
+                                </div>
+                            </li>
+                        </ul>
+                    
+                    </nav>
+                </div>
+            </div>
+</div>
 
         <!-- Contenu principal -->
-        <div class="col-10">
+        <div class="">
 
             {% block content %}{% endblock %}
 

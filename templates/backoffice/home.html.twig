@@ -6,10 +6,13 @@
 
 {% block content %}
 
-<div class="container pt-4">
+<div class="" style="height: 900px;">
+
+
+
 {% if app.user %}
 <h2 class="fw-bold ">Bonjour {{ app.user.firstname }}</h2>
-<h3 class="fst-italic ">Bienvenue dans le panneau d'administration</h3>
+<h3>Bienvenue dans le panneau d'administration</h3>
 {% endif %}
 
 {% if is_granted("edit", app.user) %}
@@ -17,6 +20,8 @@
 <a href=" {{path('user_update', {id: app.user.id} )}} ">Edit</a>
 </p>
 {% endif %}
+
+Nulla deserunt laborum ipsum sint ea fugiat aute minim pariatur eu irure laborum labore. Aliqua ullamco in elit qui Lorem ex magna do. Eu cupidatat deserunt minim Lorem minim dolore labore in eiusmod anim. Consectetur enim ut pariatur velit pariatur commodo est sint cupidatat nulla ad veniam laboris eiusmod. Fugiat in commodo consequat occaecat proident minim officia. Incididunt consequat cupidatat ipsum cillum ipsum irure.
 
 </div>
 </main>
