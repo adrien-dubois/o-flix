@@ -1,6 +1,9 @@
 {% extends "base.html.twig" %}
 
 {% block body %}
+{# Set the current route to put the links in active class #}
+{% set currentRoute = app.request.attributes.get('_route') %}
+
 <main>
     <section id="black" class="row">
         <!-- Menu de navigation -->
@@ -16,7 +19,7 @@
                                 </div>
                             </li>
                             <li>
-                                <a href="{{path('backoffice_home')}}" class="nav-link px-3 active">
+                                <a href="{{path('backoffice_home')}}" class="nav-link px-3 {{(currentRoute == 'backoffice_home')? 'active' }}">
                                 <span class="me-2">
                                     <i class="bi bi-tools"></i>
                                 </span>
@@ -35,14 +38,14 @@
 
                         {# TVSHOWS #}
                             <li>
-                              <a class="nav-link px-3 sidebar-link" data-bs-toggle="collapse" href="#collapseExample" role="button" aria-expanded="false" aria-controls="collapseExample">
+                              <a class="nav-link px-3 sidebar-link  {{(currentRoute is same as 'backoffice_tv_show_index' or currentRoute is same as 'backoffice_tv_show_new')? 'active' }}" data-bs-toggle="collapse" href="#collapseTvshows" role="button" aria-expanded="false" aria-controls="collapseTvshows">
                                 <span class="me-2"> <i class="bi bi-film"></i> </span>
                                 <span>TV Shows</span>
                                 <span class="right-icon ms-auto"> 
                                     <i class="bi bi-chevron-down"></i>
                                 </span>
                               </a>
-                                <div class="collapse" id="collapseExample">
+                                <div class="collapse" id="collapseTvshows">
                                     <div>
                                        <ul class="navbar-nav ps-3">
                                             <li>
@@ -57,22 +60,21 @@
                                                     <span>Ajouter une série</span>
                                                 </a>
                                             </li>
-                                            
-                                     
                                        </ul>
                                     </div>
                                 </div>
                             </li>
-                                   {# CHARACTERS #}
+
+                            {# CHARACTERS #}
                             <li>
-                            <a class="nav-link px-3 sidebar-link" data-bs-toggle="collapse" href="#collapseExample2" role="button" aria-expanded="false" aria-controls="collapseExample2">
+                            <a class="nav-link px-3 sidebar-link {{(currentRoute is same as 'backoffice_character_home' or currentRoute is same as 'backoffice_character_add')? 'active' }}" data-bs-toggle="collapse" href="#collapseCharacters" role="button" aria-expanded="false" aria-controls="collapseCharacters">
                                 <span class="me-2"><i class="fas fa-mask"></i> </span>
                                 <span>Personnages</span>
                                 <span class="right-icon ms-auto"> 
                                     <i class="bi bi-chevron-down"></i>
                                 </span>
                             </a>
-                                <div class="collapse" id="collapseExample2">
+                                <div class="collapse" id="collapseCharacters">
                                     <div>
                                     <ul class="navbar-nav ps-3">
                                             <li>
@@ -91,16 +93,18 @@
                                     </div>
                                 </div>
                             </li>
-                                {# CATEGORY #}
+
+
+                             {# CATEGORY #}
                             <li>
-                            <a class="nav-link px-3 sidebar-link" data-bs-toggle="collapse" href="#collapseExample3" role="button" aria-expanded="false" aria-controls="collapseExample3">
+                            <a class="nav-link px-3 sidebar-link {{(currentRoute is same as 'backoffice_category_home' or currentRoute is same as 'backoffice_category_add')? 'active' }}" data-bs-toggle="collapse" href="#collapseCategories" role="button" aria-expanded="false" aria-controls="collapseCategories">
                                 <span class="me-2"><i class="fas fa-theater-masks"></i> </span>
                                 <span>Catégories</span>
                                 <span class="right-icon ms-auto"> 
                                     <i class="bi bi-chevron-down"></i>
                                 </span>
                             </a>
-                                <div class="collapse" id="collapseExample3">
+                                <div class="collapse" id="collapseCategories">
                                     <div>
                                     <ul class="navbar-nav ps-3">
                                             <li>
@@ -119,6 +123,8 @@
                                     </div>
                                 </div>
                             </li>
+
+                            {# DIVIDER FOR SUPER ADMIN SECTION #}
                              <li class="my-4">
                                 <hr class="dropdown-divider">
                             </li> 
@@ -126,9 +132,11 @@
                                 <div class="text-muted small fw-bold text-uppercase px-3">
                                     Super Admin Section
                                 </div>
+
+
                                 {# UTILISATEURS #}
                                 <li>
-                              <a class="nav-link px-3 sidebar-link" data-bs-toggle="collapse" href="#collapseUsers" role="button" aria-expanded="false" aria-controls="collapseUsers">
+                              <a class="nav-link px-3 sidebar-link {{(currentRoute is same as 'user_home' or currentRoute is same as 'user_add')? 'active' }}" data-bs-toggle="collapse" href="#collapseUsers" role="button" aria-expanded="false" aria-controls="collapseUsers">
                                 <span class="me-2"><i class="fas fa-users"></i> </span>
                                 <span>Utilisateurs</span>
                                 <span class="right-icon ms-auto"> 
@@ -139,19 +147,17 @@
                                     <div>
                                        <ul class="navbar-nav ps-3">
                                             <li>
-                                                <a href="{{path('backoffice_tv_show_index')}}" class="nav-link px-3">
-                                                    <span class="me-2"> <i class="fas fa-photo-video"></i> </span>
+                                                <a href="{{path ('user_home') }}" class="nav-link px-3">
+                                                    <span class="me-2"><i class="fas fa-user-friends"></i></span>
                                                     <span>Liste</span>
                                                 </a>
                                             </li>
                                             <li>
-                                                <a href="{{path('backoffice_tv_show_new')}}" class="nav-link px-3">
-                                                    <span class="me-2"><i class="far fa-plus-square"></i> </span>
-                                                    <span>Ajouter une série</span>
+                                                <a href="{{path ('user_add') }}" class="nav-link px-3">
+                                                    <span class="me-2"><i class="fas fa-user-edit"></i></span>
+                                                    <span>Ajouter un utilisateur</span>
                                                 </a>
                                             </li>
-                                            
-                                     
                                        </ul>
                                     </div>
                                 </div>

@@ -4,16 +4,16 @@
 
 {% block content %}
 
-        <section class="container">
+        <section class="container text-center">
             <div class="row py-lg-5">
-                <div class="col-lg-6 col-md-8">
+                <div class="col-lg-6 col-md-8  mx-auto">
                     <h1 class="fw-light">Liste des personnages</h1>
                 </div>
             </div>
         </section>
 
 
-        <ul class="list-group list-group-flush" style="width: 600px;">
+        <ul class="list-group list-group-flush mx-auto " style="width: 600px;">
             {% for character in characters %}
                 <li style="background-color: #212529; color: #fff" class="list-group-item">{{character.lastname}} {{character.firstname}} 
                 
@@ -26,9 +26,6 @@
                 </li>
             {% endfor %}
         </ul>
-
-        <br>
-        <a href=" {{ path('backoffice_character_add') }} " class="btn btn-secondary my-2 mx-4">Ajouter un personnage</a>
 
     </main>
 

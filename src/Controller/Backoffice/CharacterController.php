@@ -43,7 +43,7 @@ class CharacterController extends AbstractController
      * @param Request $request
      * @return void
      */
-    public function add(Request $request, SluggerInterface $slugger, ImageUploader $imageUploader)
+    public function add(Request $request, ImageUploader $imageUploader)
     {
         $character = new Character();
 
@@ -86,35 +86,18 @@ class CharacterController extends AbstractController
      * @param Character $character
      * @return void
      */
-    public function update($id, Request $request, Character $character, SluggerInterface $slugger)
+    public function update(Request $request, Character $character, ImageUploader $imageUploader)
     {
         $form = $this->createForm(CharacterType::class, $character);
         $form->handleRequest($request);
 
         if($form->isSubmitted() && $form->isValid()){
-             /** @var UploadedFile $brochureFile */
-             $imgFile = $form->get('imgBrut')->getData();
+            
+            $imageFilename = $imageUploader->upload($form, 'imgBrut');
+            if($imageFilename){
+                $character->setImgUpload($imageFilename);
+            }
 
-             if ($imgFile) {
-                 $originalFilename = pathinfo($imgFile->getClientOriginalName(), PATHINFO_FILENAME);
-                 // this is needed to safely include the file name as part of the URL
-                 // We get the file name clean for safety, according the SluggerInterface Service
-                 $safeFilename = $slugger->slug($originalFilename);
- 
-                 // To avoid that 2 users upload 2 files withthe same name, and to not overwrite someone's else file, we will rename our files with a uniq suffix.
-                 $newFilename = $safeFilename.'-'.uniqid().'.'.$imgFile->guessExtension();
- 
-                 // We move the file in the public asset
-                 try {
-                     $imgFile->move(
-                         'uploads',
-                         $newFilename
-                     );
-                     $character->setImgUpload($newFilename);
-                 } catch (FileException $e) {
-                     // If it gets wrong, we can send a mail to the admin
-                 }
-             }
             $this->getDoctrine()->getManager()->flush();
 
             $this->addFlash(
