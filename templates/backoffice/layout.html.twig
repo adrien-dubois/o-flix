@@ -26,6 +26,14 @@
                                 <span>Administration</span>
                                 </a>
                             </li>
+                            <li>
+                                <a href="{{path('user_update', {id: app.user.id} )}}" class="nav-link px-3 {{(currentRoute == 'user_update')? 'active' }}">
+                                <span class="me-2">
+                                    <i class="fas fa-user-tie"></i>
+                                </span>
+                                <span>Profil Perso</span>
+                                </a>
+                            </li>
                             <li class="my-4">
                                 <hr class="dropdown-divider">
                             </li> 

@@ -2,6 +2,7 @@
 
 namespace App\Controller\Backoffice;
 
+use App\Repository\TvShowRepository;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
 use Symfony\Component\Routing\Annotation\Route;
 use Sensio\Bundle\FrameworkExtraBundle\Configuration\IsGranted;
@@ -15,9 +16,16 @@ class HomeController extends AbstractController
      *
      * @return void
      */
-    public function home()
+    public function home(TvShowRepository $tvShowRepository)
     {
-        return $this->render('backoffice/home.html.twig');
+        $shows = $tvShowRepository->findBy([],
+            ["createdAt"=>"DESC"],
+            3,0
+    );
+
+        return $this->render('backoffice/home.html.twig',[
+            'shows'=>$shows
+        ]);
     }
 
 }
