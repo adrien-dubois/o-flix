@@ -10,9 +10,10 @@ use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\Response;
 use Symfony\Component\Routing\Annotation\Route;
 use Sensio\Bundle\FrameworkExtraBundle\Configuration\IsGranted;
+use Symfony\Component\String\Slugger\SluggerInterface;
 
 /**
- * @Route("/backoffice/tvshow")
+ * @Route("/backoffice/tvshow", requirements={"id":"\d+"})
  * @IsGranted("ROLE_ADMIN")
  */
 class TvShowController extends AbstractController
@@ -28,7 +29,7 @@ class TvShowController extends AbstractController
     }
 
     /**
-     * @Route("/new", name="backoffice_tv_show_new", methods={"GET","POST"})
+     * @Route("/new", name="backoffice_tv_show_new", methods={"GET","POST"}, priority=2)
      */
     public function new(Request $request): Response
     {
@@ -57,6 +58,7 @@ class TvShowController extends AbstractController
 
     /**
      * @Route("/{id}", name="backoffice_tv_show_show", methods={"GET"})
+     * @Route("/{slug}", name="backoffice_tv_show_show_slug")
      */
     public function show(TvShow $tvShow): Response
     {
@@ -68,12 +70,17 @@ class TvShowController extends AbstractController
     /**
      * @Route("/{id}/edit", name="backoffice_tv_show_edit", methods={"GET","POST"})
      */
-    public function edit(Request $request, TvShow $tvShow): Response
+    public function edit(Request $request, TvShow $tvShow, SluggerInterface $sluggerInterface): Response
     {
         $form = $this->createForm(TvShowType::class, $tvShow);
         $form->handleRequest($request);
 
         if ($form->isSubmitted() && $form->isValid()) {
+
+            $title = $tvShow->getTitle();
+            $slug = $sluggerInterface->slug(strtolower($title));
+            $tvShow->setSlug($slug);
+
             $this->getDoctrine()->getManager()->flush();
 
             return $this->redirectToRoute('backoffice_tv_show_index', [], Response::HTTP_SEE_OTHER);
