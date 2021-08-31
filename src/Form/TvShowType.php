@@ -8,9 +8,11 @@ use App\Entity\TvShow;
 use Symfony\Bridge\Doctrine\Form\Type\EntityType;
 use Symfony\Component\Form\AbstractType;
 use Symfony\Component\Form\Extension\Core\Type\DateTimeType;
+use Symfony\Component\Form\Extension\Core\Type\FileType;
 use Symfony\Component\Form\Extension\Core\Type\SubmitType;
 use Symfony\Component\Form\FormBuilderInterface;
 use Symfony\Component\OptionsResolver\OptionsResolver;
+use Symfony\Component\Validator\Constraints\File;
 
 class TvShowType extends AbstractType
 {
@@ -19,7 +21,21 @@ class TvShowType extends AbstractType
         $builder
             ->add('title')
             ->add('synopsis')
-            ->add('image')
+            ->add('imgBrut', FileType::class, [
+                'label' => 'Choisir une image',
+                'mapped' => false,
+                'required' => false,
+                'constraints' => [
+                    new File([
+                        'maxSize' => '1024k',
+                        'mimeTypes' => [
+                            'image/jpeg',
+                            'image/png',
+                        ],
+                        'mimeTypesMessage' => 'Seuls les fichiers images de type JPEG & PNG sont autorisés',
+                    ])
+                ]
+            ])
             ->add('nbLikes')
             ->add('publishedAt', DateTimeType::class,[
                 'label'=>'Date de publication',

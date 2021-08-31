@@ -6,23 +6,39 @@
 
 {% block content %}
 
-<div class="" style="height: 900px;">
+<div class="container-fluid" style="height: 900px;">
+    
+    <div class="row">
+    
+        <div class="col-md-12">
+        {% if app.user %}
+        <h2 class="fw-bold">Bonjour {{ app.user.firstname }}</h2>
+        <h3>Bienvenue dans le panneau d'administration</h3>
+        {% endif %}
+        {% if is_granted("edit", app.user) %}
+        <p>
+        <a href=" {{path('user_update', {id: app.user.id} )}} ">Edit</a>
+        </p>
+        {% endif %}
+        </div>
+        <div class="row">
+            <div class="col-md-3"> 
 
+                {# CARD #}
+                    <div class="card text-white bg-custom mb-3" style="max-width: 18rem; box-shadow:8px 6px 10px rgba(0, 0, 0, 0.445);" >
+                        <div class="card-header fw-bold" >Header</div>
+                            <div class="card-body">
+                                <h5 class="card-title">Secondary card title</h5>
+                                <p class="card-text">Some quick example text to build on the card title and make up the bulk of the card's content.</p>
+                            </div>
+                    </div>
+                {# CARD CLOSE #}
 
+            </div>
+        </div>
 
-{% if app.user %}
-<h2 class="fw-bold ">Bonjour {{ app.user.firstname }}</h2>
-<h3>Bienvenue dans le panneau d'administration</h3>
-{% endif %}
-
-{% if is_granted("edit", app.user) %}
-<p>
-<a href=" {{path('user_update', {id: app.user.id} )}} ">Edit</a>
-</p>
-{% endif %}
-
-Nulla deserunt laborum ipsum sint ea fugiat aute minim pariatur eu irure laborum labore. Aliqua ullamco in elit qui Lorem ex magna do. Eu cupidatat deserunt minim Lorem minim dolore labore in eiusmod anim. Consectetur enim ut pariatur velit pariatur commodo est sint cupidatat nulla ad veniam laboris eiusmod. Fugiat in commodo consequat occaecat proident minim officia. Incididunt consequat cupidatat ipsum cillum ipsum irure.
-
+    </div>
 </div>
-</main>
+
+
 {% endblock %}

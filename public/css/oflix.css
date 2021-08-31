@@ -141,6 +141,7 @@ body {
 :root{
   --offcanvas-width: 270px;
   --topNavbarHeight: 56px; 
+  --bs-cyan: #0dcaf0;
 }
 
 .sidebar-nav{
@@ -179,3 +180,13 @@ body {
   }
 }
 
+.bg-custom {
+  --bs-bg-opacity: 1;
+  /* background-color: #444a4e; */
+  background-color: #586066;
+
+}
+
+.shadoo{
+  box-shadow:8px 6px 10px rgba(0, 0, 0, 0.445);
+}

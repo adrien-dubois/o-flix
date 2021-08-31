@@ -5,6 +5,7 @@ namespace App\Controller\Backoffice;
 use App\Entity\TvShow;
 use App\Form\TvShowType;
 use App\Repository\TvShowRepository;
+use App\Service\ImageUploader;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\Response;
@@ -31,13 +32,19 @@ class TvShowController extends AbstractController
     /**
      * @Route("/new", name="backoffice_tv_show_new", methods={"GET","POST"}, priority=2)
      */
-    public function new(Request $request): Response
+    public function new(Request $request, ImageUploader $uploader): Response
     {
         $tvShow = new TvShow();
         $form = $this->createForm(TvShowType::class, $tvShow);
         $form->handleRequest($request);
 
         if ($form->isSubmitted() && $form->isValid()) {
+
+            $newImagename = $uploader->upload($form, 'imgBrut');
+            if($newImagename){
+                $tvShow->setImage($newImagename);
+            }
+
             $entityManager = $this->getDoctrine()->getManager();
             $entityManager->persist($tvShow);
             $entityManager->flush();
@@ -70,18 +77,28 @@ class TvShowController extends AbstractController
     /**
      * @Route("/{id}/edit", name="backoffice_tv_show_edit", methods={"GET","POST"})
      */
-    public function edit(Request $request, TvShow $tvShow, SluggerInterface $sluggerInterface): Response
+    public function edit(Request $request, TvShow $tvShow, SluggerInterface $sluggerInterface, ImageUploader $uploader): Response
     {
         $form = $this->createForm(TvShowType::class, $tvShow);
         $form->handleRequest($request);
 
         if ($form->isSubmitted() && $form->isValid()) {
 
+            $newImagename = $uploader->upload($form, 'imgBrut');
+            if($newImagename){
+                $tvShow->setImage($newImagename);
+            }
+
             $title = $tvShow->getTitle();
             $slug = $sluggerInterface->slug(strtolower($title));
             $tvShow->setSlug($slug);
 
             $this->getDoctrine()->getManager()->flush();
+
+            $this->addFlash(
+                'success',
+                'La série a bien été modifiée'
+            );
 
             return $this->redirectToRoute('backoffice_tv_show_index', [], Response::HTTP_SEE_OTHER);
         }
