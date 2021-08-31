@@ -14,7 +14,7 @@ use Sensio\Bundle\FrameworkExtraBundle\Configuration\IsGranted;
 
 /**
  * @Route("/backoffice/user", name="user_")
- * @IsGranted("ROLE_SUPER_ADMIN")
+ * 
  */
 class UserController extends AbstractController
 {
@@ -102,8 +102,8 @@ class UserController extends AbstractController
     public function update(Request $request, User $user, UserPasswordHasherInterface $userPasswordHasherInterface )
     {
 
-        $this->denyAccessUnlessGranted('edit', $user);
-        dd($user);
+        $this->denyAccessUnlessGranted('edit', $user, 'Vous ne passerez pas!!');
+        
         
         $form = $this->createForm(UserType::class, $user);
         $form->handleRequest($request);

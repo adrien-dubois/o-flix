@@ -1,7 +1,7 @@
 {% extends "base.html.twig" %}
 
 {% block body %}
-
+<main>
     <section id="black" class="row">
         <!-- Menu de navigation -->
 <div class="col-2 my-4 mx-auto">
@@ -32,6 +32,8 @@
                                 </div>
                             </li>
 
+
+                        {# TVSHOWS #}
                             <li>
                               <a class="nav-link px-3 sidebar-link" data-bs-toggle="collapse" href="#collapseExample" role="button" aria-expanded="false" aria-controls="collapseExample">
                                 <span class="me-2"> <i class="bi bi-film"></i> </span>
@@ -45,27 +47,122 @@
                                        <ul class="navbar-nav ps-3">
                                             <li>
                                                 <a href="{{path('backoffice_tv_show_index')}}" class="nav-link px-3">
-                                                    <span class="me-2"> <i class="bi bi-list-stars"></i> </span>
+                                                    <span class="me-2"> <i class="fas fa-photo-video"></i> </span>
                                                     <span>Liste</span>
                                                 </a>
                                             </li>
                                             <li>
                                                 <a href="{{path('backoffice_tv_show_new')}}" class="nav-link px-3">
-                                                    <span class="me-2"> <i class="bi bi-plus-square"></i> </span>
+                                                    <span class="me-2"><i class="far fa-plus-square"></i> </span>
                                                     <span>Ajouter une série</span>
                                                 </a>
                                             </li>
+                                            
+                                     
                                        </ul>
                                     </div>
                                 </div>
                             </li>
+                                   {# CHARACTERS #}
+                            <li>
+                            <a class="nav-link px-3 sidebar-link" data-bs-toggle="collapse" href="#collapseExample2" role="button" aria-expanded="false" aria-controls="collapseExample2">
+                                <span class="me-2"><i class="fas fa-mask"></i> </span>
+                                <span>Personnages</span>
+                                <span class="right-icon ms-auto"> 
+                                    <i class="bi bi-chevron-down"></i>
+                                </span>
+                            </a>
+                                <div class="collapse" id="collapseExample2">
+                                    <div>
+                                    <ul class="navbar-nav ps-3">
+                                            <li>
+                                                <a href="{{path('backoffice_character_home')}}" class="nav-link px-3">
+                                                    <span class="me-2"> <i class="bi bi-person-lines-fill"></i> </span>
+                                                    <span>Liste</span>
+                                                </a>
+                                            </li>
+                                            <li>
+                                                <a href="{{path('backoffice_character_add')}}" class="nav-link px-3">
+                                                    <span class="me-2"><i class="fas fa-user-astronaut"></i> </span>
+                                                    <span>Ajouter un personnage</span>
+                                                </a>
+                                            </li>
+                                        </ul>
+                                    </div>
+                                </div>
+                            </li>
+                                {# CATEGORY #}
+                            <li>
+                            <a class="nav-link px-3 sidebar-link" data-bs-toggle="collapse" href="#collapseExample3" role="button" aria-expanded="false" aria-controls="collapseExample3">
+                                <span class="me-2"><i class="fas fa-theater-masks"></i> </span>
+                                <span>Catégories</span>
+                                <span class="right-icon ms-auto"> 
+                                    <i class="bi bi-chevron-down"></i>
+                                </span>
+                            </a>
+                                <div class="collapse" id="collapseExample3">
+                                    <div>
+                                    <ul class="navbar-nav ps-3">
+                                            <li>
+                                                <a href="{{path('backoffice_category_home')}}" class="nav-link px-3">
+                                                    <span class="me-2"> <i class="fas fa-clipboard-list"></i> </span>
+                                                    <span>Liste</span>
+                                                </a>
+                                            </li>
+                                            <li>
+                                                <a href="{{path('backoffice_category_add')}}" class="nav-link px-3">
+                                                    <span class="me-2"><i class="fas fa-puzzle-piece"></i> </span>
+                                                    <span>Ajouter une catégorie</span>
+                                                </a>
+                                            </li>
+                                        </ul>
+                                    </div>
+                                </div>
+                            </li>
+                             <li class="my-4">
+                                <hr class="dropdown-divider">
+                            </li> 
+                            <li>
+                                <div class="text-muted small fw-bold text-uppercase px-3">
+                                    Super Admin Section
+                                </div>
+                                {# UTILISATEURS #}
+                                <li>
+                              <a class="nav-link px-3 sidebar-link" data-bs-toggle="collapse" href="#collapseUsers" role="button" aria-expanded="false" aria-controls="collapseUsers">
+                                <span class="me-2"><i class="fas fa-users"></i> </span>
+                                <span>Utilisateurs</span>
+                                <span class="right-icon ms-auto"> 
+                                    <i class="bi bi-chevron-down"></i>
+                                </span>
+                              </a>
+                                <div class="collapse" id="collapseUsers">
+                                    <div>
+                                       <ul class="navbar-nav ps-3">
+                                            <li>
+                                                <a href="{{path('backoffice_tv_show_index')}}" class="nav-link px-3">
+                                                    <span class="me-2"> <i class="fas fa-photo-video"></i> </span>
+                                                    <span>Liste</span>
+                                                </a>
+                                            </li>
+                                            <li>
+                                                <a href="{{path('backoffice_tv_show_new')}}" class="nav-link px-3">
+                                                    <span class="me-2"><i class="far fa-plus-square"></i> </span>
+                                                    <span>Ajouter une série</span>
+                                                </a>
+                                            </li>
+                                            
+                                     
+                                       </ul>
+                                    </div>
+                                </div>
+                            </li>
+                            </li>
                         </ul>
-                    
                     </nav>
                 </div>
             </div>
 </div>
-
+{# 31'38 #}
         <!-- Contenu principal -->
         <div class="">
 
