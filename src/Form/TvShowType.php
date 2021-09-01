@@ -36,18 +36,10 @@ class TvShowType extends AbstractType
                     ])
                 ]
             ])
-            ->add('nbLikes')
             ->add('publishedAt', DateTimeType::class,[
                 'label'=>'Date de publication',
                 'input'=>'datetime_immutable',
                 'widget'=>'single_text'
-            ])
-            ->add('characters', EntityType::class, [
-                'class'=>Character::class,
-                'label'=>'Personnages',
-                'expanded'=>true,
-                'multiple'=>true,
-                'choice_label'=>'fullname'
             ])
             ->add('categories', EntityType::class,[
                 'class'=>Category::class,
@@ -69,6 +61,7 @@ class TvShowType extends AbstractType
     {
         $resolver->setDefaults([
             'data_class' => TvShow::class,
+            "allow_extra_fields" => true
         ]);
     }
 }

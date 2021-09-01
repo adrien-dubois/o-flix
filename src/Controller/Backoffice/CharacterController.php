@@ -3,8 +3,10 @@
 namespace App\Controller\Backoffice;
 
 use App\Entity\Character;
+use App\Form\CharacterTvType;
 use App\Form\CharacterType;
 use App\Repository\CharacterRepository;
+use App\Repository\TvShowRepository;
 use App\Service\ImageUploader;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
 use Symfony\Component\HttpFoundation\Request;
@@ -77,6 +79,50 @@ class CharacterController extends AbstractController
     }
 
     /**
+     * Add character to a TvShow just created
+     * 
+     * @Route("/add/tv/{id}", name="add_tv", methods={"GET","POST"})
+     *
+     * @return void
+     */
+    public function addToTv(Request $request, ImageUploader $uploader, $id, TvShowRepository $repository)
+    {
+        $character = new Character();
+        $tv = $repository->find($id);
+
+        $form = $this->createForm(CharacterTvType::class, $character);
+        $form->handleRequest($request);
+        
+        if($form->isSubmitted() && $form->isValid()){
+
+            $character->addTvshow($tv);
+
+            $newImage = $uploader->upload($form, 'imgBrut');
+            if($newImage){
+                $character->setImgUpload($newImage);
+            }
+
+            $em = $this->getDoctrine()->getManager();
+            $em->persist($character);
+            $em->flush();
+
+            $this->addFlash(
+                'success',
+                'Personnage ajouté avec succès'
+            );
+            $character = new Character();
+    
+            $form = $this->createForm(CharacterTvType::class, $character);
+
+        }
+
+        return $this->render('backoffice/character/tvadd.html.twig', [
+            'formView'=>$form->createView(),
+            
+        ]);
+    }
+
+    /**
      * Edit an existing character
      *
      * @Route("/update/{id}", name="update", requirements={"id"="\d+"} )
@@ -139,7 +185,7 @@ class CharacterController extends AbstractController
 
         $this->addFlash(
             'danger',
-            'Le personnage a bien été supprimée'
+            'Le personnage a bien été supprimé(e)'
         );
 
         return $this->redirectToRoute('backoffice_character_home');

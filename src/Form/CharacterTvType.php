@@ -16,7 +16,7 @@ use Symfony\Component\Form\FormBuilderInterface;
 use Symfony\Component\OptionsResolver\OptionsResolver;
 use Symfony\Component\Validator\Constraints\File;
 
-class CharacterType extends AbstractType
+class CharacterTvType extends AbstractType
 {
     public function buildForm(FormBuilderInterface $builder, array $options)
     {
@@ -66,15 +66,8 @@ class CharacterType extends AbstractType
                     ])
                 ]
             ])
-            ->add('tvshows', EntityType::class,[
-                    'class'=> TvShow::class,
-                    'label'=>'Choisir la série télé de votre personnage',
-                    'choice_label'=>'title',
-                    'multiple'=> true
-            ])
-
             ->add('submit', SubmitType::class,[
-                'label'=>'Envoyer',
+                'label'=>'Nouveau personnage',
                 'attr'=>[
                     'class'=>'btn btn-secondary mb-3'
                 ]

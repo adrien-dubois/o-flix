@@ -155,6 +155,8 @@ class Character
         return $this->tvshows;
     }
 
+ 
+
     public function addTvshow(TvShow $tvshow): self
     {
         if (!$this->tvshows->contains($tvshow)) {
@@ -168,6 +170,13 @@ class Character
     {
         $this->tvshows->removeElement($tvshow);
 
+        return $this;
+    }
+
+    public function setTvshows(string $tvshows): self
+    {
+        $this->tvshows = $tvshows;
+        
         return $this;
     }
 

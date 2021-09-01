@@ -49,12 +49,17 @@ class TvShowController extends AbstractController
             $entityManager->persist($tvShow);
             $entityManager->flush();
 
+            $id = $tvShow->getId();
+            
+
             $this->addFlash(
                 'success',
                 'La série TV a bien été crée'
             );
 
-            return $this->redirectToRoute('backoffice_tv_show_index', [], Response::HTTP_SEE_OTHER);
+            return $this->redirectToRoute('backoffice_character_add_tv', [
+                'id'=>$id
+            ], );
         }
 
         return $this->renderForm('backoffice/tv_show/new.html.twig', [
@@ -62,6 +67,7 @@ class TvShowController extends AbstractController
             'form' => $form,
         ]);
     }
+
 
     /**
      * @Route("/{id}", name="backoffice_tv_show_show", methods={"GET"})

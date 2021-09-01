@@ -16,44 +16,52 @@
         {% endif %}
         </div>
         <div class="row ">
-            <div class="col-md-4 mb-3"> 
+            <div class="col-md-3 mb-3"> 
 
                 {# CARD TV Shows#}
                     <div class="card text-white bg-custom mb-3 h-100" style=" box-shadow:8px 6px 10px rgba(0, 0, 0, 0.445);" >
-                        <div class="card-header fw-bold" >TV Shows</div>
+                        <div class="card-header fw-bold" >Série TV la plus likée</div>
                             <div class="card-body">
-                                <h5 class="card-title"></h5>
+                                <p class="card-text fw-bold">
+                                {{like.title}}</p> 
+                                <span class="fst-italic">Nombre de likes :</span> {{like.nbLikes}} <br>
+                                <span class="fst-italic">Ajoutée le :</span> {{like.createdAt ? like.createdAt|date('d-m-Y') : ''}}
+                                
+                                
+                            </div>
+                    </div>
+                {# CARD CLOSE #}
+
+            </div>
+
+
+             <div class="col-md-3 mb-3"> 
+
+                {# MOST RECENT #}
+                    <div class="card text-white bg-custom mb-3 h-100" style=" box-shadow:8px 6px 10px rgba(0, 0, 0, 0.445);" >
+                        <div class="card-header fw-bold" >Série la plus récente : </div>
+                            <div class="card-body">
+                                <p class="card-text fw-bold">
+                                {{recent.title}}</p> 
+                                <span class="fst-italic">Série crée le :</span> {{recent.publishedAt ? recent.publishedAt|date('d-m-Y') : ''}}
+                            </div>
+                    </div>
+                {# CARD CLOSE #}
+
+            </div>
+
+             <div class="col-md-3 mb-3"> 
+
+                {# CARD USERS #}
+                    <div class="card text-white bg-custom mb-3 h-100" style=" box-shadow:8px 6px 10px rgba(0, 0, 0, 0.445);" >
+                        <div class="card-header fw-bold" >Dernier utilisateur inscrit :</div>
+                            <div class="card-body">
                                 <p class="card-text">
-                                Gérer les séries TV depuis le panneau d'administration
+                                {{user.firstname}} {{user.lastname}} <br>
+                                {{user.email}}
+                                <hr>
+                                <span class="fst-italic">Inscrit le :</span> {{user.createdAt ? user.createdAt|date('d-m-Y') : ''}}  
                                 </p>
-                            </div>
-                    </div>
-                {# CARD CLOSE #}
-
-            </div>
-
-             <div class="col-md-4 mb-3"> 
-
-                {# CARD CHARACTERS #}
-                    <div class="card text-white bg-custom mb-3 h-100" style=" box-shadow:8px 6px 10px rgba(0, 0, 0, 0.445);" >
-                        <div class="card-header fw-bold" >Personnages</div>
-                            <div class="card-body">
-                                <h5 class="card-title">Secondary card title</h5>
-                                <p class="card-text">Some quick example text to build on the card title and make up the bulk of the card's content.</p>
-                            </div>
-                    </div>
-                {# CARD CLOSE #}
-
-            </div>
-
-             <div class="col-md-4 mb-3"> 
-
-                {# CARD CATEGORIES #}
-                    <div class="card text-white bg-custom mb-3 h-100" style=" box-shadow:8px 6px 10px rgba(0, 0, 0, 0.445);" >
-                        <div class="card-header fw-bold" >Catégories </div>
-                            <div class="card-body">
-                                <h5 class="card-title">Secondary card title</h5>
-                                <p class="card-text">Some quick example text to build on the card title and make up the bulk of the card's content.</p>
                             </div>
                     </div>
                 {# CARD CLOSE #}
