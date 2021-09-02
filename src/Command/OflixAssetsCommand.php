@@ -12,13 +12,13 @@ use Symfony\Component\Console\Style\SymfonyStyle;
 class OflixAssetsCommand extends Command
 {
     protected static $defaultName = 'oflix:assets';
-    protected static $defaultDescription = 'Permets la création de deux dossiers : public/css, public/images';
+    protected static $defaultDescription = 'Permets la création de dossier asset';
 
     protected function configure(): void
     {
         $this
-            ->addArgument('folder', InputArgument::OPTIONAL, 'Argument description')
-            ->addOption('option1', null, InputOption::VALUE_NONE, 'Option description')
+            ->addArgument('folder', InputArgument::REQUIRED, 'Le dossier à créer')
+            ->addOption('addToGit', null, InputOption::VALUE_NONE, 'Option description')
         ;
     }
 
@@ -28,15 +28,18 @@ class OflixAssetsCommand extends Command
         $folder = $input->getArgument('folder');
 
         if ($folder) {
-            mkdir('public/' . $folder);
+            $folderToCreate = 'public/' . $folder;
+            mkdir($folderToCreate);
+
+            $optionGit = $input->getOption('addToGit');
+            if($optionGit){
+                $keepFile = $folderToCreate . '/.keep';
+
+                file_put_contents($keepFile, 'Je suis ton père');
+            }
+
             $io->note('Le dossier ' . $folder . ' a bien été créé');
         }
-
-        if ($input->getOption('option1')) {
-            // ...
-        }
-
-  
 
         $io->success('Le dossier d\'asset a bien été créé');
 
