@@ -37,34 +37,33 @@ class TvShowController extends AbstractController
      * Methods which display a serie by his ID
      *
      * @Route("/{id}", name="single", requirements={"id"="\d+"})
+     * @Route("/{slug}", name="single_slug")
      * 
-     * @param [int] $id
      * @param TvShowRepository $tvShowRepository
      * @return Response
      */
-    public function singleShow($id, TvShowRepository $tvShowRepository, SeasonRepository $seasonRepository, OmdbApi $omdbApi): Response
+    public function singleShow( TvShowRepository $tvShowRepository, SeasonRepository $seasonRepository, OmdbApi $omdbApi, TvShow $tvShow): Response
     {
-    
-        // Get the right serie with the asked ID
-        $show = $tvShowRepository->find($id);
 
         // TEST OMDB API
         // $tvShowDataArray = $omdbApi->fetch($show->getTitle());
         // dd($tvShowDataArray);
         
+        $id = $tvShow->getId();
+
         // Get seasons in relation with the good show
         $season = $seasonRepository->findBy(['tvShow' => $id]);
 
-        dump($show);
+        
         
         // If someone ask an ID doesn't exists, send a 404
-        if(!$show){
+        if(!$tvShow){
             throw $this->createNotFoundException('La série demandée n\'existe pas');
         }      
         
         // dump($show);
         return $this->render('tv_show/single.html.twig',[
-            'show'=>$show,
+            'show'=>$tvShow,
             'seasons'=>$season,
         ]);
     }

@@ -22,12 +22,12 @@
                     {% for tvshow in tvshows %}
                         <div class="col">
                             <div class="card shadow-sm">
-                                <a href="{{path('show_single', {id: tvshow.id})}}"><img src=" {{asset('uploads/') ~ tvshow.image}} " alt="" class="img-fluid"></a>
+                                <a href="{{path('show_single_slug', {slug: tvshow.slug})}}"><img src=" {{asset('uploads/') ~ tvshow.image}} " alt="" class="img-fluid"></a>
                                 <div class="card-body">
                                     <p class="card-text"> {{tvshow.synopsis}} </p>
                                     <div class="d-flex justify-content-between align-items-center">
                                         <div class="btn-group">
-                                            <a href=" {{path('show_single', {id: tvshow.id})}} " class="btn btn-sm btn-outline-secondary">Voir</a>
+                                            <a href=" {{path('show_single_slug', {slug: tvshow.slug})}} " class="btn btn-sm btn-outline-secondary">Voir</a>
                                         {# EDIT BUTTONS FOR ADMIN #}
                                         {% if is_granted("ROLE_ADMIN") %}
                                             <a href=" {{path('backoffice_tv_show_edit', {id: tvshow.id})}} " class="btn btn-sm btn-outline-secondary">Editer</a>

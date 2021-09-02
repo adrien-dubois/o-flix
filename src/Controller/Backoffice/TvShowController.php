@@ -14,7 +14,7 @@ use Sensio\Bundle\FrameworkExtraBundle\Configuration\IsGranted;
 use Symfony\Component\String\Slugger\SluggerInterface;
 
 /**
- * @Route("/backoffice/tvshow", requirements={"id":"\d+"})
+ * @Route("/backoffice/tvshow")
  * @IsGranted("ROLE_ADMIN")
  */
 class TvShowController extends AbstractController
@@ -32,7 +32,7 @@ class TvShowController extends AbstractController
     /**
      * @Route("/new", name="backoffice_tv_show_new", methods={"GET","POST"}, priority=2)
      */
-    public function new(Request $request, ImageUploader $uploader): Response
+    public function new(Request $request, ImageUploader $uploader, SluggerInterface $slugger): Response
     {
         $tvShow = new TvShow();
         $form = $this->createForm(TvShowType::class, $tvShow);
@@ -43,6 +43,12 @@ class TvShowController extends AbstractController
             $newImagename = $uploader->upload($form, 'imgBrut');
             if($newImagename){
                 $tvShow->setImage($newImagename);
+            }
+
+            $title = $tvShow->getTitle();
+            $slug = $slugger->slug(strtolower($title));
+            if($slug){
+                $tvShow->setSlug($slug);
             }
 
             $entityManager = $this->getDoctrine()->getManager();
@@ -70,8 +76,9 @@ class TvShowController extends AbstractController
 
 
     /**
-     * @Route("/{id}", name="backoffice_tv_show_show", methods={"GET"})
-     * @Route("/{slug}", name="backoffice_tv_show_show_slug")
+     * @Route("/{id}", name="backoffice_tv_show_show", methods={"GET"}, requirements={"id":"\d+"})
+     * @Route("/{slug}", name="backoffice_tv_show_slug")
+     * 
      */
     public function show(TvShow $tvShow): Response
     {
@@ -81,7 +88,8 @@ class TvShowController extends AbstractController
     }
 
     /**
-     * @Route("/{id}/edit", name="backoffice_tv_show_edit", methods={"GET","POST"})
+     * @Route("/{id}/edit", name="backoffice_tv_show_edit", methods={"GET","POST"}, requirements={"id":"\d+"})
+     * @Route("/{slug}/edit", name="backoffice_tv_show_edit_slug", methods={"GET","POST"})
      */
     public function edit(Request $request, TvShow $tvShow, SluggerInterface $sluggerInterface, ImageUploader $uploader): Response
     {

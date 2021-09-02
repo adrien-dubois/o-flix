@@ -48,12 +48,6 @@ class TvShowType extends AbstractType
                 'multiple'=>true,
                 'choice_label'=>'name'
             ])
-            ->add('submit', SubmitType::class,[
-                'label'=>'Ajouter',
-                'attr'=>[
-                    'class'=>'btn btn-dark mb-3'
-                ]
-            ])
         ;
     }
 

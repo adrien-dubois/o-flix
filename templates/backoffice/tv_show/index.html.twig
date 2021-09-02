@@ -34,8 +34,8 @@
                 <td>{{ tv_show.nbLikes }}</td>
                 <td>{{ tv_show.publishedAt ? tv_show.publishedAt|date('Y-m-d H:i:s') : '' }}</td>
                 <td>
-                    <a style="text-decoration: none; color: white;" href="{{ path('backoffice_tv_show_show', {'id': tv_show.id}) }}" class="card-link badge rounded-pill bg-success">Détail</a>
-                    <a style="text-decoration: none; color: white; " href="{{ path('backoffice_tv_show_edit', {'id': tv_show.id}) }}" class="card-link badge rounded-pill bg-danger mx-2">Edit</a>
+                    <a style="text-decoration: none; color: white;" href="{{ path('backoffice_tv_show_slug', {'slug': tv_show.slug}) }}" class="card-link badge rounded-pill bg-success">Détail</a>
+                    <a style="text-decoration: none; color: white; " href="{{ path('backoffice_tv_show_edit_slug', {'slug': tv_show.slug}) }}" class="card-link badge rounded-pill bg-danger mx-2">Edit</a>
                     
                 </td>
             </tr>
