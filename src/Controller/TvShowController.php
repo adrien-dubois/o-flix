@@ -5,6 +5,7 @@ namespace App\Controller;
 use App\Entity\TvShow;
 use App\Repository\SeasonRepository;
 use App\Repository\TvShowRepository;
+use App\Service\OmdbApi;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\Response;
@@ -41,11 +42,15 @@ class TvShowController extends AbstractController
      * @param TvShowRepository $tvShowRepository
      * @return Response
      */
-    public function singleShow($id, TvShowRepository $tvShowRepository, SeasonRepository $seasonRepository): Response
+    public function singleShow($id, TvShowRepository $tvShowRepository, SeasonRepository $seasonRepository, OmdbApi $omdbApi): Response
     {
     
         // Get the right serie with the asked ID
         $show = $tvShowRepository->find($id);
+
+        // TEST OMDB API
+        // $tvShowDataArray = $omdbApi->fetch($show->getTitle());
+        // dd($tvShowDataArray);
         
         // Get seasons in relation with the good show
         $season = $seasonRepository->findBy(['tvShow' => $id]);
