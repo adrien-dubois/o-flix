@@ -75,7 +75,7 @@ class PosterCommand extends Command
             if(isset($tvShowData['Poster'])) {
                 $tvShow->setImage($tvShowData['Poster']);
             }
-            $io->text('Mise à jour de la série' . $title . 'en cours...');
+            $io->text('Mise à jour de la série' . $title . ' en cours...');
         }
 
         
