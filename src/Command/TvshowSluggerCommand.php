@@ -20,8 +20,8 @@ class TvshowSluggerCommand extends Command
     protected function configure(): void
     {
         $this
-            ->addArgument('arg1', InputArgument::OPTIONAL, 'Argument description')
-            ->addOption('option1', null, InputOption::VALUE_NONE, 'Option description')
+            ->addArgument('id', InputArgument::OPTIONAL, 'ID de la série du slug à mettre à jour')
+            ->addOption('update', null, InputOption::VALUE_NONE, 'Mets à jour la propriété updatedAt')
         ;
     }
 
@@ -43,28 +43,31 @@ class TvshowSluggerCommand extends Command
     protected function execute(InputInterface $input, OutputInterface $output): int
     {
         $io = new SymfonyStyle($input, $output);
-        // $arg1 = $input->getArgument('arg1');
+        $id = $input->getArgument('id');
 
-        // if ($arg1) {
-        //     $io->note(sprintf('You passed an argument: %s', $arg1));
-        // }
-
-        // if ($input->getOption('option1')) {
-        //     ...
-        // }
-
-        $tvShowList = $this->repository->findAll();
-
-        foreach($tvShowList as $tvShow){
-            $title = $tvShow->getTitle();
+        if ($id) {
+            $tvShowSingle = $this->repository->find($id);
+            $title = $tvShowSingle->getTitle();
             $slug = $this->slugger->slug(strtolower($title));
-            if (isset($slug)) {
-                $tvShow->setSlug($slug);
+            if(isset($slug)){
+                $tvShowSingle->setSlug($slug);
             }
-            $io->text('Création du slug de ' . $title);
+            $io->text('Mise à jour du slug de la série ' . $title);
+
+        } else {
+
+            $tvShowList = $this->repository->findAll();
+
+            foreach ($tvShowList as $tvShow) {
+                $title = $tvShow->getTitle();
+                $slug = $this->slugger->slug(strtolower($title));
+                if (isset($slug)) {
+                    $tvShow->setSlug($slug);
+                }
+                $io->text('Création du slug de ' . $title);
+            }
         }
         $this->em->flush();
-        
         $io->success('Création et mise à jour des slugs réussie');
 
         return Command::SUCCESS;
