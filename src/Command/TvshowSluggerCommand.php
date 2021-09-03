@@ -21,7 +21,7 @@ class TvshowSluggerCommand extends Command
     {
         $this
             ->addArgument('id', InputArgument::OPTIONAL, 'ID de la série du slug à mettre à jour')
-            ->addOption('update', null, InputOption::VALUE_NONE, 'Mets à jour la propriété updatedAt')
+            ->addOption('update', '-u' , InputOption::VALUE_NONE, 'Mets à jour la propriété updatedAt')
         ;
     }
 
@@ -44,6 +44,7 @@ class TvshowSluggerCommand extends Command
     {
         $io = new SymfonyStyle($input, $output);
         $id = $input->getArgument('id');
+        $update = $input->getOption('update');
 
         if ($id) {
             $tvShowSingle = $this->repository->find($id);
@@ -52,6 +53,11 @@ class TvshowSluggerCommand extends Command
             if(isset($slug)){
                 $tvShowSingle->setSlug($slug);
             }
+            $optionUpdate = $input->getOption('update');
+            if($optionUpdate){
+                $tvShowSingle->setUpdatedAt(new \DateTimeImmutable());
+            }
+
             $io->text('Mise à jour du slug de la série ' . $title);
 
         } else {
