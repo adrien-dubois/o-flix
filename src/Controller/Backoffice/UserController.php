@@ -109,12 +109,12 @@ class UserController extends AbstractController
         $form->handleRequest($request);
         
         if($form->isSubmitted() && $form->isValid()){
-            $user->setPassword(
-                $userPasswordHasherInterface->hashPassword(
-                    $user,
-                    $form->get('plainPassword')->getData()
-                )
-            );
+            // $user->setPassword(
+            //     $userPasswordHasherInterface->hashPassword(
+            //         $user,
+            //         $form->get('plainPassword')->getData()
+            //     )
+            // );
             $this->getDoctrine()->getManager()->flush();
 
             $this->addFlash(
