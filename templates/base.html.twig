@@ -17,10 +17,11 @@
     <body>
         {% include "partials/_navbar.html.twig" %}
         {% include "partials/_flash.html.twig" %}
-        </header>
 
+        
         {% block body %} 
         {% endblock %}
+        
         {% block footer %}
         {% include "partials/_footer.html.twig" %}
         {% endblock %}
@@ -34,6 +35,7 @@
             return new bootstrap.Tooltip(tooltipTriggerEl)
             })
             </script>
+            
         {% endblock %}
     </body>
 </html>
