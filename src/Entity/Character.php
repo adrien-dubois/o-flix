@@ -48,7 +48,7 @@ class Character
 
     /**
      * @ORM\Column(type="integer", nullable=true)
-     * @Assert\NotBlank(message="Ajouter un âge")
+     * 
      */
     private $age;
 

@@ -11,7 +11,7 @@ class MaintenanceSubscriber implements EventSubscriberInterface
     {
         $response = $event->getResponse();
         $content = $response->getContent();
-        dump($event);
+        // dump($_ENV);
         $body = str_replace(
             "</nav>", 
             $_ENV['BONUS_MESSAGE'], 
