@@ -11,19 +11,13 @@ class MaintenanceSubscriber implements EventSubscriberInterface
     {
         $response = $event->getResponse();
         $content = $response->getContent();
-        // dump($content);
+        dump($event);
         $body = str_replace(
-            "<body>", 
-            '<body> 
-            <div class="alert alert-danger alert-dismissible fade show mt-5 text-center" role="alert">
-            <strong>Maintenance prévue!</strong> Le mardi 7 septembre à 17h00.
-            <button type="button" class="btn-close" data-bs-dismiss="alert" aria-label="Close"></button>
-            </div>
-            ', 
+            "</nav>", 
+            $_ENV['BONUS_MESSAGE'], 
             $content
         );
         $response->setContent($body);
-
     }
 
     public static function getSubscribedEvents()

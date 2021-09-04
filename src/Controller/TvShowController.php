@@ -34,15 +34,27 @@ class TvShowController extends AbstractController
     }
 
     /**
+     * Method displaying favorites page
+     * 
+     * @Route("/favorite", name="fav")
+     *
+     * @return void
+     */
+    public function favs()
+    {
+        return $this->render('tv_show/favs.html.twig');
+    }
+
+    /**
      * Methods which display a serie by his ID
      *
      * @Route("/{id}", name="single", requirements={"id"="\d+"})
      * @Route("/{slug}", name="single_slug")
      * 
-     * @param TvShowRepository $tvShowRepository
+     * @param TvShowRepository $seasonRepository
      * @return Response
      */
-    public function singleShow( TvShowRepository $tvShowRepository, SeasonRepository $seasonRepository, OmdbApi $omdbApi, TvShow $tvShow): Response
+    public function singleShow(SeasonRepository $seasonRepository, OmdbApi $omdbApi, TvShow $tvShow): Response
     {
 
         // TEST OMDB API
@@ -100,17 +112,7 @@ class TvShowController extends AbstractController
     }
 
 
-    /**
-     * Method displaying favorites page
-     * 
-     * @Route("/favorite", name="fav")
-     *
-     * @return void
-     */
-    public function favs()
-    {
-        return $this->render('tv_show/favs.html.twig');
-    }
+
 
 }
  

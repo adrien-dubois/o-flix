@@ -131,7 +131,7 @@ body {
   .roundimg{
     float: right;
     width : 150px; height : 150px;
-    border: 2px solid grey;
+    border: 1px solid black;
     box-shadow:8px 6px 10px rgba(0, 0, 0, 0.445);
     -moz-border-radius : 75px;
     -webkit-border-radius : 75px;
@@ -189,4 +189,8 @@ body {
 
 .shadoo{
   box-shadow:8px 6px 10px rgba(0, 0, 0, 0.445);
+}
+
+#al{
+  margin: 0;
 }
