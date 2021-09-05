@@ -35,6 +35,7 @@ class TvShowController extends AbstractController
     public function new(Request $request, ImageUploader $uploader, SluggerInterface $slugger): Response
     {
         $tvShow = new TvShow();
+        
         $form = $this->createForm(TvShowType::class, $tvShow);
         $form->handleRequest($request);
 

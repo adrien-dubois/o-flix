@@ -11,6 +11,7 @@ use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\Response;
 use Symfony\Component\Routing\Annotation\Route;
 use Sensio\Bundle\FrameworkExtraBundle\Configuration\IsGranted;
+use Symfony\Component\HttpKernel\Exception\NotFoundHttpException;
 
 /**
  * @Route("/tvshow", name="show_")
@@ -25,7 +26,7 @@ class TvShowController extends AbstractController
     public function index(TvShowRepository $tvShowRepository): Response
     {   
         return $this->render('tv_show/list.html.twig', [
-            'tvshows' => $tvShowRepository->findAll(),
+            'tvshows' => $tvShowRepository->findBy([],['title'=>'ASC']),
         ]);
     }
 
@@ -36,9 +37,56 @@ class TvShowController extends AbstractController
      *
      * @return void
      */
-    public function favs()
+    public function favs(TvShowRepository $tvShowRepository)
     {
-        return $this->render('tv_show/favs.html.twig');
+
+        return $this->render('tv_show/favs.html.twig',[
+            'tvshows'=>$tvShowRepository->findAll()
+        ]);
+    }
+
+    /**
+     * @Route("/favorite/add/{id}", name="fav_add", requirements={"id"="\d+"})
+     *
+     * @param TvShow $tvShow
+     * @param [type] $id
+     * @return void
+     */
+    public function addFav(TvShow $tvShow, Request $request)
+    {
+        if(!$tvShow){
+            throw new NotFoundHttpException('Pas de série avec cet identifiant');
+        }
+        $tvShow->addFavori($this->getUser());
+        $em = $this->getDoctrine()->getManager();
+        $em->persist($tvShow);
+        $em->flush();
+
+        $referer = filter_var($request->headers->get('referer'), FILTER_SANITIZE_URL);
+
+        return $this->redirect($referer);
+    }
+
+    /**
+     * @Route("/favorite/remove/{id}", name="fav_remove", requirements={"id"="\d+"})
+     *
+     * @param TvShow $tvShow
+     * @param [type] $id
+     * @return void
+     */
+    public function removeFav(TvShow $tvShow, Request $request)
+    {
+        if(!$tvShow){
+            throw new NotFoundHttpException('Pas de série avec cet identifiant');
+        }
+        $tvShow->removeFavori($this->getUser());
+        $em = $this->getDoctrine()->getManager();
+        $em->persist($tvShow);
+        $em->flush();
+
+        $referer = filter_var($request->headers->get('referer'), FILTER_SANITIZE_URL);
+
+        return $this->redirect($referer);
     }
 
     /**

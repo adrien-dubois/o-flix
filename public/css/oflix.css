@@ -194,3 +194,15 @@ body {
 #al{
   margin: 0;
 }
+
+.nolink, .nolink:hover, .nolink a, .nolink:active, .nolink:visited{
+  text-decoration: none;
+  color: red;
+}
+
+.fds{
+  position: absolute;
+  right: 20px;
+}
+
+/* a:hover, a:visited, a:active */
