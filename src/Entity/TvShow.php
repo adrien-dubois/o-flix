@@ -84,12 +84,18 @@ class TvShow
      */
     private $slug;
 
+    /**
+     * @ORM\ManyToMany(targetEntity=User::class, inversedBy="favoris")
+     */
+    private $favoris;
+
     public function __construct()
     {
         $this->season = new ArrayCollection();
         $this->characters = new ArrayCollection();
         $this->categories = new ArrayCollection();
         $this->createdAt = new \DateTimeImmutable();
+        $this->favoris = new ArrayCollection();
     }
 
     public function getId(): ?int
@@ -270,6 +276,30 @@ class TvShow
     public function setSlug(?string $slug): self
     {
         $this->slug = $slug;
+
+        return $this;
+    }
+
+    /**
+     * @return Collection|User[]
+     */
+    public function getFavoris(): Collection
+    {
+        return $this->favoris;
+    }
+
+    public function addFavori(User $favori): self
+    {
+        if (!$this->favoris->contains($favori)) {
+            $this->favoris[] = $favori;
+        }
+
+        return $this;
+    }
+
+    public function removeFavori(User $favori): self
+    {
+        $this->favoris->removeElement($favori);
 
         return $this;
     }

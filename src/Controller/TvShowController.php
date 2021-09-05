@@ -23,13 +23,9 @@ class TvShowController extends AbstractController
      * @Route("/", name="list")
      */
     public function index(TvShowRepository $tvShowRepository): Response
-    {
-
-        // Get all the series from DB
-        $tvshows = $tvShowRepository->findAll();
-
+    {   
         return $this->render('tv_show/list.html.twig', [
-            'tvshows' => $tvshows,
+            'tvshows' => $tvShowRepository->findAll(),
         ]);
     }
 
