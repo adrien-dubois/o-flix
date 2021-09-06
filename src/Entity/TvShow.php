@@ -8,6 +8,7 @@ use Doctrine\Common\Collections\ArrayCollection;
 use Doctrine\Common\Collections\Collection;
 use Doctrine\ORM\Mapping as ORM;
 use Symfony\Component\Validator\Constraints as Assert;
+use Symfony\Component\Serializer\Annotation\Groups;
 
 /**
  * @ORM\Entity(repositoryClass=TvShowRepository::class)
@@ -18,29 +19,35 @@ class TvShow
      * @ORM\Id
      * @ORM\GeneratedValue
      * @ORM\Column(type="integer")
+     * 
+     * @Groups({"tvshow_list", "tvshow_detail"})
      */
     private $id;
 
     /**
      * @ORM\Column(type="string", length=255)
      * @Assert\NotBlank(message="Ajouter un titre")
+     * @Groups({"tvshow_list", "tvshow_detail"})
      */
     private $title;
 
     /**
      * @ORM\Column(type="text")
      * @Assert\NotBlank(message="Ajouter un synopsis")
+     * @Groups({"tvshow_list", "tvshow_detail"})
      */
     private $synopsis;
 
     /**
      * @ORM\Column(type="string", length=255)
      * Ajouter une image
+     * @Groups({"tvshow_list", "tvshow_detail"})
      */
     private $image;
 
     /**
      * @ORM\Column(type="integer", nullable=true)
+     * @Groups({"tvshow_list", "tvshow_detail"})
      * 
      */
     private $nbLikes;
@@ -48,16 +55,19 @@ class TvShow
     /**
      * @ORM\Column(type="datetime_immutable", nullable=true)
      * @Assert\NotBlank(message="Date de publication")
+     * @Groups({"tvshow_list", "tvshow_detail"})
      */
     private $publishedAt;
 
     /**
      * @ORM\Column(type="datetime_immutable")
+     * @Groups({"tvshow_list", "tvshow_detail"})
      */
     private $createdAt;
 
     /**
      * @ORM\Column(type="datetime_immutable", nullable=true)
+     * @Groups({"tvshow_list", "tvshow_detail"})
      */
     private $updatedAt;
 
@@ -75,12 +85,14 @@ class TvShow
     /**
      * @ORM\ManyToMany(targetEntity=Category::class, inversedBy="tvShows")
      * @Assert\NotBlank(message="Ajouter des catégories")
+     * @Groups({"tvshow_list", "tvshow_detail"})
      * 
      */
     private $categories;
 
     /**
      * @ORM\Column(type="string", length=255, nullable=true)
+     * @Groups({"tvshow_list", "tvshow_detail"})
      */
     private $slug;
 
