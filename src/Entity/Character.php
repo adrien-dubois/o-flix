@@ -8,6 +8,7 @@ use Doctrine\Common\Collections\ArrayCollection;
 use Doctrine\Common\Collections\Collection;
 use Doctrine\ORM\Mapping as ORM;
 use Symfony\Component\Validator\Constraints as Assert;
+use Symfony\Component\Serializer\Annotation\Groups;
 
 /**
  * @ORM\Entity(repositoryClass=CharacterRepository::class)
@@ -19,30 +20,35 @@ class Character
      * @ORM\Id
      * @ORM\GeneratedValue
      * @ORM\Column(type="integer")
+     * @Groups({"character_list", "character_detail"})
      */
     private $id;
 
     /**
      * @ORM\Column(type="string", length=255)
      * @Assert\NotBlank(message="Ajouter un prénom")
+     * @Groups({"character_list", "character_detail"})
      */
     private $firstname;
 
     /**
      * @ORM\Column(type="string", length=255)
      * @Assert\NotBlank(message="Ajouter un nom au personnage")
+     * @Groups({"character_list", "character_detail"})
      */
     private $lastname;
 
     /**
      * @ORM\Column(type="string", length=255)
      * @Assert\NotBlank(message="Renseigner le sexe du personnage")
+     * @Groups({"character_list", "character_detail"})
      */
     private $gender;
 
     /**
      * @ORM\Column(type="text", nullable=true)
      * @Assert\NotBlank(message="Merci de donner la biographie de votre personnage")
+     * 
      */
     private $bio;
 
@@ -55,11 +61,13 @@ class Character
     /**
      * @ORM\ManyToMany(targetEntity=TvShow::class, inversedBy="characters")
      * @Assert\NotBlank(message="Séléctionnez la série à laquelle apartient votre personnage")
+     * @Groups({"character_list", "character_detail"})
      */
     private $tvshows;
 
     /**
      * @ORM\Column(type="string", length=255)
+     * @Groups({"character_list", "character_detail"})
      */
     private $truename;
 

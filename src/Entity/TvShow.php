@@ -27,7 +27,7 @@ class TvShow
     /**
      * @ORM\Column(type="string", length=255)
      * @Assert\NotBlank(message="Ajouter un titre")
-     * @Groups({"tvshow_list", "tvshow_detail"})
+     * @Groups({"tvshow_list", "tvshow_detail", "character_list", "character_detail"})
      */
     private $title;
 
