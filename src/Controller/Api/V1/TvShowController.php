@@ -8,10 +8,11 @@ use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\Response;
 use Symfony\Component\Routing\Annotation\Route;
+use Symfony\Component\Serializer\Normalizer\AbstractNormalizer;
 use Symfony\Component\Serializer\SerializerInterface;
 
 /**
- * @Route("/api/v1/tvshows", name="api_v1_tvshow_")
+ * @Route("/api/v1/tvshows", name="api_v1_tvshow_", requirements={"id"="\d+"})
  */
 class TvShowController extends AbstractController
 {
@@ -63,7 +64,7 @@ class TvShowController extends AbstractController
      * 
      * @Route("/", name="add", methods={"POST"})
      *
-     * @return void
+     * @return JsonResponse
      */
     public function add(Request $request, SerializerInterface $serializer)
     {
@@ -82,4 +83,65 @@ class TvShowController extends AbstractController
 
         return $this->json($tvShow, 201);
     }
+
+    /**
+     * Can edit an existing show by its ID
+     * 
+     * @Route("/{id}", name="edit", methods={"PUT", "PATCH"})
+     *
+     * @return JsonResponse
+     */
+    public function edit(int $id, TvShowRepository $tvShowRepository, Request $request, SerializerInterface $serializer)
+    {
+        $jsonData = $request->getContent();
+        
+        $tvShow = $tvShowRepository->find($id);
+        if(!$tvShow){
+            return $this->json([
+                'error' => 'La série TV n\'existe pas'
+            ], 404
+            );
+        }
+
+        $tvShowDatas = $serializer->deserialize($jsonData, TvShow::class, 'json', [AbstractNormalizer::OBJECT_TO_POPULATE=>$tvShow]);
+
+        $em = $this->getDoctrine()->getManager();
+        $em->persist($tvShowDatas);
+        $em->flush();
+
+        return $this->json($tvShowDatas, 200, [], [
+            'groups' => 'tvshow_detail'
+        ]);
+    }
+
+    /**
+     * To delete a show by its ID
+     * 
+     * @Route("/{id}", name="delete", methods={"DELETE"})
+     *
+     * @param integer $id
+     * @param TvShowRepository $tvShowRepository
+     * @param Request $request
+     * @return void
+     */
+    public function delete(int $id, TvShowRepository $tvShowRepository, Request $request)
+    {
+        $tvShow = $tvShowRepository->find($id);
+        if(!$tvShow){
+            return $this->json([
+                'error' => 'Cette série TV n\'existe pas'
+            ],404
+        );
+        }
+
+        $em = $this->getDoctrine()->getManager();
+        $em->remove($tvShow);
+        $em->flush();
+
+        return $this->json([
+            'ok' => 'La série a bien été effacée'
+        ],200
+    );
+    }
 }
+

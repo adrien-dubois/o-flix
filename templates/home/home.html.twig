@@ -55,8 +55,11 @@
                                 <p class="card-text"> {{ show.synopsis }} </p>
                                 <div class="d-flex justify-content-between align-items-center">
                                     <div class="btn-group">
-                                        <a href="{{path('show_single', {id: show.id})}}" class="btn btn-sm btn-outline-secondary">Voir</a>
+                                    {% if app.user %}
+                                    {% else %}
+                                        <a href="{{path('show_single', {id: show.id})}}" data-bs-toggle="tooltip" data-bs-placement="bottom" title="Connectez-vous pour voir la série" class="btn btn-sm btn-outline-secondary">Voir</a>
                                         {# EDIT BUTTONS FOR ADMIN #}
+                                        {% endif %}
                                         {% if is_granted("ROLE_ADMIN") %}
                                         <a href=" {{path('backoffice_tv_show_edit', {id: show.id})}} " class="btn btn-sm btn-outline-secondary">Editer</a>
                                         {% endif %}
