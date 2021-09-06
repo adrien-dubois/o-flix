@@ -124,7 +124,7 @@ class TvShowController extends AbstractController
      * @param Request $request
      * @return void
      */
-    public function delete(int $id, TvShowRepository $tvShowRepository, Request $request)
+    public function delete(int $id, TvShowRepository $tvShowRepository)
     {
         $tvShow = $tvShowRepository->find($id);
         if(!$tvShow){
