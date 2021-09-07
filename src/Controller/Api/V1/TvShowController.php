@@ -10,6 +10,7 @@ use Symfony\Component\HttpFoundation\Response;
 use Symfony\Component\Routing\Annotation\Route;
 use Symfony\Component\Serializer\Normalizer\AbstractNormalizer;
 use Symfony\Component\Serializer\SerializerInterface;
+use Symfony\Component\Validator\Validator\ValidatorInterface;
 
 /**
  * @Route("/api/v1/tvshows", name="api_v1_tvshow_", requirements={"id"="\d+"})
@@ -66,7 +67,7 @@ class TvShowController extends AbstractController
      *
      * @return JsonResponse
      */
-    public function add(Request $request, SerializerInterface $serializer)
+    public function add(Request $request, SerializerInterface $serializer, ValidatorInterface $validator)
     {
         // we take back the JSON
         $jsonData = $request->getContent();
@@ -76,6 +77,14 @@ class TvShowController extends AbstractController
         // Second : The type of object we want 
         // Last : Start type
         $tvShow = $serializer->deserialize($jsonData, TvShow::class, 'json');
+
+        // We validate the datas stucked in $tvShow on criterias of annotations' Entity @assert
+        $errors = $validator->validate($tvShow);
+
+        // If the errors array is not empty, we return an error code 400 that is a Bad Request
+        if(count($errors) > 0) {
+            return $this->json($errors, 400);
+        }
 
         $em = $this->getDoctrine()->getManager();
         $em->persist($tvShow);
@@ -98,18 +107,16 @@ class TvShowController extends AbstractController
         $tvShow = $tvShowRepository->find($id);
         if(!$tvShow){
             return $this->json([
-                'error' => 'La série TV n\'existe pas'
+                'errors' => ['message'=>'La série TV n\'existe pas']
             ], 404
             );
         }
 
-        $tvShowDatas = $serializer->deserialize($jsonData, TvShow::class, 'json', [AbstractNormalizer::OBJECT_TO_POPULATE=>$tvShow]);
+        $serializer->deserialize($jsonData, TvShow::class, 'json', [AbstractNormalizer::OBJECT_TO_POPULATE=>$tvShow]);
 
-        $em = $this->getDoctrine()->getManager();
-        $em->persist($tvShowDatas);
-        $em->flush();
+        $this->getDoctrine()->getManager()->flush();
 
-        return $this->json($tvShowDatas, 200, [], [
+        return $this->json(["message"=>"La série TV a bien été modifié"], 200, [], [
             'groups' => 'tvshow_detail'
         ]);
     }

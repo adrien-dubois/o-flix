@@ -11,6 +11,7 @@ use Symfony\Component\HttpFoundation\Response;
 use Symfony\Component\Routing\Annotation\Route;
 use Symfony\Component\Serializer\Normalizer\AbstractNormalizer;
 use Symfony\Component\Serializer\SerializerInterface;
+use Symfony\Component\Validator\Validator\ValidatorInterface;
 
 /**
  * @Route("/api/v1/characters", name="api_v1_character_", requirements={"id"="\d+"})
@@ -67,11 +68,16 @@ class CharacterController extends AbstractController
      * @param SerializerInterface $serializer
      * @return void
      */
-    public function add(Request $request, SerializerInterface $serializer)
+    public function add(Request $request, SerializerInterface $serializer, ValidatorInterface $validator)
     {
         $jsonData = $request->getContent();
 
         $characters = $serializer->deserialize($jsonData, Character::class, 'json');
+
+        $errors = $validator->validate($characters);
+        if(count($errors) > 0) {
+            return $this->json($errors, 400);
+        }
 
         $em = $this->getDoctrine()->getManager();
         $em->persist($characters);
@@ -98,18 +104,16 @@ class CharacterController extends AbstractController
         $characters = $characterRepository->find($id);
         if(!$characters){
             return $this->json([
-                'error' => 'Le personnage ' .$id . 'n\'existe pas'
+                'errors' => ['message'=>'Le personnage ' .$id . 'n\'existe pas']
             ], 404
             );
         }
 
-        $characterDatas = $serializer->deserialize($jsonData, Character::class,'json', [AbstractNormalizer::OBJECT_TO_POPULATE=>$characters]);
+        $serializer->deserialize($jsonData, Character::class,'json', [AbstractNormalizer::OBJECT_TO_POPULATE=>$characters]);
 
-        $em = $this->getDoctrine()->getManager();
-        $em->persist($characterDatas);
-        $em->flush();
+        $this->getDoctrine()->getManager()->flush();
 
-        return $this->json($characterDatas, 200 ,[],[
+        return $this->json(["message"=>"Le personnage a bien été modifié"], 200 ,[],[
             'groups' => 'character_detail'
         ]);
     }

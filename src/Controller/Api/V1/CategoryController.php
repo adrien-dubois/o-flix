@@ -7,10 +7,10 @@ use App\Repository\CategoryRepository;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
 use Symfony\Component\HttpFoundation\JsonResponse;
 use Symfony\Component\HttpFoundation\Request;
-use Symfony\Component\HttpFoundation\Response;
 use Symfony\Component\Routing\Annotation\Route;
 use Symfony\Component\Serializer\Normalizer\AbstractNormalizer;
 use Symfony\Component\Serializer\SerializerInterface;
+use Symfony\Component\Validator\Validator\ValidatorInterface;
 
 /**
  * @Route("/api/v1/categories", name="api_v1_category_", requirements={"id"="\d+"})
@@ -66,11 +66,16 @@ class CategoryController extends AbstractController
      * @param SerializerInterface $serializer
      * @return void
      */
-    public function add(Request $request, SerializerInterface $serializer)
+    public function add(Request $request, SerializerInterface $serializer, ValidatorInterface $validator)
     {
         $jsonData = $request->getContent();
 
         $categories = $serializer->deserialize($jsonData, Category::class, 'json');
+
+        $errors = $validator->validate($categories);
+        if(count($errors) > 0) {
+            return $this->json($errors, 400);
+        }
 
         $em = $this->getDoctrine()->getManager();
         $em->persist($categories);
@@ -98,18 +103,16 @@ class CategoryController extends AbstractController
         $categories = $categoryRepository->find($id);
         if(!$categories){
             return $this->json([
-                'error' => 'La catégorie ' .$id . 'n\'existe pas'
+                'errors' => ['message'=>'La catégorie ' .$id . 'n\'existe pas']
             ], 404
             );
         }
 
-        $categoryDatas = $serializer->deserialize($jsonData, Category::class,'json', [AbstractNormalizer::OBJECT_TO_POPULATE=>$categories]);
+        $serializer->deserialize($jsonData, Category::class,'json', [AbstractNormalizer::OBJECT_TO_POPULATE=>$categories]);
 
-        $em = $this->getDoctrine()->getManager();
-        $em->persist($categoryDatas);
-        $em->flush();
+        $this->getDoctrine()->getManager()->flush();
 
-        return $this->json($categoryDatas, 200 ,[],[
+        return $this->json(["message"=>"La catégorie a bien été modifiée"], 200 ,[],[
             'groups' => 'tvshow_detail'
         ]);
     }
@@ -139,7 +142,7 @@ class CategoryController extends AbstractController
         $em->flush();
 
         return $this->json([
-            'ok' => 'La série a bien été effacée'
+            'ok' => 'La catégorie a bien été effacée'
         ],200
         );
     }
