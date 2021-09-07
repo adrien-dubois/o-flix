@@ -11,9 +11,9 @@ class MaintenanceSubscriber implements EventSubscriberInterface
     {
         $request = $event->getRequest();
         $server = $request->server;
-        $maintenance = $server->get('MAINTENANCE');
+        $maintenance = $server->get('MAINTENANCE_MODE');
         $maintenanceMessage = $server->get('MAINTENANCE_MESSAGE');
-        // $server->set('MAINTENANCE', 0);
+        // $server->set('maintenance_mode', 1);
         
         if ($maintenance == 1) {
             $response = $event->getResponse();

@@ -24,6 +24,10 @@ class HomeController extends AbstractController
             3,0
         );
 
+        // $var = $this->getParameter('maintenance_mode');
+        
+        
+
         $user = $userRepository->findOneBy([], ["createdAt"=>"DESC"]);
 
         $like = $tvShowRepository->findOneBy([],['nbLikes'=>"DESC"]);
