@@ -132,7 +132,7 @@ class CategoryController extends AbstractController
         $categories = $categoryRepository->find($id);
         if(!$categories){
             return $this->json([
-                'error'=>'Cette série TV n\'existe pas'
+                'error'=>'Cette catégorie n\'existe pas'
             ], 404
             );
         }
