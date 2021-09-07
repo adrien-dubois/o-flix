@@ -39,24 +39,28 @@
                                             <a href=" {{path('backoffice_tv_show_edit', {id: tvshow.id})}} " class="btn btn-sm btn-outline-secondary">Editer</a>
                                         {% endif %}
 
-                                            {# HEART FAVS #}
+                                         {# FAVS #}
                                         <div class="text-danger">
                                         
                                             {% if is_granted("ROLE_USER") %}
-                                                {% for favoris in tvshow.favoris %}
-                                                    {% if favoris.id == app.user.id %}
-                                                        <a class="nolink" href=" {{path('show_fav_remove', {id: tvshow.id})}}"><i class="fas fa-star mx-2"></i></a>
+                                                {% set isFavorite = false %}
+                                                    {% for favoris in tvshow.favoris %}
+                                                        {% if favoris.id == app.user.id %}  
+                                                            {% set isFavorite = true %}
+                                                        {% endif %}
+                                                    {% endfor %}
+                                                    {% if isFavorite %}
+                                                        <a href=" {{path('show_fav_remove', {id: tvshow.id})}} " class="nolink"><i class="fas fa-star mx-2 "></i></a>
                                                     {% else %}
-                                                        <a class="nolink" href="{{path('show_fav_add', {id: tvshow.id})}}"><i class="far fa-star mx-2"></i></a>
+                                                        <a href="{{path('show_fav_add', {id: tvshow.id})}}" class="nolink"><i class="far fa-star mx-2"></i></a>
                                                     {% endif %} 
                                                 {% else %}
-                                                    <a class="nolink" href="{{path('show_fav_add', {id: tvshow.id})}}"><i class="far fa-star mx-2"></i></a>
-                                                {% endfor %}
-                                            {% else %}
-                                                <i class="far fa-star mx-2"></i>
-                                            {% endif %}
+                                                     <i class="far fa-star mx-2"></i>
+                                                {% endif %}
+                                                
                                             
                                         </div>   
+                                        {# FAVS END #}   
 
                                         </div>
                                         <small class="text-muted">

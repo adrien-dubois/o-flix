@@ -71,6 +71,11 @@ class User implements UserInterface, PasswordAuthenticatedUserInterface
      */
     private $favoris;
 
+    /**
+     * @ORM\Column(type="string", length=50, nullable=true)
+     */
+    private $activation_token;
+
     public function __construct()
     {
         $this->roles = array('ROLE_USER');

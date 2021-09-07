@@ -4,57 +4,75 @@
 {% endblock %}
 
 {% block body %}
-
-        <section class="py-5 text-center container">
-            <div class="row py-lg-5">
-                <div class="col-lg-6 col-md-8 mx-auto">
-                    <h1 class="fw-light">Séries favorites</h1>
-                </div>
-            </div>
-        </section>
-
-        <div class="py-5 bg-light">
-            <div class="container">
-
-                <div class="row row-cols-1 row-cols-sm-2 row-cols-md-3 g-3">
-
-                    {# SERIES CARDS #}
-
-                    {% for show in tvshows %}
-                        {% for favoris in show.favoris %}
-                            {% if favoris.id == app.user.id %}
-
-                                <div class="col">
-                                    <div class="card shadow-sm">
-                                        <img src=" {{asset('uploads/' ~ show.image)}} " alt="" class="img-fluid">
-                                        <div class="card-body">
-                                            <p class="card-text"> {{show.synopsis}} </p>
-                                            <div class="d-flex justify-content-between align-items-center">
-                                                <div class="btn-group">
-                                                    <a href="{{path('show_single_slug', {slug: show.slug})}}" class="btn btn-sm btn-outline-secondary">Voir</a>
-                                                     {# EDIT BUTTONS FOR ADMIN #}
-                                                    {% if is_granted("ROLE_ADMIN") %}
-                                                        <a href=" {{path('backoffice_tv_show_edit', {id: show.id})}} " class="btn btn-sm btn-outline-secondary">Editer</a>
-                                                    {% endif %}
-                                                </div>
-                                                <small class="text-muted">
-                                                    {{show.nbLikes}}
-                                                    <a href="{{path('show_like', {id: show.id})}}">
-                                                    <img src=" {{asset('img/like.svg')}} " alt="" class="like">
-                                                    </a>
-                                                </small>
-                                            </div>
-                                        </div>
-                                    </div>
-                                </div>
-                            {% endif %}
-                        {% endfor %}
-                    {% endfor %}
-                    
-                </div>
+{% set isFavorite = false %}
+<section class="container text-center">
+    <div class="row py-lg-5">
+        <div class="col-lg-6 col-md-6 mx-auto">
+            <h1 class="fw-light">Liste de série favorites</h1>
+            <p class="fst-italic lead">Sélectionnez ici vos références préférées</p>
+            <div class="divider-custom">
+                <div class="divider-custom-line"></div>
+                <div class="divider-custom-icon"><i class="fas fa-star"></i></div>
+                <div class="divider-custom-line"></div>
             </div>
         </div>
+    </div>
+</section>
 
-    </main>
+<div class="py-5 bg-light">
+    <div class="container">
+        
+        <div class="row row-cols-1 row-cols-sm-2 row-cols-md-3 g-3">
+            {# SERIES CARDS #}
+            {% for show in tvshows %}
+                {% for favoris in show.favoris %}
+                    {% if favoris.id == app.user.id %}
+                        {% set isFavorite = true %}
+                    {% endif %}
+
+                    {% if isFavorite %}
+                        <div class="col">
+                            <div class="card shadow-sm">
+                                <img src=" {{asset('uploads/' ~ show.image)}} " alt="" class="img-fluid">
+                                <div class="card-body">
+                                    <p class="card-text"> {{show.synopsis}} </p>
+                                    <div class="d-flex justify-content-between align-items-center">
+                                        <div class="btn-group">
+                                            <a href="{{path('show_single_slug', {slug: show.slug})}}" class="btn btn-sm btn-outline-secondary">Voir</a>
+                                                {# EDIT BUTTONS FOR ADMIN #}
+                                            {% if is_granted("ROLE_ADMIN") %}
+                                                <a href=" {{path('backoffice_tv_show_edit', {id: show.id})}} " class="btn btn-sm btn-outline-secondary">Editer</a>
+                                            {% endif %}
+                                        </div>
+                                        <small class="text-muted">
+                                            {{show.nbLikes}}
+                                            <a href="{{path('show_like', {id: show.id})}}">
+                                            <img src=" {{asset('img/like.svg')}} " alt="" class="like">
+                                            </a>
+                                        </small>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>    
+                    {% endif %}
+                {% endfor %}
+            {% endfor %}
+
+        </div>
+            {# NO FAVORITES #}
+            {% if isFavorite == false %}
+            <div class="d-flex flex-row bd-highlight">
+            <div class="p-2 bd-highlight">
+                <h3 class="fw-bold">Vous n'avez pas encore de favoris</h3>
+                <p class="lead fst-italic">Séléctionnez vos séries préférées en cliquant sur un coeur pour l'ajouter à votre sélection </p>
+            </div>
+            <div class="p-2 bd-highlight">
+                <img class="img-fluid float-end"  src="{{ asset('img/family.png') }}" alt="" >
+            </div>
+            </div>
+            {% endif %}
+    </div>
+</div>
+
 
 {% endblock %}

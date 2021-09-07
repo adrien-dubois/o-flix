@@ -38,8 +38,7 @@ class TvShowController extends AbstractController
      * @return void
      */
     public function favs(TvShowRepository $tvShowRepository)
-    {
-
+    {   
         return $this->render('tv_show/favs.html.twig',[
             'tvshows'=>$tvShowRepository->findAll()
         ]);
