@@ -18,7 +18,7 @@ class RegistrationController extends AbstractController
     /**
      * @Route("/register", name="app_register")
      */
-    public function register(Request $request, UserPasswordHasherInterface $userPasswordHasherInterface, UserAuthenticatorInterface $authenticator, LoginFormAuthenticator $formAuthenticator): Response
+    public function register(Request $request, UserPasswordHasherInterface $userPasswordHasherInterface, UserAuthenticatorInterface $authenticator, LoginFormAuthenticator $formAuthenticator, \Swift_Mailer $mailer): Response
     {
         $user = new User();
         $form = $this->createForm(RegistrationFormType::class, $user);
@@ -33,15 +33,31 @@ class RegistrationController extends AbstractController
                 )
             );
 
+            // Generate activation token
+            $user->setActivationToken(md5(uniqid()));
+
             $entityManager = $this->getDoctrine()->getManager();
             $entityManager->persist($user);
             $entityManager->flush();
 
             $this->addFlash(
                 'success',
-                'Vous êtes bien inscrit'
+                'Vous avez reçu un email d\'activation'
             );
             // do anything else you need here, like send an email
+
+            $message = (new \Swift_Message('Activation de votre compte'))
+                ->setFrom('admin@oflix.com')
+                ->setTo($user->getEmail())
+                ->setBody(
+                    $this->renderView(
+                        'email/activation.html.twig', ['token'=>$user->getActivationToken()]
+                    ),
+                    'text/html'
+                )
+            ;
+
+            $mailer->send($message);
 
             return $authenticator->authenticateUser($user, $formAuthenticator, $request);
         }
@@ -49,6 +65,36 @@ class RegistrationController extends AbstractController
         return $this->render('registration/register.html.twig', [
             'registrationForm' => $form->createView(),
         ]);
+    }
+
+    /**
+     * Activate user
+     *  
+     * @Route("/activation/{token}", name="activation")
+     *
+     */
+    public function activation($token, UserRepository $userRepository)
+    {
+        // We check if a user has this token
+        $user = $userRepository->findOneBy(['activation_token' => $token]);
+
+        // If no users has this token
+        if(!$user){
+            throw $this->createNotFoundException('Cet utilisateur n\'existe pas');
+        }
+
+        // We delete the token
+        $user->setActivationToken('');
+        $em = $this->getDoctrine()->getManager();
+        $em->persist($user);
+        $em->flush();
+
+        $this->addFlash(
+            'success',
+            'Votre compte a bien été activé'
+        );
+
+        return $this->redirectToRoute('home');
     }
 
 } 
