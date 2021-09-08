@@ -13,6 +13,7 @@ use Symfony\Component\Form\Extension\Core\Type\SubmitType;
 use Symfony\Component\Form\FormBuilderInterface;
 use Symfony\Component\OptionsResolver\OptionsResolver;
 use Symfony\Component\Validator\Constraints\File;
+use Symfony\Component\Validator\Constraints\NotBlank;
 
 class TvShowType extends AbstractType
 {
@@ -33,7 +34,10 @@ class TvShowType extends AbstractType
                             'image/png',
                         ],
                         'mimeTypesMessage' => 'Seuls les fichiers images de type JPEG & PNG sont autorisés',
-                    ])
+                    ]),
+                    new NotBlank([
+                        'message'=>'Merci de fournir une image'
+                    ]),
                 ]
             ])
             ->add('publishedAt', DateTimeType::class,[

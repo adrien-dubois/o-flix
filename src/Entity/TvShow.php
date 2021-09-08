@@ -40,7 +40,7 @@ class TvShow
 
     /**
      * @ORM\Column(type="string", length=255)
-     * Ajouter une image
+     * 
      * @Groups({"tvshow_list", "tvshow_detail"})
      */
     private $image;

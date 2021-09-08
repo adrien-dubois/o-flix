@@ -29,8 +29,10 @@ class TvShowController extends AbstractController
         ]);
     }
 
+
+
     /**
-     * @Route("/new", name="backoffice_tv_show_new", methods={"GET","POST"}, priority=2)
+     * @Route("/new", name="backoffice_tv_show_new", methods={"GET","POST"})
      */
     public function new(Request $request, ImageUploader $uploader, SluggerInterface $slugger): Response
     {
@@ -75,6 +77,24 @@ class TvShowController extends AbstractController
         ]);
     }
 
+    /**
+     * @Route("/{id}", name="backoffice_tv_show_delete", methods={"POST"}, requirements={"id":"\d+"})
+     */
+    public function delete(Request $request, TvShow $tvShow): Response
+    {
+        if ($this->isCsrfTokenValid('delete'.$tvShow->getId(), $request->request->get('_token'))) {
+            $entityManager = $this->getDoctrine()->getManager();
+            $entityManager->remove($tvShow);
+            $entityManager->flush();
+
+            $this->addFlash(
+                'danger',
+                'La série ' . $tvShow->getTitle() . ' a bien été supprimée'
+            );
+        }
+
+        return $this->redirectToRoute('backoffice_tv_show_index', [], Response::HTTP_SEE_OTHER);
+    }
 
     /**
      * @Route("/{id}", name="backoffice_tv_show_show", methods={"GET"}, requirements={"id":"\d+"})
@@ -124,17 +144,5 @@ class TvShowController extends AbstractController
         ]);
     }
 
-    /**
-     * @Route("/{id}", name="backoffice_tv_show_delete", methods={"POST"})
-     */
-    public function delete(Request $request, TvShow $tvShow): Response
-    {
-        if ($this->isCsrfTokenValid('delete'.$tvShow->getId(), $request->request->get('_token'))) {
-            $entityManager = $this->getDoctrine()->getManager();
-            $entityManager->remove($tvShow);
-            $entityManager->flush();
-        }
 
-        return $this->redirectToRoute('backoffice_tv_show_index', [], Response::HTTP_SEE_OTHER);
-    }
 }
