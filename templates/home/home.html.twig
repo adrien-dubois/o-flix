@@ -10,6 +10,8 @@
         <div class="row py-lg-5">
             <div class="col-lg-6 col-md-6 mx-auto">
                 <h1 class="fw-light">Séries TV et bien plus en illimité.</h1>
+
+                
                 {% if app.user %}
                 <p class="lead fst-italic">
                     {{app.user.firstname}}, bienvenue sur votre compte <a class="navbar-brand text-danger" href=" {{path('home')}} ">
@@ -26,6 +28,8 @@
                 <div class="divider-custom-line"></div> 
                 </div>
                 <p class="lead text-muted">Nos dernières entrées au catalogue, rien que pour vous :</p>
+
+
                 {% else %} 
                 <p class="lead text-muted">Où que vous soyez. Annulez à tout moment.</p>   
                 <p>
