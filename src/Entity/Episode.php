@@ -4,6 +4,7 @@ namespace App\Entity;
 
 use App\Repository\EpisodeRepository;
 use Doctrine\ORM\Mapping as ORM;
+use Symfony\Component\Validator\Constraints as Assert;
 
 /**
  * @ORM\Entity(repositoryClass=EpisodeRepository::class)
@@ -19,16 +20,20 @@ class Episode
 
     /**
      * @ORM\Column(type="integer")
+     * @Assert\NotBlank(message="Ajouter le numéro de l'épisode")
+     * 
      */
     private $episodeNumber;
 
     /**
      * @ORM\Column(type="string", length=255)
+     * @Assert\NotBlank(message="Ajouter le titre de l'épisode")
      */
     private $title;
 
     /**
      * @ORM\Column(type="datetime_immutable")
+     * @Assert\NotBlank(message="Ajouter la date de publication de l'épisode")
      */
     private $publishedAt;
 
@@ -47,6 +52,11 @@ class Episode
      * @ORM\JoinColumn(nullable=false)
      */
     private $season;
+
+    public function __construct()
+    {
+        $this->createdAt = new \DateTimeImmutable();
+    }
 
     public function getId(): ?int
     {

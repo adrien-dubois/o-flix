@@ -1,0 +1,50 @@
+{% extends 'backoffice/layout.html.twig' %}
+
+{% block title %}Category Backoffice - {{parent()}} {% endblock %}
+
+{% block content %}
+
+        <section class="container text-center">
+            <div class="row py-lg-5">
+                <div class="col-lg-6 col-md-8 mx-auto">
+                    <h1 class="fw-light">Saisons de la série {{TvShow.title}}</h1>
+                </div>
+            </div>
+        </section>
+
+        <div class="container">
+        
+            
+        
+
+
+        <ul class="list-group list-group list-group-flush mx-auto" style="width: 600px;">
+                <li class="list-group-item mx-auto" style="background-color: #212529;">
+                    {# ADD SEASON #}
+                    <a style="text-decoration: none; color: white; float: right" class="btn btn-success" href="{{ path('backoffice_season_add', {id: TvShow.id}) }}">Add season</a>
+                </li>
+            {% for seas in TvShow.season %}
+                <li class="list-group-item " style="background-color: #212529; color: #fff"> <a href="" style="text-decoration: none; color: white;">Saison {{seas.seasonNumber}} </a>
+                
+                {# DELETE #}
+                <a style="text-decoration: none; color: white; float: right;" href=" {{path('backoffice_season_delete', {id: seas.id})}} " class="card-link badge rounded-pill bg-danger mx-2">Suppr.</a>
+
+                {# ADD EPISODE #}
+                <a style="text-decoration: none; color: white; float: right" class="card-link badge rounded-pill bg-success" href="{{ path('backoffice_episode_add', {id:seas.id}) }}">Add episode</a>
+                
+                
+                <ul>
+                    {% for episod in seas.episode %}
+                        <li>{{ episod.title }}</li>
+                    {% endfor %}
+                </ul>
+                
+
+                </li>
+            {% endfor %}
+        </ul>
+        <a href=" {{path('backoffice_tv_show_slug', {slug: TvShow.slug})}} " class="btn btn-secondary">Retour</a>
+        </div>
+        
+
+{% endblock %}

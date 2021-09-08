@@ -9,6 +9,9 @@
                     <h1 class="fw-light"> {{ tv_show.title }}</h1>
                 </div>
             </div>
+                    <p>
+            <a href=" {{path('backoffice_season_index', {id : tv_show.id})}} " class="btn btn-dark">Liste des saisons</a>
+        </p>
         </section>
 
 <div class="container">

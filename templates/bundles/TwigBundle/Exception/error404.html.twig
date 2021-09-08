@@ -11,14 +11,14 @@
 <body style="background-image: url('https://wallpaperboat.com/wp-content/uploads/2019/04/game-of-thrones-cool-minimal-wallpaper-hd-picture-012.jpg'); margin-bottom: 2rem;">
 
 {% include "partials/_navbar.html.twig" %}
-    <section style="padding-top: 60px;">
+    <section >
         <div id="error" class="container">
             <div class="row">
                 <div class="col-md-8 offset-md-2 text-center">
                     <div class="err_tx">
-                    <p style="color: black;" class="fw-bold fst-italic">Nous sommes désolés, la page que vous avez demandée n'a pas été trouvée.</p>
+                    <p style="color: black;" class="fw-bold fst-italic">Nous sommes désolés, la page que vous avez demandée n'a pas été trouvée. <br> {{exception.message}} </p>
                     <h1 style="font-size: 162px;">404</h1>
-                    <h2>Winter Is Coming</h2>
+                    <h2 style="color:rgb(104, 103, 103);">Winter Is Coming</h2>
                     </div>
 
                     <br>

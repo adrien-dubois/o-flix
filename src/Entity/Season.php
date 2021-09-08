@@ -3,9 +3,11 @@
 namespace App\Entity;
 
 use App\Repository\SeasonRepository;
+use DateTimeImmutable;
 use Doctrine\Common\Collections\ArrayCollection;
 use Doctrine\Common\Collections\Collection;
 use Doctrine\ORM\Mapping as ORM;
+use Symfony\Component\Validator\Constraints as Assert;
 
 /**
  * @ORM\Entity(repositoryClass=SeasonRepository::class)
@@ -21,11 +23,13 @@ class Season
 
     /**
      * @ORM\Column(type="integer")
+     * @Assert\NotBlank(message="Ajouter le numéro de la saison")
      */
     private $seasonNumber;
 
     /**
      * @ORM\Column(type="datetime_immutable")
+     * @Assert\NotBlank(message="Ajouter la date de publication")
      */
     private $publishedAt;
 
@@ -53,6 +57,7 @@ class Season
     public function __construct()
     {
         $this->episode = new ArrayCollection();
+        $this->createdAt = new DateTimeImmutable();
     }
 
     public function getId(): ?int

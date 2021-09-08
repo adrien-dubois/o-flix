@@ -11,10 +11,16 @@
             <h1 class="fw-light">Éditer une série télé</h1>
         </div>
     </div>
+        <p>
+            <a href=" {{path('backoffice_season_index', {id : tv_show.id})}} ">Liste des saisons</a>
+            |
+            <a href=" {{path('backoffice_season_add', {id: tv_show.id} )}} ">Ajouter une saison</a>
+        </p>
 </section>
 
     <div class="input-group-sm mb-3 mx-auto text-center" style="width: 600px;">
         {{ include('backoffice/tv_show/_form.html.twig', {'button_label': 'Update'}) }}
+
 
         {{ include('backoffice/tv_show/_delete_form.html.twig') }}
 
