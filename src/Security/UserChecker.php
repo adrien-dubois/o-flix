@@ -16,6 +16,8 @@ class UserChecker implements UserCheckerInterface
             return;
         }
 
+        // Verification of the activation Token in the DB
+        // If the token is still here, so the account is still not activate, and you cannot connect with it
         if (!$user->getActivationToken() == null) {
             // the message passed to this exception is meant to be displayed to the user
             throw new CustomUserMessageAccountStatusException('Votre compte doit être activé par mail');
