@@ -45,5 +45,6 @@ class HomeTest extends WebTestCase
         $client->request('GET', '/');
         $this->assertResponseIsSuccessful();
         $this->assertSelectorTextContains('p.lead.fst-italic', $testUser->getFirstname() . ', bienvenue sur votre compte');
+        $this->assertEquals(200, $client->getResponse()->getStatusCode());
     }
 }

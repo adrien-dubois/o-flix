@@ -21,7 +21,12 @@ class LoginTest extends WebTestCase
         $this->assertSelectorTextContains('h1', 'Connexion');
     }
 
-    public function testLoginConnected()
+    /**
+     * Test register page connected user
+     *
+     * @return void
+     */
+    public function testRegisterConnected()
     {
         $client = static::createClient();
         $userRepository = static::getContainer()->get(UserRepository::class);
