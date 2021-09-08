@@ -40,10 +40,7 @@ class RegistrationController extends AbstractController
             $entityManager->persist($user);
             $entityManager->flush();
 
-            $this->addFlash(
-                'success',
-                'Vous avez reçu un email d\'activation'
-            );
+            
             // do anything else you need here, like send an email
 
             $message = (new \Swift_Message('Activation de votre compte'))
@@ -59,7 +56,11 @@ class RegistrationController extends AbstractController
 
             $mailer->send($message);
 
-            return $authenticator->authenticateUser($user, $formAuthenticator, $request);
+            $this->addFlash(
+                            'success',
+                            'Veuillez activez votre compte par mail.'
+                        );
+            return $this->redirectToRoute('home');
         }
 
         return $this->render('registration/register.html.twig', [
