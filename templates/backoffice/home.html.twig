@@ -18,6 +18,7 @@
         <div class="row ">
             <div class="col-md-3 mb-3"> 
 
+                {% if like is not null %}
                 {# CARD TV Shows#}
                     <div class="card text-white bg-custom mb-3 h-100" style=" box-shadow:8px 6px 10px rgba(0, 0, 0, 0.445);" >
                         <div class="card-header fw-bold" >Série TV la plus likée</div>
@@ -32,11 +33,12 @@
                     </div>
                 {# CARD CLOSE #}
 
+                {% endif %}
             </div>
 
 
              <div class="col-md-3 mb-3"> 
-
+                {% if recent is not null %}
                 {# MOST RECENT #}
                     <div class="card text-white bg-custom mb-3 h-100" style=" box-shadow:8px 6px 10px rgba(0, 0, 0, 0.445);" >
                         <div class="card-header fw-bold" >Série la plus récente : </div>
@@ -47,11 +49,13 @@
                             </div>
                     </div>
                 {# CARD CLOSE #}
+                {% endif %}
 
             </div>
 
              <div class="col-md-3 mb-3"> 
-
+                
+                {% if user is not null %}
                 {# CARD USERS #}
                     <div class="card text-white bg-custom mb-3 h-100" style=" box-shadow:8px 6px 10px rgba(0, 0, 0, 0.445);" >
                         <div class="card-header fw-bold" >Dernier utilisateur inscrit :</div>
@@ -65,6 +69,7 @@
                             </div>
                     </div>
                 {# CARD CLOSE #}
+                {% endif %}
 
             </div>
         </div>
