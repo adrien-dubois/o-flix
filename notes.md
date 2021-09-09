@@ -8,3 +8,4 @@
       2. `php bin/console make:migration`
       3. `php bin/console d:mi:mi` ou `php bin/console doctrine:migration:migrate` 
 3. On vérifie que le projet a été pushé sur un serveur Git
+4. Installer `composer require symfony/apache-pack` pour avoir un .htaccess de configuré dans `/public`
