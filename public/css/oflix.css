@@ -182,7 +182,6 @@ body {
 
 .bg-custom {
   --bs-bg-opacity: 1;
-  /* background-color: #444a4e; */
   background-color: #586066;
 
 }
@@ -204,5 +203,3 @@ body {
   position: absolute;
   right: 20px;
 }
-
-/* a:hover, a:visited, a:active */

@@ -50,7 +50,10 @@ class TvShowType extends AbstractType
                 'label'=>'Catégories',
                 'expanded'=>true,
                 'multiple'=>true,
-                'choice_label'=>'name'
+                'choice_label'=>'name',
+                'attr'=>[
+                    'class'=>'text-center mx-auto'
+                ]
             ])
         ;
     }

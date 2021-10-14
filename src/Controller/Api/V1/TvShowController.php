@@ -73,7 +73,7 @@ class TvShowController extends AbstractController
         $jsonData = $request->getContent();
 
         // We transform the json in object
-        // First argument : datas to deserialaize
+        // First argument : datas to deserialize
         // Second : The type of object we want 
         // Last : Start type
         $tvShow = $serializer->deserialize($jsonData, TvShow::class, 'json');

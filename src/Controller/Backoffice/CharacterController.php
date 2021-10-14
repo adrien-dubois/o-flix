@@ -61,6 +61,7 @@ class CharacterController extends AbstractController
                 $character->setImgUpload($newFilename);
             }
                 
+            
             $em = $this->getDoctrine()->getManager();
             $em->persist($character);
             $em->flush();

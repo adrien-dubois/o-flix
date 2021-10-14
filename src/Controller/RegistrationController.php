@@ -33,8 +33,9 @@ class RegistrationController extends AbstractController
                 )
             );
 
-            // Generate activation token
+            // Génération du token
             $user->setActivationToken(md5(uniqid()));
+
 
             $entityManager = $this->getDoctrine()->getManager();
             $entityManager->persist($user);
@@ -43,23 +44,25 @@ class RegistrationController extends AbstractController
             
             // do anything else you need here, like send an email
 
-            $message = (new \Swift_Message('Activation de votre compte'))
-                ->setFrom('admin@oflix.com')
-                ->setTo($user->getEmail())
-                ->setBody(
-                    $this->renderView(
-                        'email/activation.html.twig', ['token'=>$user->getActivationToken()]
-                    ),
-                    'text/html'
-                )
+            $message =(new \Swift_Message('Activation de votre compte'))
+                    ->setFrom('admin@oclock.io')
+                    ->setTo($user->getEmail())
+                    ->setBody(
+                        $this->renderView(
+                            'email/activation.html.twig',
+                            ['token'=>$user->getActivationToken()]
+                        ),
+                        'text/html'
+                    )
             ;
-
             $mailer->send($message);
 
             $this->addFlash(
-                            'success',
-                            'Veuillez activez votre compte par mail.'
-                        );
+                'success',
+                'Veuillez activer votre compe par mail'
+            )
+            ;
+
             return $this->redirectToRoute('home');
         }
 
@@ -69,33 +72,38 @@ class RegistrationController extends AbstractController
     }
 
     /**
-     * Activate user
-     *  
+     * Methode d'activation par mail
+     * 
      * @Route("/activation/{token}", name="activation")
      *
+     * @param [type] $token
+     * @param UserRepository $userRepository
+     * @return void
      */
     public function activation($token, UserRepository $userRepository)
     {
-        // We check if a user has this token
-        $user = $userRepository->findOneBy(['activation_token' => $token]);
+        // On recherche l'utilisateur en BDD avec son token unique
+        $user = $userRepository->findOneBy(['activation_token'=>$token]);
 
-        // If no users has this token
+        // Si l'utilisateur n'existe pas, on bloque
         if(!$user){
             throw $this->createNotFoundException('Cet utilisateur n\'existe pas');
         }
 
-        // We delete the token
+        // Sinon on seupprime le token
         $user->setActivationToken('');
-        $em = $this->getDoctrine()->getManager();
-        $em->persist($user);
-        $em->flush();
+        $em = $this->getDoctrine()->getManager()->flush();
 
+        // Conirmation par flash
         $this->addFlash(
             'success',
             'Votre compte a bien été activé'
         );
 
+        // Et redirection
         return $this->redirectToRoute('home');
+
     }
+
 
 } 
