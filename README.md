@@ -1,109 +1,36 @@
-# Projet Oflix
+# Oflix Project
 
-## Supports de cours associés
+This is a full Symfony project which is a Netflix/Allocine styled website. We can add TV Shows, with the Synopsis, Picture, Characters ( Actor's name, story of the character, age & other informations ), categories of the show, seasons etc... 
+We can't see any show, that's more than a database.
 
-- [Doctrine Associations](https://symfony.com/doc/current/doctrine/associations.html)
-- [Lien vers la fiche récap Doctrine Associations](https://kourou.oclock.io/ressources/fiche-recap/symfo-s2-j2-associations-avec-doctrine/)
+## Different sections
 
-## Challenge 
+  - Homepage with three last entries, Login or register
+  - TV Show page where all shows are published
+  - Page of the selected TV Show with all informations about it
+  - A favorite page, where you can list your favorites shows
+  - And for administrators, a backoffice section to manage the entire sections ( edit / delete / add )
 
-D'après le MCD suivant :
+## Technos
 
-```
-TVSHOW : title, synopsis, image, nbLikes, published at
+This project is made with :
 
-SEASON : season number, published at
-HAS, 0N TVSHOW, 11 SEASON
+  - Symfony
+  - Bootstrap
+  - Adminer
 
-EPISODE : episode number, title
-CONTAINS, 0N SEASON , 11 EPISODE
+## Features 
 
-
-CHARACTER : firstname, lastname, gender, bio, age
-PLAY, 0N TVSHOW, 1N CHARACTER
-
-CATEGORY : name
-LINKED, 0N TVSHOW, 0N CATEGORY
-```
-
-![MCD Oflix](mcd_mld_oflix.PNG)
-
-### Démarrage 
-
-- On part d'un nouveau Projet en Website skeleton : `composer create-project symfony/website-skeleton oflix`
-- Ensuite on configure le fichier `.env.local` (Vous pouvez nommer la DB `oflix`)
-- Puis création de ta DB : `php bin/console doctrine:database:create`
-
-### Création des entités
-
-- Créez toutes les entités du MCD à l'aide de la commande `php bin/console make:entity`
-
-#### TvShow
-
-- `title`
-- `synopsis`
-- `image` (url de l'image)
-- `nbLikes`
-- `publishedAt`
-- `createdAt`
-- `updatedAt`
-
-#### Season
-
-- `seasonNumber`
-- `publishedAt`
-- `createdAt`
-- `updatedAt`
-
-#### Episode
-
-- `episodeNumber`
-- `title`
-- `publishedAt`
-- `createdAt`
-- `updatedAt`
-
-etc...
-
-Puis lancez la commande suivante : `php bin/console doctrine:schema:update --force`
-
-### Relations OneToMany / ManyToOne
-
-Créez les relations entre : 
-
-- `TvShow` et `Season` : Une série peut avoir plusieurs saisons.
-- `Season` et `Episode` : Une saison peut avoir plusieurs épisodes.
-
-Puis lancez la commande suivante : `php bin/console doctrine:schema:update --force`
-
-### Relations ManyToMany
-
-Créez les relations entre `TvShow`, `Character` et `Category`
-
-- `TvShow` et `Character` : Une série peut avoir plusieurs personnages, et 1 personnage peut joueur dans plusieurs séries.
-- `TvShow` et `Category` :  Une série peut avoir plusieurs catégories, et 1 catégorie peut être associée à plusieurs séries.
-
-Puis lancez la commande suivante : `php bin/console doctrine:schema:update --force`
-
-### Lecture et affichage
-
-Si vous voulez démarrer avec quelques données, créez-en vous-même depuis Adminer ou PhpMyAdmin.
-
-- Afficher la liste des 3 dernières séries depuis la page d'accueil (regarder du côté de `findBy`). URL = `/`.
-- Afficher la liste des séries (TvShow) depuis la page des séries. URL = `/tvshow/`.
-- Afficher les détails d'une série. URL = `/tvshow/{id}`.
-  - Pour chaque série, affichez les saison`S`, les personnage`S` et les catégorie`S` associés... Ca sent la boucle `for` on dirait :wink:
-
-## Bonus intégration
-
-Dans le dossier [`docs`](docs) se trouve l'intégration du projet `oFlix` :tada:.
-On y trouve
-- Une page d'accueil qui servira de point d'entrée : `/`
-- Une page `Séries` qui affichera les dernières séries publiées : `/tvshow/`
-- Une page affichant les détails d'une série selon son ID : `/tvshow/{id}`
-- Une page `Ma liste` qui affichera vos séries préférées : `/tvshow/favorite`
-- Une page de `Login` pour accéder aux contenus réservées aux personnes connectées (A ne surtout pas coder pour le moment ^^)
-
-Votre mission : l'inclure pour apporter un peu de couleur au projet actuel.
-
-P.S. : on inclurera d'autres pages au fur et à mesure
+  - Image Uploader
+  - Voters
+  - Authentication & Security
+  - Backoffice
+  - Roles
+  - Search
+  - Favorites manager
+  - Data Fixtures
+  - Unit tests
+  - API for the website with endpoints for
+      - TV Shows
+      - Categories
+      - Characters

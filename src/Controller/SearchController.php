@@ -28,6 +28,7 @@ class SearchController extends AbstractController
 
         // Send it to the method that is in the repository
         $results = $tvShowRepository->searchTvShowByTitle($query);
+
         // dd($results);
 
         return $this->render('search/search.html.twig', [
