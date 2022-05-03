@@ -59,7 +59,7 @@ class RegistrationController extends AbstractController
 
             $this->addFlash(
                 'success',
-                'Veuillez activer votre compe par mail'
+                'Veuillez activer votre compte par mail'
             )
             ;
 
