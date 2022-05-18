@@ -6,12 +6,15 @@
 parameters:
     locale: 'en'
     maintenance_mode: '%env(MAINTENANCE_MODE)%'
+    elastic.pass: '%env(ELASTIC_API_KEY)%'
+    elastic.cloudid: '%env(ELASTIC_CLOUD_ID)%'
 
 services:
     # default configuration for services in *this* file
     _defaults:
         autowire: true      # Automatically injects dependencies in your services.
         autoconfigure: true # Automatically registers your services as commands, event subscribers, etc.
+    
 
     # makes classes in src/ available to be used as services
     # this creates a service per class whose id is the fully-qualified class name
@@ -25,3 +28,10 @@ services:
 
     # add more service definitions when explicit configuration is needed
     # please note that last definitions always *replace* previous ones
+    App\Service\ElasticsearchApi:
+        public: false
+        autowire: true
+        autoconfigure: true
+        $apikeys: '%elastic.pass%'
+        $cloudid: '%elastic.cloudid%'
+        tags: [elastica.search]
